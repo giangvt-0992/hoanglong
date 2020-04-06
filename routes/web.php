@@ -11,6 +11,13 @@
 |
 */
 
+use App\Models\Trip;
+
 Route::get('/', function () {
+    $trips = Trip::with('carType:id,total_seats,seat_map')->get();
+    echo('<pre>');
+    print_r($trips);
+    echo('<pre>');
+    exit();
     return view('welcome');
 });
