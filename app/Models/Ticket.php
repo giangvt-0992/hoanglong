@@ -12,7 +12,10 @@ class Ticket extends Model
         'trip_depart_date_id',
         'quantity',
         'passenger_info',
-        'brand_id'
+        'brand_id',
+        'list_seat',
+        'total',
+        'user_id'
     ];
 
     public function tripDepartDate()
