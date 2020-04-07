@@ -14,3 +14,4 @@ const mix = require("laravel-mix");
 // mix.js('resources/js/app.js', 'public/js')
 //     .sass('resources/sass/app.scss', 'public/css');
 mix.copyDirectory(["resources/assets/admin_template"], "public/admin_template");
+mix.copyDirectory(["resources/assets/web_template"], "public/web_template");

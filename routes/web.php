@@ -11,13 +11,15 @@
 |
 */
 
-use App\Models\Trip;
+// Route::get('/', function () {
+//     return view('web.layout.master');
+// });
 
-Route::get('/', function () {
-    $trips = Trip::with('carType:id,total_seats,seat_map')->get();
-    echo('<pre>');
-    print_r($trips);
-    echo('<pre>');
-    exit();
-    return view('welcome');
+Route::group(['namespace' => 'Web'], function () {
+    Route::get('/', 'HomeController@index')->name('index');
+    Route::get('/dat-ve', 'HomeController@index')->name('booking');
+    Route::get('/bang-gia', 'HomeController@index')->name('price-table');
+    Route::get('/huong-dan-dat-ve', 'HomeController@index')->name('ticket-purchase-guide');
+    Route::get('/redirect/{social}', 'SocialLoginController@redirect')->name('social-redirect');
+    Route::get('/callback/{social}', 'SocialLoginController@callback')->name('social-callback');
 });
