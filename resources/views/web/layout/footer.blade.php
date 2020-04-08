@@ -5,16 +5,16 @@
                 <div class="col-sm-4 col-xs-12">
                     <div class="footerContent">
                         <h5></h5>
-                        <a href="index.html" class="footer-logo"><img src="web_template/Images/logo_xe.jpg" alt="logo_xe" width="235"></a>
-                        <p> {{ __('CÔNG TY VẬN TẢI GIANG TUẤN') }}</p>
-                        <p>M&#227; số thuế: 0200383487</p>
+                        <a href="index.html" class="footer-logo"><img src="{{url('web_template/Images/logo_xe.jpg')}}" alt="logo_xe" width="235"></a>
+                        <p> {{ __('Giang Tuấn Transportation Co.,Ltd') }}</p>
+                        <p>M&#227; {{__('Tax Code')}}: 0200383487</p>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-12">
                     <div class="footerContent">
-                        <h5>Li&#234;n hệ</h5>
+                        <h5>{{ __('Contacts') }}</h5>
                         <ul class="list-unstyled">
-                            <li><i class="fa fa-home" aria-hidden="true"></i>Số 6 Ngách 53 Ngõ 68 Cầu Giấy Hà Nội</li>
+                            <li><i class="fa fa-home" aria-hidden="true"></i>{{__('06/53/68 Cau Giay, Cau Giay District, Ha Noi City.')}}</li>
                             <li><i class="fa fa-phone" aria-hidden="true"></i><b>039-866-9765 - Fax: 039-866-9765 </b></li>
                             <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailTo:giangtuan6199@gmail.com">giangtuan6199@gmail.com</a></li>
                         </ul>
@@ -28,25 +28,25 @@
                 </div>
                 <div class="col-sm-3 col-xs-12">
                     <div class="footerContent imgGallery">
-                        <h5><a href="thu-vien.html" class="color-white">Thư viện</a></h5>
+                        <h5><a href="thu-vien.html" class="color-white">{{__('Library')}}</a></h5>
                         <div class="row ">
                             <div class="col-xs-4">
-                                <a class="fancybox-pop" href="thu-vien.html"><img src="web_template/Content/themes/startravel/img/gallery/hao-1.jpg" alt="image"></a>
+                                <a class="fancybox-pop" href="thu-vien.html"><img src="{{ url('web_template/Content/themes/startravel/img/gallery/hao-1.jpg') }}" alt="image"></a>
                             </div>
                             <div class="col-xs-4">
-                                <a class="fancybox-pop" href="thu-vien.html"><img src="web_template/Content/themes/startravel/img/gallery/hao-1.jpg" alt="image"></a>
+                                <a class="fancybox-pop" href="thu-vien.html"><img src="{{ url('web_template/Content/themes/startravel/img/gallery/hao-1.jpg') }}" alt="image"></a>
                             </div>
                             <div class="col-xs-4">
-                                <a class="fancybox-pop" href="thu-vien.html"><img src="web_template/Content/themes/startravel/img/gallery/hao-1.jpg" alt="image"></a>
+                                <a class="fancybox-pop" href="thu-vien.html"><img src="{{ url('web_template/Content/themes/startravel/img/gallery/hao-1.jpg') }}" alt="image"></a>
                             </div>
                             <div class="col-xs-4">
-                                <a class="fancybox-pop" href="thu-vien.html"><img src="web_template/Content/themes/startravel/img/gallery/hao-1.jpg" alt="image"></a>
+                                <a class="fancybox-pop" href="thu-vien.html"><img src="{{ url('web_template/Content/themes/startravel/img/gallery/hao-1.jpg') }}" alt="image"></a>
                             </div>
                             <div class="col-xs-4">
-                                <a class="fancybox-pop" href="thu-vien.html"><img src="web_template/Content/themes/startravel/img/gallery/hao-1.jpg" alt="image"></a>
+                                <a class="fancybox-pop" href="thu-vien.html"><img src="{{ url('web_template/Content/themes/startravel/img/gallery/hao-1.jpg') }}" alt="image"></a>
                             </div>
                             <div class="col-xs-4">
-                                <a class="fancybox-pop" href="thu-vien.html"><img src="web_template/Content/themes/startravel/img/gallery/hao-1.jpg" alt="image"></a>
+                                <a class="fancybox-pop" href="thu-vien.html"><img src="{{ url('web_template/Content/themes/startravel/img/gallery/hao-1.jpg') }}" alt="image"></a>
                             </div>
                         </div>
                     </div>
