@@ -4,22 +4,20 @@
 <section class="darkSection">
     <div class="container">
         <div class="row gridResize">
-            <form action="{{route('booking')}}" method="post" id="form">
+            <form action="{{route('search')}}" method="post" id="form">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="col-sm-3 col-xs-12">
                     <div class="sectionTitleDouble">
-                        <p>Vé</p>
-                        <h2>Bắc <span>Nam</span></h2>
-                        <a href="{{route('booking')}}" class="book-other">Chọn </a>
-                        <a href=""><span>Điểm đi - Điểm đến</span></a>
+                        <p>Choose</p>
+                        <h2>your <br/><span>destination</span></h2>
                     </div>
                 </div>
-                <div class="col-sm-7 col-xs-12">
-                    <div class="row">
+                <div class="col-sm-9 col-xs-12">
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 row">
                         <div class="col-sm-4 col-xs-12">
                             <div class="searchTour">
                                 <select class="select2bootstrap" id="departure" name="departure">
-                                    <option value="">Điểm đi</option>
+                                    <option value="">{{__('Departure')}}</option>
                                     @foreach($provinces as $province)
                                     <option value="{{$province->id}}">{{$province->name}}</option>
                                     @endforeach
@@ -28,7 +26,7 @@
                         </div>
                         <div class="col-sm-4 col-xs-12">
                             <div class="searchTour">
-                                <select class="select2bootstrap" id="destination" name="destination"><option value="">Điểm đến</option>
+                                <select class="select2bootstrap" id="destination" name="destination"><option value="">{{ __('Destination') }}</option>
                                     @foreach($provinces as $province)
                                     <option value="{{$province->id}}">{{$province->name}}</option>
                                     @endforeach
@@ -43,12 +41,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 col-xs-12">
+                        <div class="col-sm-4 col-xs-12">
                             <div class="searchTour">
                                 <select name="quantity" class="select2bootstrap" id="quantity">
-                                    <option value="0">SỐ LƯỢNG</option>
+                                    <option value="0">{{__('Quantity')}}</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -57,17 +53,59 @@
                                 </select>
                             </div>
                         </div>
+                        
                     </div>
-                    
+                    <div class="col-sm-3 col-xs-12">
+                        <input type="hidden" id="hdculture" value="vi" />
+                        <input type="hidden" name="step" value="step1">
+                        <input type="submit" class="btn btn-block buttonCustomPrimary btnSearchShift" value="{{__('Search Route')}}" data-blank="1"/>
+                    </div>
                 </div>
-                <div class="col-sm-2 col-xs-12">
-                    <input type="hidden" id="hdculture" value="vi" />
-                    <input type="hidden" name="step" value="step1">
-                    <input type="submit" class="btn btn-block buttonCustomPrimary btnSearchShift" value="T&#236;m chuyến" data-blank="1"/>
-                </div>
+                
             </form>
         </div>
-        
+    </div>
+</section>
+<section class="countUpSection" style="background-image: url(web_template/Content/themes/startravel/img/home/promotion/promotion-3.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <div class="text-center">
+                    <div class="icon">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </div>
+                    <div class="counter">41</div>
+                    <h5>{{ __('Destinations') }}</h5>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                <div class="text-center">
+                    <div class="icon">
+                        <i class="fa fa-bus" aria-hidden="true"></i>
+                    </div>
+                    <div class="counter">150</div>
+                    <h5>{{ __('Trips') }}/{{ __('Day') }}</h5>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                <div class="text-center">
+                    <div class="icon">
+                        <i class="fa fa-smile-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="counter">4526</div>
+                    <h5>{{ __('Happy customers') }}</h5>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                <div class="text-center">
+                    <div class="icon">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                    </div>
+                    <div class="counterCss">24/7</div>
+                    <h5>{{ __('Support line') }}</h5>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 @endsection
