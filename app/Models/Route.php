@@ -36,4 +36,9 @@ class Route extends Model
     {
         return $this->belongsTo(Place::class, 'des_place_id');
     }
+
+    public function tripDepartDates()
+    {
+        return $this->hasManyThrough(TripDepartDate::class, Trip::class);
+    }
 }
