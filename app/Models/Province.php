@@ -20,6 +20,13 @@ class Province extends Model
 
     public function places()
     {
-        return $this->hasManyThrough(Place::class, District::class);
+        return $this->hasManyThrough(
+            Place::class,
+            District::class,
+            'province_id',
+            'district_id',
+            'id',
+            'id'
+        );
     }
 }

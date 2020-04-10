@@ -29,7 +29,7 @@ class TripDepartDateTableSeeder extends Seeder
                 ];
             for ($i = $currentDay; $i <= $maxDays; $i++) {
                 $new = $trip;
-                $new['depart_date'] = "$currentYear-$currentMonth-$currentDay";
+                $new['depart_date'] = "$currentYear-$currentMonth-$i";
                 $array[] = $new;
             }
         }

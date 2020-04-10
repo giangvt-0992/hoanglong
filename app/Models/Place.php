@@ -13,8 +13,8 @@ class Place extends Model
         'description',
         'address',
         'map',
-        'district',
-        'brand'
+        'district_id',
+        'brand_id'
     ];
 
     public function brand()
