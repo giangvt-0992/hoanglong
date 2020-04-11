@@ -31,12 +31,16 @@
                     </li>
                     <?php $user = auth('web')->user(); ?>
                     @if(isset($user))
-                    <li>
-                        {{-- <li>
-                            <a href="{{route('guess-logout')}}">Đăng xuất</a>
-                        </li> --}}
-                        <img src="{{$user->picture}}" alt="" style="margin-top:20px; width: 50px; heigh: 50px; border-radius: 50%;">
+                    <li class="dropdown singleDrop">
+                        <a href="javascript::" style="padding-top: 0;">
+                            <img src="{{$user->avatar}}" alt="" style="margin-top:20px; width: 38px; heigh: 38px; border-radius: 50%;"  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">
+                        </a>
                         
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="{{ route('logout') }}">{{ __('Logout') }}</a>
+                            </li>
+                        </ul>
                     </li>
                     @else
                     <li class="img-link">                                
@@ -50,9 +54,6 @@
                         <a href="{{route('change-language', 'en')}}"><img src="{{url('web_template/Images/icon/icon-uk.png')}}" class="icon icon-uk" width="23" height="15" data-returnurl=""></a>
                         @endif
                     </li>
-                    {{-- <li>
-                        <a href="{{route('change-language', 'en')}}" style="margin-left: 0;"><img src="{{url('web_template/Images/icon/icon-uk.png')}}" class="icon icon-uk" width="23" height="15" data-returnurl=""></a>
-                    </li> --}}
                 </ul>
             </div>
             

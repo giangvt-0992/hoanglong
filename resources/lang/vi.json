@@ -43,5 +43,6 @@
     "is the scheduled time you will arrive at the destination": "là giờ dự kiến quý khách sẽ đến bến cuối",
     "the amount you pay to ride on the chosen itinerary": "Giá tiền được định giá quý khách phải trả để đi xe trên hành trình chọn",
     "is the total estimated travel time of the vehicle": "là tổng thời gian dự kiến hành trình của xe",
-    "is the number of available seats on the bus": "là Số lượng chỗ còn trống trên chuyến xe"
+    "is the number of available seats on the bus": "là Số lượng chỗ còn trống trên chuyến xe",
+    "Logout": "Đăng xuất"
 }
