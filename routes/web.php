@@ -28,8 +28,9 @@ Route::group([
         Route::get('/bang-gia', 'HomeController@index')->name('price-table');
         Route::get('/huong-dan-dat-ve', 'HomeController@index')->name('ticket-purchase-guide');
     });
-    Route::get('/redirect/{social}', 'SocialLoginController@redirect')->name('social-redirect');
-    Route::get('/callback/{social}', 'SocialLoginController@callback')->name('social-callback');
+    Route::get('/redirect/{social}', 'SocialAuthController@redirect')->name('social-redirect');
+    Route::get('/callback/{social}', 'SocialAuthController@callback')->name('social-callback');
     Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('change-language');
     Route::post('/search-route', 'RouteController@search')->name('search-route');
+    Route::get('/logout', 'AuthController@logout')->name('logout');
 });
