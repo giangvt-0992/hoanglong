@@ -53,8 +53,6 @@
                         
                     </div>
                     <div class="col-sm-3 col-xs-12">
-                        <input type="hidden" id="hdculture" value="vi" />
-                        <input type="hidden" name="step" value="step1">
                         <input type="submit" class="btn btn-block buttonCustomPrimary btnSearchShift" value="{{__('Search route')}}" data-blank="1"/>
                     </div>
                 </div>

@@ -8,7 +8,10 @@ class RepositoryServiceProvider extends ServiceProvider
 {
     protected $models = [
         'Route',
-        'Province'
+        'Province',
+        'User',
+        'Ticket',
+        'TripDepartDate',
     ];
     /**
      * Register services.
