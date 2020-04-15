@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Ticket extends Model
 {
@@ -15,7 +16,9 @@ class Ticket extends Model
         'brand_id',
         'list_seat',
         'total',
-        'user_id'
+        'user_id',
+        'unit_price',
+        'code'
     ];
 
     public function tripDepartDate()

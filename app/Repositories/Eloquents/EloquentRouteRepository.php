@@ -7,6 +7,7 @@ use App\Contracts\Repositories\RouteRepository;
 use App\Models\District;
 use App\Models\Place;
 use App\Models\Route;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class EloquentRouteRepository extends EloquentBaseRepository implements RouteRepository
@@ -46,6 +47,14 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
         $desPlaces = $desProvince->places()->pluck('places.id')->toArray();
 
         $formartDate = date("Y-m-d", strtotime($data['departDate']));
+
+        $now = Carbon::now()->timestamp;
+        if ($now >= strtotime($data['departDate'])) {
+            $timeNow = Carbon::now()->format('H:i:00');
+        } else {
+            $timeNow = '00:00:00';
+        }
+
         $routes = DB::table('routes as r')
         ->select(
             'r.id as routeId',
@@ -60,9 +69,13 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
             'ct.name as carType',
             'tdd.available_seats as availableSeats',
             'tdd.seat_map as seatMap',
+            'tdd.id as tripDepartDateId',
             'b.name as brandName',
+            'b.id as brandId',
             'p1.name as departName',
-            'p2.name as desName'
+            'p1.id as departId',
+            'p2.name as desName',
+            'p2.id as desId'
         )
         ->whereIn('depart_place_id', $departPlaces)
         ->whereIn('des_place_id', $desPlaces)
@@ -74,10 +87,10 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
         ->join('places as p2', 'r.des_place_id', 'p2.id')
         ->where([
             ['tdd.depart_date', $formartDate],
-            ['tdd.available_seats', '>=',$data['quantity']]
+            ['tdd.available_seats', '>=',$data['quantity']],
+            ['t.depart_time', '>=', $timeNow]
             ])
         ->get();
-        
         return $routes;
     }
 }

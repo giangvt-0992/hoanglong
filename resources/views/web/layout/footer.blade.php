@@ -7,7 +7,7 @@
                         <h5></h5>
                         <a href="index.html" class="footer-logo"><img src="{{url('web_template/Images/logo_xe.jpg')}}" alt="logo_xe" width="235"></a>
                         <p> {{ __('Giang Tuấn Transportation Co.,Ltd') }}</p>
-                        <p>M&#227; {{__('Tax Code')}}: 0200383487</p>
+                        <p> {{__('Tax Code')}}: 0200383487</p>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-12">
