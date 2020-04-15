@@ -66,7 +66,7 @@
     "I agreed with the terms and policies for using service": "Tôi đồng ý với các điều khoản sử dụng dịch vụ",
     "Operation Center Department, Giang Tuan Transport Co.,Ltd, No 5, Pham Ngu Lao, Ngo Quyen Distric, Hai Phong, VietNam.": "Phòng Điều hành trung tâm, Công ty TNHH vận tải Giang Tuấn, Số 21 Ngõ 41 Đông Tác Đống Đa Hà Nội",
     "Payment method": "Hình thức thanh toán",
-    "Expected customers will board the car in :place at :time": "Dự kiến khách hàng sẽ lên xe tại :place lúc :time",
+    "Expected customers will board the car at": "Dự kiến khách hàng sẽ lên xe lúc",
     "Total price": "Tổng tiền",
     "Booking confirmation": "Xác nhận đặt vé",
     "Verification code": "Mã xác nhận",
@@ -78,5 +78,10 @@
     "We have sent you an email to your email address": "Chúng tôi đã gửi cho bạn một email vào địa chỉ",
     "Please check your email for the ticket code, payment instructions and ticket receipt": "Xin vui lòng kiểm tra email để được mã code vé, hướng dẫn thủ tục thanh toán và lấy vé.",
     "This ticket has been sold out": "Hết vé",
-    "This trip does not have enough number of tickets required, please choose another trip": "Chuyến xe này không đủ số lượng vé yêu cầu, quý khách vui lòng chọn chuyến xe khác"
+    "This trip does not have enough number of tickets required, please choose another trip": "Chuyến xe này không đủ số lượng vé yêu cầu, quý khách vui lòng chọn chuyến xe khác",
+    "Ticket code": "Mã đặt vé",
+    "Hello": "Xin chào",
+    "Booking ticket successfully!": "Đặt vé thành công",
+    "Route": "Tuyến",
+    "Trip": "Chuyến"
 }

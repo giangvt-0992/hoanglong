@@ -1,21 +1,21 @@
-<div id=":1kz" class="a3s aXjCH ">Xin chao ban Hoang Van Nam<br>
+<div id=":1kz" class="a3s aXjCH ">{{__('Hello')}} {{$data['passengerName']}}<br>
     <br>
-    Cong ty TNHH Van tai Hoang Long cam on ban da su dung dich vu dat ve truc tuyen qua mang Internet tu website <a href="http://hoanglongasia.com" target="_blank">http://hoanglongasia.com</a><br>
+    Cong ty TNHH Van tai Giang Tuan cam on ban da su dung dich vu dat ve truc tuyen qua mang Internet tu website <a href="http://hoanglongasia.com" target="_blank">http://hoanglongasia.com</a><br>
     <br>
     Day la thong tin ve dat truoc cua ban:<br>
-    Ho va ten khach hang: Hoang Van Nam<br>
-    Dien thoại: 0398669765<br>
-    Email: <a href="mailto:giangtuan6199@gmail.com" target="_blank">giangtuan6199@gmail.com</a><br>
-    Dia chi: 68 cau giay<br>
+    {{__('Fullname')}}: {{$data['passengerName']}}<br>
+    {{__('Phone')}}: {{$data['passengerPhone']}}<br>
+    {{__('Email')}}: <a href="mailto:{{$data['passengerEmail']}}" target="_blank">{{$data['passengerEmail']}}</a><br>
+    {{__('Address')}}: {{$data['passengerAddress']}}<br>
     
-    Ma so dat ve: <strong>JS2LLZ,QH1O5H</strong><br>
-    Du kien khach hang se len xe tai Ha Noi luc: 07:00 30-04-2020 <br>
-    Diem di: Ha Noi (So 1 Ngoc Hoi - BX Nuoc Ngam - HN)<br>
-    Diem den: Ho Chi Minh<br>
-    Chuyen: HL0004 - 07:00 Ha Noi - Ho Chi Minh - khoi hanh ngay: 30-04-2020 <br>
-    So luong nguoi di : 2 <br>
-    Gia ve: 720.000 VNĐ (Khong an)<br>
-    Tong tien : <strong>1.440.000 VNĐ (Khong an)</strong><br>
+    {{__('Ticket code')}}: <strong>{{$data['ticketCode']}}</strong><br>
+    {{__('Expected customers will board the car at')}}: {{$data['departTime']}} {{$data['date']}} <br>
+    {{__('Departure')}}: {{$data['depProvinceName']}} (So 1 Ngoc Hoi - BX Nuoc Ngam - HN)<br>
+    {{__('Destination')}}: {{$data['desProvinceName']}}<br>
+    {{__('Route')}}: {{$data['routeName']}} - khoi hanh ngay: {{$data['date']}} <br>
+    {{__('Quantity')}} : {{$data['quantity']}} <br>
+    {{__('Ticket price')}}: {{$data['price']}}<br>
+    {{__('Total price')}} : <strong>{{number_format($data['quantity'] * $data['price'])}}</strong><br>
     <br>
     <strong style="color:red">TINH TRANG VE: CHUA THANH TOAN</strong><br>
     <strong style="color:red">(Quy khach vui long lien lac voi chung toi qua so 0225 3920920, đe xac nhan lai thong tin dat ve sau khi thanh toan chuyen khoan thanh cong.)</strong><br>

@@ -4,6 +4,10 @@ $quantity = Request::get('quantity') ?? 0;
 $destinationId = Request::get('destination_id') ?? -1;
 $date = Request::get('depart_date') ?? $nextdate;
 $user = auth('web')->user();
+$depProvince = $provinces->where('id', $departureId)->first();
+$desProvince = $provinces->where('id', $destinationId)->first();
+$depProvinceName = $depProvince != null ? $depProvince->name : '';
+$desProvinceName = $desProvince != null ? $desProvince->name : '';
 ?>
 <div class="step1 bookinghcm ">
     <div class="row">
@@ -113,7 +117,7 @@ $user = auth('web')->user();
                                     <td class="hidden-xs hidden-sm">{{$route->carType}}</td>
                                     <td>{{number_format($route->price)}}</td>
                                     <td>
-                                        <a class="btn buttonTransparent btnSetVehicleId" data-brand-id="{{$route->brandId}}" data-brand-name="{{$route->brandName}}" data-tdd-id="{{$route->tripDepartDateId}}" data-depart-id="{{$route->departId}}" data-depart-name="{{$route->departName}}" data-des-id="{{$route->desId}}" data-des-name="{{$route->desName}}" data-depart-time="{{$route->departTime}}" data-date="{{$date}}" data-price="{{$route->price}}" data-datecheck="{{$date}}" data-quantity="{{$quantity}}"  data-route-name="{{$route->routeName}}" data-des-time="{{$route->arriveTime}}">{{ __('book') }}</a>
+                                    <a class="btn buttonTransparent btnSetVehicleId" data-brand-id="{{$route->brandId}}" data-brand-name="{{$route->brandName}}" data-tdd-id="{{$route->tripDepartDateId}}" data-depart-id="{{$route->departId}}" data-depart-name="{{$route->departName}}" data-des-id="{{$route->desId}}" data-des-name="{{$route->desName}}" data-depart-time="{{$route->departTime}}" data-date="{{$date}}" data-price="{{$route->price}}" data-datecheck="{{$date}}" data-quantity="{{$quantity}}"  data-route-name="{{$route->routeName}}" data-des-time="{{$route->arriveTime}}" data-dep-province-name="{{$depProvinceName}}" data-des-province-name="{{$desProvinceName}}">{{ __('book') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach
