@@ -9,8 +9,11 @@ use App\Contracts\Repositories\TripDepartDateRepository;
 use App\Contracts\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMailJob;
+use App\Mail\SendMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
@@ -75,15 +78,10 @@ class BookingController extends Controller
         return $routes;
     }
 
-    public function sendMail()
-    {
-        return view('web.booking.mail');
-    }
-
     public function bookRoute(Request $request)
     {
         // $formData = $request->formData;
-        $formData = "passengerName=a&passengerPhone=a&passengerEmail=giang%40gmail.com&passengerAddress=a&price=0&quantity=1&date=15-04-2020&paymenttype=1&tddId=7267&brandId=5&departName=Jerrell+Row&departTime=03%3A43%3A00&desName=Langosh+Points&desTime=06%3A25%3A00&routeName=Lorenzo+Hand+DVM";
+        $formData = "passengerName=giang&passengerPhone=039867&passengerEmail=a%40gmial.com&passengerAddress=a&price=0&quantity=1&date=16-04-2020&paymenttype=1&tddId=7268&brandId=5&departName=Jerrell+Row&departTime=03%3A43%3A00&desName=Langosh+Points&desTime=06%3A25%3A00&routeName=Lorenzo+Hand+DVM&depProvinceName=Tr%C3%A0+Vinh&desProvinceName=S%C3%B3c+Tr%C4%83ng";
         $ticketData = [];
         parse_str($formData, $ticketData);
             
@@ -118,7 +116,8 @@ class BookingController extends Controller
         }
         $ticketData['ticketCode'] = $ticket->code;
         $view = view('web.booking.step4', ['ticketData' => $ticketData])->render();
-            
+        SendMailJob::dispatch($ticketData);
+
         return response()->json([
                 'status' => "success",
                 'data' => [

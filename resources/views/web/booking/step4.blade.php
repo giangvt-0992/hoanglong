@@ -9,7 +9,7 @@
             <table class="table table-bordered">
                 <tbody><tr>
                     <td>
-                        Mã đặt vé
+                        {{ __('Ticket code') }}
                     </td>
                     <td>
                         <span class="bold">{{$ticketData['ticketCode']}}</span>
@@ -49,10 +49,18 @@
                 </tr>
                 <tr>
                     <td>
-                        {{ __('Departure')}} - {{ __('Destination')}}
+                        {{ __('Departure')}}
                     </td>
                     <td>
-                        {{$ticketData['departName'] .' - '. $ticketData['desName']}}
+                        {{$ticketData['depProvinceName'] .' - ( '. $ticketData['departName'] . ' )'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ __('Destination')}}
+                    </td>
+                    <td>
+                        {{$ticketData['desProvinceName'] .' - ( '. $ticketData['desName'] . ' )'}}
                     </td>
                 </tr>
                 <tr>

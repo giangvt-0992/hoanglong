@@ -32,6 +32,6 @@ class SendMail extends Mailable
     {
         $viewName = $this->data['viewName'];
         $subject = $this->data['subject'];
-        return $this->from('datxekhach@gmail.com')->subject($subject)->view($viewName)->with('data', $this->data);
+        return $this->from('giangtuan6199@gmail.com')->subject($subject)->view($viewName)->with('data', $this->data);
     }
 }

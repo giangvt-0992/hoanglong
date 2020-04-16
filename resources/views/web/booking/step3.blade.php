@@ -35,20 +35,32 @@
                     </tr>
                     <tr>
                         <td>
-                            {{ __('Departure')}} - {{ __('Destination')}}
+                            {{ __('Brand')}}
                         </td>
-                        <td id="departToDesTbl"></td>
+                        <td id="brandNameTbl"></td>
                     </tr>
                     <tr>
                         <td>
-                            {{ __('Rotue')}}
+                            {{ __('Departure')}}
+                        </td>
+                        <td id="departProvinceTbl"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ __('Destination')}}
+                        </td>
+                        <td id="desProvinceTbl"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ __('Route')}}
                         </td>
                         <td id="routeNameTbl">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            {{__('Expected customers will board the car in :place at :time')}}
+                            {{__('Expected customers will board the car at')}}
                         </td>
                         <td id="dateTbl">
                             <span class="bold"></span>
@@ -64,7 +76,7 @@
                     </tr>
                     <tr>
                         <td>
-                            {{__('Ticket prices')}}
+                            {{__('Ticket price')}}
                         </td>
                         <td >
                             <span class="bold" id="priceTbl"></span>
@@ -122,6 +134,8 @@
                 <input type="hidden" name="desName" id="desNameHd">
                 <input type="hidden" name="desTime" id="desTimeHd">
                 <input type="hidden" name="routeName" id="routeNameHd">
+                <input type="hidden" name="depProvinceName" id="depProvinceNameHd">
+                <input type="hidden" name="desProvinceName" id="desProvinceNameHd">
                 <div class="listseat ">
                     <div class="row">
                         <div class="col-sm-2 col-xs-12"></div>

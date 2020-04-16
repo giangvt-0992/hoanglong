@@ -37,5 +37,5 @@ Route::group([
     Route::get('/logout', 'AuthController@logout')->name('logout');
     
     // Route::get('/book-route', 'BookingController@bookRoute')->name('booking-route');
-    Route::get('/test', 'HomeController@test');
+    Route::get('/test', 'BookingController@bookRoute');
 });
