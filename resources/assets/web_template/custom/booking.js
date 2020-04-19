@@ -1,3 +1,4 @@
+// var errors = data.responseJSON.errors;
 var bill, user_info, code, data_email;
 let culture;
 $(".btnGoToStep").unbind('click');
@@ -53,7 +54,9 @@ $(".btnSetVehicleId").click(function () {
         price: $(this).attr('data-price'),
         dateCheck: $(this).attr('data-datecheck'),
         quantity: $(this).attr('data-quantity'),
-        routeName: $(this).attr('data-route-name')
+        routeName: $(this).attr('data-route-name'),
+        depProvinceName: $(this).attr('data-dep-province-name'),
+        desProvinceName: $(this).attr('data-des-province-name'),
     }
     gotostep(2);
 });
@@ -225,19 +228,27 @@ $("#confirm-button").click(function (e) {
     $("#desNameHd").val(bill.desName);
     $("#desTimeHd").val(bill.desTime);
     $("#routeNameHd").val(bill.routeName);
+    $("#depProvinceNameHd").val(bill.depProvinceName);
+    $("#desProvinceNameHd").val(bill.desProvinceName);
 
     $("#passengerNameTbl").text(bill.passengerName);
     $("#passengerPhoneTbl").text(bill.passengerPhone);
     $("#passengerEmailTbl").text(bill.passengerEmail);
     $("#passengerAddressTbl").text(bill.passengerAddress);
-    $("#departToDesTbl").text(bill.departName + "-" + bill.desName);
+    $("#departProvinceTbl").text(bill.depProvinceName + " - ( " + bill.departName + " )");
+    $("#desProvinceTbl").text(bill.desProvinceName + " - ( " + bill.desName + " )");
     $("#priceTbl").text(formatNumber(bill.price));
     $("#quantityTbl").text(formatNumber(bill.quantity));
     $("#totalTbl").text(formatNumber(bill.price * bill.quantity));
     $("#routeNameTbl").text(bill.routeName);
     $("#dateTbl").text(bill.departTime + ' ' + bill.date);
+    $("#brandNameTbl").text(bill.brandName);
     if (bill.paymenttype == 1) {
-        $("#paymenttypeTbl").text("giao dịch trực tiếp");
+        let text = "Giao dịch trực tiếp";
+        if (culture == "en") {
+            text = "Direct payment";
+        }
+        $("#paymenttypeTbl").text(text);
     }
     createCaptcha();
     gotostep(3);
@@ -286,7 +297,7 @@ $(".btnConfirmTicket").click(function () {
     if (confirmCodeText === code) {
         $("#notecaptcha").hide();
         const form = $('#form_step3');
-
+        $('#pageLoading').addClass('show');
         $.ajax({
             type: 'POST',
             url: form.attr('action'),
@@ -296,9 +307,12 @@ $(".btnConfirmTicket").click(function () {
             success: function (data) {
                 if (data.status === "success") {
                     $("#step4render").append(data.data.view);
+                    $('#pageLoading').removeClass('show');
                     gotostep(4);
+                    Alert.Success(data.message);
                 } else {
-                    console.log(data.message);
+                    Alert.Error(data.message);
+                    $('#pageLoading').removeClass('show');
                 }
             },
             error: function (data, textStatus, errorThrown) {
