@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin';
     public function showLoginForm()
     {
         if (auth('admin')->check()) {

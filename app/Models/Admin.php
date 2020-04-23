@@ -25,8 +25,20 @@ class Admin extends Authenticatable
         return $this->hasMany(Image::class);
     }
 
-    public function isAdmin()
+    public function isSuperAdmin()
     {
-        return $this->role_id === 'config.admin';
+        return $this->role->slug === 'super-admin';
+    }
+
+    public function hasAccess($permissions) : bool
+    {
+        // check if the permission is available in any role
+        $role = $this->role;
+        foreach ($role->permissions as $permission) {
+            if ($permission->slug == $permissions) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagesTable extends Migration
+class AddColumnsBrandIdAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('url');
-            $table->string('title')->nullable();
-            $table->bigInteger('admin_id');
-            $table->timestamps();
+        Schema::table('admins', function (Blueprint $table) {
+            $table->bigInteger('brand_id')->default(0);
         });
     }
 
@@ -29,6 +25,10 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        if (Schema::hasColumn('admins', 'brand_id')) {
+            Schema::table('admins', function (Blueprint $table) {
+                $table->dropColumn('brand_id');
+            });
+        }
     }
 }

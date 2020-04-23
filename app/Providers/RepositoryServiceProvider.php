@@ -12,6 +12,8 @@ class RepositoryServiceProvider extends ServiceProvider
         'User',
         'Ticket',
         'TripDepartDate',
+        'Brand',
+        'Image'
     ];
     /**
      * Register services.

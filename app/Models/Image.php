@@ -10,7 +10,8 @@ class Image extends Model
 
     protected $fillable = [
         'url',
-        'admin_id'
+        'admin_id',
+        'title'
     ];
 
     public function admin()

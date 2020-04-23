@@ -6,5 +6,9 @@ return [
         'STEP2' => 2,
         'STEP3' => 3,
         'STEP4' => 4,
+    ],
+    'IS_ACTIVE_STATUS' => [
+        'ACTIVE' => true,
+        'DEACTIVE' => false
     ]
-    ];
+];
