@@ -8,10 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Brand::class, function (Faker $faker) {
     $phone = [
-        [
-            'key' => 'phone',
-            'value' =>  $faker->tollFreePhoneNumber
-        ]
+         $faker->tollFreePhoneNumber
     ];
     $a = json_encode($phone);
     return [
@@ -19,6 +16,5 @@ $factory->define(Brand::class, function (Faker $faker) {
         'description' => $faker->text,
         'phone' => $a,
         'image' => config('picture.default_image'),
-        'admin_id' => 1
     ];
 });

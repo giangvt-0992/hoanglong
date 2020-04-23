@@ -18,10 +18,10 @@ class CreateBrandsTable extends Migration
             $table->string('name', 100);
             $table->text('description')->nullable();
             $table->json('phone');
-            $table->json('notice')->nullable();
+            $table->string('notice')->nullable();
             $table->json('bank')->nullable();
             $table->string('image');
-            $table->bigInteger('admin_id');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

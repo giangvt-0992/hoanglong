@@ -5,6 +5,7 @@
 /public/web_template
 /storage/*.key
 /vendor
+public/images/*
 .env.backup
 .phpunit.result.cache
 Homestead.json

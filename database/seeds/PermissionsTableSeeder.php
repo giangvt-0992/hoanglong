@@ -19,10 +19,10 @@ class PermissionsTableSeeder extends Seeder
         $superadmin = Role::whereSlug('super-admin')->first();
 
         $arrayPermission = [];
-        foreach ($permissions as $key => $value) {
+        foreach ($permissions as $p) {
             $permission = [
-                'name' => $key,
-                'slug' => $value,
+                'name' => $p['title'],
+                'slug' => $p['slug'],
             ];
             $arrayPermission[] = $permission;
         }

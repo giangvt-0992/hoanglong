@@ -26,7 +26,7 @@ class AddPriceColumnTicketsTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('tickets', ['unit_price', 'code'])) {
+        if (Schema::hasColumn('tickets', 'unit_price') && Schema::hasColumn('tickets', 'code')) {
             Schema::table('tickets', function (Blueprint $table) {
                 $table->dropColumn('unit_price');
                 $table->dropColumn('code');

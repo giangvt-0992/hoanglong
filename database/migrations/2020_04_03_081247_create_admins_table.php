@@ -20,6 +20,7 @@ class CreateAdminsTable extends Migration
             $table->string('password', 120);
             $table->bigInteger('parent_id');
             $table->bigInteger('role_id');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
