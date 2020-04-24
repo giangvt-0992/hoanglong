@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 120);
             $table->string('slug', 120)->unique();
+            $table->bigInteger('admin_id')->default(1);
             $table->timestamps();
         });
     }

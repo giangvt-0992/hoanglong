@@ -28,5 +28,23 @@ Route::group([
             Route::get('/{brand}/active', 'BrandController@active')->name('active');
             Route::get('/{id}/images', 'BrandController@images')->name('images');
         });
+
+        Route::group([
+            'as' => 'user.',
+            'prefix' => 'users'
+        ], function () {
+            Route::get('/', 'AdminController@index')->name('index');
+        });
+
+        Route::group([
+            'as' => 'role.',
+            'prefix' => 'roles'
+        ], function () {
+            Route::get('/create', 'RoleController@create')->name('create');
+            Route::post('/', 'RoleController@store')->name('store');
+            Route::get('/{role}/edit', 'RoleController@edit')->name('update');
+            Route::post('/{role}/edit', 'RoleController@update');
+            Route::get('/{role}/destroy', 'RoleController@destroy')->name('destroy');
+        });
     });
 });

@@ -14,6 +14,8 @@
     <link href="{{url('admin_template/css/font-awesome.min.css')}}" rel="stylesheet">
     <!-- NProgress -->
     <link href="{{url('admin_template/css/nprogress.css')}}" rel="stylesheet">
+    <link href="{{url('admin_template/vendors/iCheck/skins/flat/blue.css')}}" rel="stylesheet">
+
     <!-- jQuery custom content scroller -->
     <link href="{{url('admin_template/css/jquery.mCustomScrollbar.min.css')}}" rel="stylesheet"/>
 
@@ -59,11 +61,12 @@
     <script src="{{url('admin_template/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
     <script src="{{url('admin_template/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{url('admin_template/js/dataTables.bootstrap.min.js')}}"></script>
+    
     <script src="{{url('admin_template/vendors/dropzone/dist/min/dropzone.min.js')}}"></script>
     <script src="{{url('admin_template/js/sweetalert2@9.js')}}"></script>
-
     <script src="{{url('admin_template/vendors/pnotify/dist/pnotify.js')}}"></script>
     <script src="{{url('admin_template/vendors/pnotify/dist/pnotify.buttons.js')}}"></script>
+    <script src="{{url('admin_template/vendors/iCheck/icheck.min.js')}}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{url('admin_template/js/custom.min.js')}}"></script>
     <script src="{{url('admin_template/js/dropzone-config.js')}}"></script>
