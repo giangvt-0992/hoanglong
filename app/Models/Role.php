@@ -10,7 +10,8 @@ class Role extends Model
 
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'admin_id',
     ];
 
     public function admins()
@@ -21,5 +22,10 @@ class Role extends Model
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
+    }
+
+    public function admin()
+    {
+        return $this->belongTo(Admin::class);
     }
 }

@@ -26,9 +26,11 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li>
+                        <a href="{{route('admin.user.index')}}"><i class="fa fa-users"></i> Nguời dùng và phân quyền </a>
+                    </li>
+                    <li>
                         <a href="{{route('admin.brand.index')}}"><i class="fa fa-bus"></i> Nhà xe </a>
                     </li>
-                   
                 </ul>
             </div>
             {{-- <div class="menu_section">

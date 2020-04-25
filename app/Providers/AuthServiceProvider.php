@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Policies\BrandPolicy;
+use App\Policies\RolePolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -27,5 +28,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::resource('brand', BrandPolicy::class);
+        Gate::resource('role', RolePolicy::class);
     }
 }
