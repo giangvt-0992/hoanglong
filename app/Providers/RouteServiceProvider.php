@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
 use App\Models\Brand;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
@@ -32,9 +33,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('brand', function ($value) {
             return Brand::findOrFail($value);
         });
-
         Route::bind('role', function ($value) {
             return Role::findOrFail($value);
+        });
+
+        Route::bind('admin', function ($value) {
+            return Admin::findOrFail($value);
         });
     }
 

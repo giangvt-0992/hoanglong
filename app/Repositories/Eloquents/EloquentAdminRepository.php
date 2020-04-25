@@ -17,7 +17,8 @@ class EloquentAdminRepository extends EloquentBaseRepository implements AdminRep
 
     public function all()
     {
-        return $this->model->orderBy('created_at', 'DESC')->get();
+        $admin = auth('admin')->user();
+        return $this->model->where('parent_id', $admin->id)->with(['brand:id,name','role:id,name'])->orderBy('created_at', 'DESC')->get();
     }
     
     public function paginate($items = null)

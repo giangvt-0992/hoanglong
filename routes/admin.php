@@ -29,11 +29,17 @@ Route::group([
             Route::get('/{id}/images', 'BrandController@images')->name('images');
         });
 
+
         Route::group([
             'as' => 'user.',
             'prefix' => 'users'
         ], function () {
             Route::get('/', 'AdminController@index')->name('index');
+            Route::get('/create', 'AdminController@create')->name('create');
+            Route::post('/', 'AdminController@store')->name('store');
+            // Route::get('/{admin}/edit', 'AdminController@edit')->name('update');
+            // Route::post('/{admin}/edit', 'AdminController@update');
+            Route::get('/{admin}/destroy', 'AdminController@destroy')->name('destroy');
         });
 
         Route::group([

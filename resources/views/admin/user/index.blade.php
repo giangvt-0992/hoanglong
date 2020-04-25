@@ -25,15 +25,11 @@
             </ul>
             <div id="myTabContent" class="tab-content">
               <div role="tabpanel" class="tab-pane fade @if ($tab === 'user') active in @endif" id="tab_content1" aria-labelledby="home-tab">
-                <div class="x_title">
-                  <h2><i class="fa fa-bars"></i> Danh sách người dùng</h2>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <a href="" class="btn btn-success"><i class="fa fa-plus"></i> Thêm</a>
-                  <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher
-                    synth. Cosby sweater eu banh mi, qui irure terr.</p>
-                </div>
+                @include('admin.user._user', [
+                  'users' => $users,
+                  'roles' => $roles,
+                  'permissions' => $permissions
+                ])
               </div>
               <div role="tabpanel" class="tab-pane fade @if ($tab === 'role') active in @endif" id="tab_content2" aria-labelledby="profile-tab">
                   @include('admin.role.index', [

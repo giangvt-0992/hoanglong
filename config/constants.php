@@ -10,5 +10,6 @@ return [
     'IS_ACTIVE_STATUS' => [
         'ACTIVE' => true,
         'DEACTIVE' => false
-    ]
+    ],
+    'SUPER_ADMIN' => 'super-admin'
 ];
