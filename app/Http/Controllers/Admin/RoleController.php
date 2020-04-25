@@ -65,6 +65,11 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $this->authorize('role.delete', $role);
+        $checkAdmins = $role->admins()->count();
+        if ($checkAdmins > 0) {
+            return redirect()->route('admin.user.index', ['tab' => 'role'])->with('error', 'Xóa thất bại! Quyền này đã được gán cho người dùng');
+        }
+
         $role->permissions()->detach();
         $role->delete();
         return redirect()->route('admin.user.index', ['tab' => 'role'])->with('success', 'Xóa quyền thành công');

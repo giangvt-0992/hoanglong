@@ -17,9 +17,9 @@ class Brand extends Model
         'image'
     ];
 
-    public function admin()
+    public function admins()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->hasMany(Admin::class);
     }
 
     public function images()

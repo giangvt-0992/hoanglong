@@ -9,6 +9,15 @@ class Admin extends Authenticatable
 {
     protected $table = "admins";
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'brand_id',
+        'role_id',
+        'parent_id',
+    ];
+
     public function role()
     {
         //
@@ -17,7 +26,7 @@ class Admin extends Authenticatable
 
     public function brand()
     {
-        return $this->hasOne(Brand::class);
+        return $this->belongsTo(Brand::class);
     }
 
     public function images()

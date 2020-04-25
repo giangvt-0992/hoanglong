@@ -4,7 +4,7 @@
 	<div class="">
 		<div class="page-title">
 			<div class="title_left">
-				<p>Home / Nhà xe / Thêm quyền</p>
+				<p>Home / Người dùng và phần quyền / Thêm quyền</p>
 			</div>
 		</div>
 		<div class="clearfix"></div>

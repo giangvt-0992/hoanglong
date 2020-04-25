@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\AdminPolicy;
 use App\Policies\BrandPolicy;
 use App\Policies\RolePolicy;
 use Illuminate\Support\Facades\Gate;
@@ -29,5 +30,6 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::resource('brand', BrandPolicy::class);
         Gate::resource('role', RolePolicy::class);
+        Gate::resource('admin', AdminPolicy::class);
     }
 }

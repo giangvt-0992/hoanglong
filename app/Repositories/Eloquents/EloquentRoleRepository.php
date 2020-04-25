@@ -17,7 +17,10 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
 
     public function all()
     {
-        return $this->model->orderBy('id', 'DESC')->get();
+        return $this->model->where([
+            ['slug', '!=', config('constants.SUPER_ADMIN')],
+            ['admin_id', '=', auth('admin')->user()->id]
+            ])->orderBy('id', 'DESC')->get();
     }
     
     public function paginate($items = null)
