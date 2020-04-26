@@ -222,7 +222,7 @@ class BrandController extends Controller
     public function active(Brand $brand)
     {
         $this->authorize('brand.delete', $brand);
-        $brand->is_active = true;
+        $brand->is_active = config('constants.IS_ACTIVE_STATUS.ACTIVE');
         $brand->save();
         Admin::where([
             ['brand_id', $brand->id],

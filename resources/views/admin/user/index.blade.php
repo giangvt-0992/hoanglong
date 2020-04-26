@@ -26,7 +26,7 @@
             <div id="myTabContent" class="tab-content">
               <div role="tabpanel" class="tab-pane fade @if ($tab === 'user') active in @endif" id="tab_content1" aria-labelledby="home-tab">
                 @include('admin.user._user', [
-                  'users' => $users,
+                  'admins' => $admins,
                   'roles' => $roles,
                   'permissions' => $permissions
                 ])

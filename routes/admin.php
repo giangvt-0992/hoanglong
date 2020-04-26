@@ -40,6 +40,8 @@ Route::group([
             // Route::get('/{admin}/edit', 'AdminController@edit')->name('update');
             // Route::post('/{admin}/edit', 'AdminController@update');
             Route::get('/{admin}/destroy', 'AdminController@destroy')->name('destroy');
+            Route::get('/{admin}/active', 'AdminController@active')->name('active');
+            Route::get('/{admin}/deactivate', 'AdminController@deactivate')->name('deactivate');
         });
 
         Route::group([
