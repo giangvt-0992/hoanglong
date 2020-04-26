@@ -93,4 +93,22 @@ class AdminController extends Controller
         $admin->delete();
         return redirect()->route('admin.user.index', ['tab' => 'user'])->with('success', 'Xóa người dùng thành công');
     }
+
+    public function active(Admin $admin)
+    {
+        $this->authorize('admin.delete', $admin);
+        $admin->is_active = config('constants.IS_ACTIVE_STATUS.ACTIVE');
+        $admin->save();
+
+        return redirect()->route('admin.user.index', ['tab' => 'user'])->with('success', 'Kích hoạt người dùng thành công');
+    }
+
+    public function deactivate(Admin $admin)
+    {
+        $this->authorize('admin.delete', $admin);
+        $admin->is_active = config('constants.IS_ACTIVE_STATUS.DEACTIVATE');;
+        $admin->save();
+
+        return redirect()->route('admin.user.index', ['tab' => 'user'])->with('success', 'Ngưng kích hoạt người dùng thành công');
+    }
 }
