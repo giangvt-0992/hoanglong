@@ -25,7 +25,13 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
 
     public function all()
     {
-        return $this->model->with('images')->orderBy('index', 'ASC')->get();
+        return $this->model->with('departPlace:id,name', 'desPlace:id,name')->get();
+    }
+
+    public function allByAdmin()
+    {
+        $admin = getAuthAdmin();
+        return $this->model->whereBrandId($admin->brand_id)->with('departPlace:id,name', 'desPlace:id,name')->get();
     }
     
     public function paginate($items = null)
@@ -92,5 +98,17 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
             ])
         ->get();
         return $routes;
+    }
+
+    public function checkRouteExist($departPlaceId, $desPlaceId)
+    {
+        $count = $this->model->where([
+            ['depart_place_id', $departPlaceId],
+            ['des_place_id', $desPlaceId],
+        ])->count();
+        if ($count > 0) {
+            return true;
+        }
+        return false;
     }
 }

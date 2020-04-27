@@ -4,7 +4,7 @@
 	<div class="">
 		<div class="page-title">
 			<div class="title_left">
-				<p>Home / Người dùng và phân quyền / Sửa quyền</p>
+				<p>Home / Người dùng và phân quyền / Cập nhật quyền</p>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -12,7 +12,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Sửa quyền</h2>
+						<h2>Cập nhật quyền</h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
@@ -48,8 +48,8 @@
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    <button type="submit" class="btn btn-success">Cập nhật</button>
                     <button class="btn btn-primary btn-cancel" type="button" data-next-route="{{route('admin.user.index', ['tab' => 'role'])}}" >Hủy</button>
-                    <button type="submit" class="btn btn-success">Sửa</button>
                   </div>
                 </div>
               </form>

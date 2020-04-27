@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Brand;
 use App\Models\Place;
 use App\Models\Role;
+use App\Models\Route as ModelsRoute;
 use App\Models\Trip;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -46,6 +47,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('trip', function ($value) {
             return Trip::findOrFail($value);
+        });
+        Route::bind('route', function ($value) {
+            return ModelsRoute::findOrFail($value);
         });
     }
 

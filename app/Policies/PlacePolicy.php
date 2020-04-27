@@ -18,7 +18,7 @@ class PlacePolicy
      */
     public function viewAny(Admin $admin)
     {
-        //
+        return $admin->hasAccess(config('permissions.view_place.slug'));
     }
 
     /**

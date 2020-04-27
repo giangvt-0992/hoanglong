@@ -50,7 +50,7 @@
 									<td>{{$brand->is_active == true ? 'Kích hoạt' : 'Ngưng kích hoạt'}}</td>
 									{{-- <td>{{$brand->phone}}</td> --}}
 									<td>
-										<a class="btn btn-primary" href="{{route('admin.brand.update', ['brand' => $brand->id])}}"><i class="fa fa-pencil" title="Sửa"></i></a>
+										<a class="btn btn-primary" href="{{route('admin.brand.update', ['brand' => $brand->id])}}"><i class="fa fa-pencil" title="Cập nhật"></i></a>
 										@if ($brand->is_active == config('constants.IS_ACTIVE_STATUS.ACTIVE'))
 										<a class="btn btn-danger btn-deactivate" href="{{route('admin.brand.destroy', ['brand' => $brand->id])}}" title="Ngưng kích hoạt" data-page="brand" ><i class="fa fa-trash"></i></a>
 										@else 

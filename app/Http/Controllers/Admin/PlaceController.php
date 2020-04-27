@@ -28,6 +28,8 @@ class PlaceController extends Controller
 
     public function index()
     {
+        $this->authorize('place.viewAny');
+        
         $admin = getAuthAdmin();
         $places = $admin->brand->places()->with('district', 'district.province')->get();
         return view('admin.place.index', [
@@ -85,9 +87,9 @@ class PlaceController extends Controller
             $place->district_id = $request->districtId;
             $place->description = $request->description;
             $place->save();
-            return redirect()->route('admin.place.index')->with('success', 'Sửa địa điểm thành công');
+            return redirect()->route('admin.place.index')->with('success', 'Cập nhật địa điểm thành công');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Sửa địa điểm thất bại')->withInput();
+            return redirect()->back()->with('error', 'Cập nhật địa điểm thất bại')->withInput();
         }
     }
 
@@ -110,7 +112,7 @@ class PlaceController extends Controller
         //     $place->save();
             return redirect()->route('admin.place.index')->with('success', 'Xóa địa điểm thành công');
         // } catch (\Exception $e) {
-        //     return redirect()->back()->with('error', 'Sửa địa điểm thất bại')->withInput();
+        //     return redirect()->back()->with('error', 'Cập nhật địa điểm thất bại')->withInput();
         // }
     }
 }

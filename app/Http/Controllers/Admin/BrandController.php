@@ -29,6 +29,8 @@ class BrandController extends Controller
      */
     public function index()
     {
+        $this->authorize('brand.viewAny');
+        
         $admin = auth('admin')->user();
         if ($admin->isSuperAdmin()) {
             $brands = $this->brandRepository->all();
@@ -165,7 +167,7 @@ class BrandController extends Controller
             return redirect()->back()->with('error', 'Thêm nhà xe không thành công')->withInput();
         }
 
-        return redirect()->route('admin.brand.index')->with('success', 'Sửa nhà xe thành công');
+        return redirect()->route('admin.brand.index')->with('success', 'Cập nhật nhà xe thành công');
     }
 
     /**

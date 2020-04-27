@@ -24,7 +24,7 @@ class AdminPolicy
      */
     public function viewAny(Admin $admin)
     {
-        // if ($admin->hasAccess(''))
+        return $admin->hasAccess(config('permissions.view_admin.slug'));
     }
 
     /**

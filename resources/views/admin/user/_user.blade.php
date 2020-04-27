@@ -19,7 +19,7 @@
     <tbody>
       @foreach ($admins as $admin)
       <tr>
-        <td>{{$loop->index}}</td>
+        <td>{{$loop->iteration}}</td>
         <td>{{$admin->name}}</td>
         <td>{{$admin->email}}</td>
         <td>{{$admin->role->name}}</td>

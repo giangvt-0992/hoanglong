@@ -12,6 +12,10 @@ return [
         'title' => 'Xóa người dùng',
         'slug' => 'xoa-nguoi-dung'
     ],
+    'view_admin' => [
+        'title' => 'Xem người dùng',
+        'slug' => 'xem-nguoi-dung'
+    ],
     'create_brand' => [
         'title' => 'Thêm hãng xe',
         'slug' => 'them-hang-xe'
@@ -23,6 +27,10 @@ return [
     'delete_brand' => [
         'title' => 'Xóa hãng xe',
         'slug' => 'xoa-hang-xe'
+    ],
+    'view_brand' => [
+        'title' => 'Xem hãng xe',
+        'slug' => 'xem-hang-xe'
     ],
     'create_office' => [
         'title' => 'Thêm văn phòng',
@@ -36,6 +44,10 @@ return [
         'title' => 'Xóa văn phòng',
         'slug' => 'xoa-van-phong'
     ],
+    'view_office' => [
+        'title' => 'Xem văn phòng',
+        'slug' => 'xem-van-phong'
+    ],
     'create_place' => [
         'title' => 'Thêm địa điểm',
         'slug' => 'them-dia-diem'
@@ -47,6 +59,10 @@ return [
     'delete_place' => [
         'title' => 'Xóa địa điểm',
         'slug' => 'xoa-dia-diem'
+    ],
+    'view_place' => [
+        'title' => 'Xem địa điểm',
+        'slug' => 'xem-dia-diem'
     ],
     'create_route' => [
         'title' => 'Thêm tuyến đường',
@@ -60,6 +76,10 @@ return [
         'title' => 'Xóa tuyến đường',
         'slug' => 'xoa-tuyen-duong'
     ],
+    'view_route' => [
+        'title' => 'Xem tuyến đường',
+        'slug' => 'xem-tuyen-duong'
+    ],
     'create_trip' => [
         'title' => 'Thêm chuyến',
         'slug' => 'them-chuyen'
@@ -71,6 +91,10 @@ return [
     'delete_trip' => [
         'title' => 'Xóa chuyến',
         'slug' => 'xoa-chuyen'
+    ],
+    'view_trip' => [
+        'title' => 'Xem chuyến',
+        'slug' => 'xem-chuyen'
     ],
     'create_trip_depart_date' => [
         'title' => 'Thêm lịch chạy',
@@ -84,6 +108,10 @@ return [
         'title' => 'Xóa lịch chạy',
         'slug' => 'xoa-lich-chay'
     ],
+    'view_trip_depart_date' => [
+        'title' => 'Xem lịch chạy',
+        'slug' => 'xem-lich-chay'
+    ],
     'create_ticket' => [
         'title' => 'Thêm vé',
         'slug' => 'them-ve'
@@ -96,6 +124,10 @@ return [
         'title' => 'Xóa vé',
         'slug' => 'xoa-ve'
     ],
+    'view_ticket' => [
+        'title' => 'Xem vé',
+        'slug' => 'xem-ve'
+    ],
     'create_role' => [
         'title' => 'Thêm quyền',
         'slug' => 'them-quyen'
@@ -107,5 +139,9 @@ return [
     'delete_role' => [
         'title' => 'Xóa quyền',
         'slug' => 'xoa-quyen'
+    ],
+    'view_role' => [
+        'title' => 'Xem quyền',
+        'slug' => 'xem-quyen'
     ]
 ];

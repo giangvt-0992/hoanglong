@@ -24,7 +24,7 @@ class BrandPolicy
      */
     public function viewAny(Admin $admin)
     {
-        //
+        return $admin->hasAccess(config('permissions.view_brand.slug'));
     }
 
     /**

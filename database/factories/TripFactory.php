@@ -10,9 +10,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Trip::class, function (Faker $faker, $var) {
     $route = Route::find($var['route_id']);
-    $duration = $route->duration;
+    $distance = $route->distance;
     $now = rand(1262055681, 1263455681);
-    $endStamp = $now + $duration * 3600;
+    $endStamp = $now + $distance * 60;
     $depart_place = $route->departPlace->name;
     $des_place = $route->desPlace->name;
     return [
