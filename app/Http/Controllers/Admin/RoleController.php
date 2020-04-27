@@ -40,7 +40,7 @@ class RoleController extends Controller
             'admin' => auth('admin')->user()->id
         ]);
         $role->permissions()->attach($request->permissions);
-        return view('admin.user.index', ['tab' => 'role']);
+        return redirect()->route('admin.user.index', ['tab' => 'role'])->with('success', 'Thêm quyền thành công');
     }
 
     public function edit(Role $role)

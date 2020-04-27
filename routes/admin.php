@@ -54,5 +54,17 @@ Route::group([
             Route::post('/{role}/edit', 'RoleController@update');
             Route::get('/{role}/destroy', 'RoleController@destroy')->name('destroy');
         });
+
+        Route::group([
+            'as' => 'place.',
+            'prefix' => 'places'
+        ], function () {
+            Route::get('/', 'PlaceController@index')->name('index');
+            Route::get('/create', 'PlaceController@create')->name('create');
+            Route::post('/', 'PlaceController@store')->name('store');
+            Route::get('/{place}/edit', 'PlaceController@edit')->name('update');
+            Route::post('/{place}/edit', 'PlaceController@update');
+            Route::get('/{place}/destroy', 'PlaceController@destroy')->name('destroy');
+        });
     });
 });

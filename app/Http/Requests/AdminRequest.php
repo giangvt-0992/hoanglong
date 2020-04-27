@@ -46,7 +46,7 @@ class AdminRequest extends FormRequest
             'password.max' => 'Mật khẩu phải có độ dài không quá :max ký tự',
             'rePassword.same' => 'Mật khẩu không khớp',
             'brandId.required' => 'Xin mời chọn nhà xe',
-            'roleId' => 'Xin mời chọn quyền người dùng',
+            'roleId.required' => 'Xin mời chọn quyền người dùng',
         ];
     }
 }

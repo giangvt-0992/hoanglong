@@ -19,6 +19,11 @@ class EloquentBrandRepository extends EloquentBaseRepository implements BrandRep
     {
         return $this->model->orderBy('created_at', 'DESC')->get();
     }
+
+    // public function allAdmin()
+    // {
+    //     return $this->model->orderBy('created_at', 'DESC')->get();
+    // }
     
     public function paginate($items = null)
     {

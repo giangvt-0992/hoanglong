@@ -12,7 +12,7 @@ class Place extends Model
         'name',
         'description',
         'address',
-        'map',
+        'map_url',
         'district_id',
         'brand_id'
     ];

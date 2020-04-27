@@ -31,6 +31,9 @@
                     <li>
                         <a href="{{route('admin.brand.index')}}"><i class="fa fa-bus"></i> Nhà xe </a>
                     </li>
+                    <li>
+                        <a href="{{route('admin.place.index')}}"><i class="fa fa-map-marker"></i> Địa điểm </a>
+                    </li>
                 </ul>
             </div>
             {{-- <div class="menu_section">

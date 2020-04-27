@@ -1,0 +1,18 @@
+.dz-image img {
+  width: 100%;
+}
+
+.float-right {
+  float: right;
+}
+
+ul.to_do li {
+  background: none;
+}
+
+.shorter {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

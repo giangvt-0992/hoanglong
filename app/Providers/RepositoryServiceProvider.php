@@ -17,6 +17,8 @@ class RepositoryServiceProvider extends ServiceProvider
         'Admin',
         'Permission',
         'Role',
+        'Place',
+        'District'
     ];
     /**
      * Register services.
