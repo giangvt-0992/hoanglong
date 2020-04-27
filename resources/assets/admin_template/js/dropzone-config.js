@@ -1,10 +1,14 @@
+$(document).ready( function () {
 $.ajaxSetup({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
     }
 });
-let uploadedDocumentMap = [];
+let uploadedDocumentMap = []; // save all upload file id
+let uploadedHistory = []; // save new upload file id
 let indexFile = 0;
+const maxFiles = 5;
+let count = 0;
 Dropzone.options.myDropzone = {
     url: $("div#my-dropzone").attr("route-upload"),
     headers: {
@@ -13,7 +17,7 @@ Dropzone.options.myDropzone = {
     autoProcessQueue: true,
     uploadMultiple: true,
     parallelUploads: 5,
-    maxFiles: 5,
+    maxFiles: maxFiles,
     maxFilesize: 5,
     acceptedFiles: ".jpeg,.jpg,.png,.gif",
     dictFileTooBig: "Dung lượng ảnh không được vượt quá 5MB",
@@ -31,7 +35,17 @@ Dropzone.options.myDropzone = {
                 console.log(response);
                 const data = response.data;
                 $.each(data, function(key, value) {
-                    var mockFile = { name: value.name, serverId: value.id };
+                    var mockFile = {
+                        name: value.name,
+                        serverId: value.id,
+                        deleteRoute: value.deleteRoute
+                    };
+                    uploadedDocumentMap.push(value.id);
+                    $("#form").append(
+                        '<input type="hidden" name="images[]" value="' +
+                            value.id +
+                            '">'
+                    );
 
                     myDropzone.emit("addedfile", mockFile);
                     myDropzone.emit("thumbnail", mockFile, value.url);
@@ -41,12 +55,15 @@ Dropzone.options.myDropzone = {
         });
     },
     success: function(file, response) {
-        const { data } = response;
+        count = 0;
         if (response.status === "success") {
             const { data } = response;
+            console.log(response);
             for (let img of data) {
                 if (!uploadedDocumentMap.includes(img.id)) {
                     uploadedDocumentMap.push(img.id);
+                    uploadedHistory.push(img);
+
                     $("#form").append(
                         '<input type="hidden" name="images[]" value="' +
                             img.id +
@@ -54,24 +71,32 @@ Dropzone.options.myDropzone = {
                     );
                 }
             }
-            file.serverId = uploadedDocumentMap[indexFile++];
+            file.serverId = uploadedHistory[indexFile].id;
+            file.deleteRoute = uploadedHistory[indexFile].deleteRoute;
+            indexFile++;
         }
     },
     removedfile: function(file) {
         const imageId = file.serverId;
-        $.ajax({
-            type: "POST",
-            url: '{{ url("admin/file/delete") }}',
-            data: "id=" + imageId,
-            dataType: "html",
-            success: function(data) {
-                $('input[name="images[]"]').each(function() {
-                    if ($(this).val() == imageId) {
-                        $(this).remove();
-                    }
-                });
-            }
-        });
+        if (imageId) {
+            $.ajax({
+                type: "POST",
+                url: file.deleteRoute,
+                data: "id=" + imageId,
+                dataType: "html",
+                success: function(response) {
+                    console.log(response);
+                    $('input[name="images[]"]').each(function() {
+                        if ($(this).val() == imageId) {
+                            $(this).remove();
+                        }
+                    });
+                    count = 0;
+                    const index = uploadedDocumentMap.indexOf(imageId);
+                    uploadedDocumentMap.splice(index, 1);
+                }
+            });
+        }
         var _ref;
         if (file.previewElement) {
             if ((_ref = file.previewElement) != null) {
@@ -79,6 +104,22 @@ Dropzone.options.myDropzone = {
             }
         }
         return this._updateMaxFilesReachedClass();
+    },
+    accept: function(file, done) {
+        count++;
+
+        if (uploadedDocumentMap.length + count > maxFiles) {
+            console.log(`Bạn chỉ có upload tối đa ${maxFiles} file`);
+            new PNotify({
+                title: "Thêm ảnh thất bại",
+                text: `Bạn chỉ có upload tối đa ${maxFiles} ảnh`,
+                type: "error",
+                styling: "bootstrap3"
+            });
+            this.removeFile(file);
+        } else {
+            done();
+        }
     },
     previewsContainer: null,
     hiddenInputContainer: "body"
@@ -123,4 +164,5 @@ function previewImage(input) {
 
 $("#image").change(function() {
     previewImage(this);
+});
 });

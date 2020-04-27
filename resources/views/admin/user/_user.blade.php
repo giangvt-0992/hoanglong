@@ -26,12 +26,12 @@
         <td>{{$admin->brand->name ?? ''}}</td>
         <td>{{$admin->is_active == true ? 'Hoạt động' : 'Ngưng hoạt động'}}</td>
         <td class="text-center">
-          {{-- <a href="{{route('admin.user.destroy', ['admin' => $admin->id])}}" class="btn btn-danger btn-delete" data-page="role"><i class="fa fa-trash"></i></a> --}}
           @if ($admin->is_active == config('constants.IS_ACTIVE_STATUS.ACTIVE'))
-          <a href="{{route('admin.user.deactivate', ['admin' => $admin->id])}}" class="btn btn-danger btn-danger btn-deactivate" data-page="user" title="Ngưng kích hoạt" ><i class="fa fa-trash"></i></a>
+          <a href="{{route('admin.user.deactivate', ['admin' => $admin->id])}}" class="btn btn-warning btn-deactivate" data-page="user" title="Ngưng kích hoạt" ><i class="fa fa-ban"></i></a>
           @else 
           <a href="{{route('admin.user.active', ['admin' => $admin->id])}}" class="btn btn-success btn-active" data-page="user" title="Kích hoạt"><i class="fa fa-recycle"></i></a>
           @endif
+          <a href="{{route('admin.user.destroy', ['admin' => $admin->id])}}" class="btn btn-danger btn-delete" data-page="user"><i class="fa fa-trash"></i></a>
         </td>
       </tr>
       @endforeach

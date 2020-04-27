@@ -29,7 +29,12 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = $this->brandRepository->all();
+        $admin = auth('admin')->user();
+        if ($admin->isSuperAdmin()) {
+            $brands = $this->brandRepository->all();
+        } else {
+            $brands = [$admin->brand];
+        }
         return view('admin.brand.index', [
             'brands' => $brands,
         ]);

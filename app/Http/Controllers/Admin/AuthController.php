@@ -29,6 +29,7 @@ class AuthController extends Controller
     {
         $remember = isset(request()->remember_me) ? true : false;
         $credential = $request->only(['email', 'password']);
+        $credential['is_active'] = true;
         if (Auth::guard('admin')->attempt($credential, $remember)) {
             return redirect($this->redirectTo);
         }

@@ -17,16 +17,21 @@ class EloquentProvinceRepository extends EloquentBaseRepository implements Provi
 
     public function all()
     {
-        return $this->model->with('images')->orderBy('index', 'ASC')->get();
+        return $this->model->get();
     }
     
     public function paginate($items = null)
     {
-        return $this->model->orderBy('index', 'ASC')->paginate($items);
+        return $this->model->paginate($items);
     }
 
     public function find($id)
     {
         return $this->model->find($id);
+    }
+
+    public function allWithDistrict()
+    {
+        return $this->model->with('districts')->get();
     }
 }

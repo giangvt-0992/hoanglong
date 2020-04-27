@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -65,7 +66,7 @@ class AdminController extends Controller
             $this->adminRepository->store([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
                 'brand_id' => $request->brandId,
                 'role_id' => $request->roleId,
                 'name' => $request->name,

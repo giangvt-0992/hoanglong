@@ -23,7 +23,9 @@
     <link href="{{url('admin_template/vendors/dropzone/dist/min/dropzone.min.css')}}" rel="stylesheet"/>
 
     <link href="{{url('admin_template/vendors/pnotify/dist/pnotify.css')}}" rel="stylesheet"/>
-    <link href="{{url('admin_template//vendors/pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet"/>
+    <link href="{{url('admin_template/vendors/pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet"/>
+
+    <link href="{{url('admin_template/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
 
     <!-- Custom Theme Style -->
     <link href="{{url('admin_template/css/custom.min.css')}}" rel="stylesheet">
@@ -67,6 +69,7 @@
     <script src="{{url('admin_template/vendors/pnotify/dist/pnotify.js')}}"></script>
     <script src="{{url('admin_template/vendors/pnotify/dist/pnotify.buttons.js')}}"></script>
     <script src="{{url('admin_template/vendors/iCheck/icheck.min.js')}}"></script>
+    <script src="{{url('admin_template/vendors/select2/dist/js/select2.min.js')}}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{url('admin_template/js/custom.min.js')}}"></script>
     <script src="{{url('admin_template/js/dropzone-config.js')}}"></script>

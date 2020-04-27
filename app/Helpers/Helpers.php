@@ -11,3 +11,11 @@ if (!function_exists('isActiveRoute')) {
         return false;
     }
 }
+
+if (!function_exists('getAuthAdmin')) {
+    function getAuthAdmin()
+    {
+        $admin = auth('admin')->user();
+        return $admin;
+    }
+}

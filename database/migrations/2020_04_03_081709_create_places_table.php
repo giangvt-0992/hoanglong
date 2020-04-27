@@ -18,7 +18,7 @@ class CreatePlacesTable extends Migration
             $table->string('name', 100);
             $table->string('description')->nullable();
             $table->string('address');
-            $table->string('map_url')->nullable();
+            $table->text('map_url')->nullable();
             $table->bigInteger('district_id');
             $table->bigInteger('brand_id');
             $table->timestamps();
