@@ -17,9 +17,10 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
 
     public function all()
     {
+        $admin = getAuthAdmin();
         return $this->model->where([
             ['slug', '!=', config('constants.SUPER_ADMIN')],
-            ['admin_id', '=', auth('admin')->user()->id]
+            ['brand_id', '=', $admin->brand_id]
             ])->orderBy('id', 'DESC')->get();
     }
     

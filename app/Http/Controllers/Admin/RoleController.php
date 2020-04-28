@@ -25,7 +25,7 @@ class RoleController extends Controller
     public function create()
     {
         $this->authorize('role.create');
-        $permissions = $this->permissionRepository->all();
+        $permissions = $this->permissionRepository->allByAdmin();
         return view('admin.role.create', [
             'permissions' => $permissions
         ]);
@@ -34,10 +34,13 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $this->authorize('role.create');
+
+        $admin = getAuthAdmin();
+
         $role = $this->roleRepository->store([
             'name' => $request->name,
-            'slug' => str_slug($request->name) . '-' . strtolower(str_random(6)),
-            'admin' => auth('admin')->user()->id
+            'slug' => str_slug($request->name) . '-' . strtolower(str_random(2)),
+            'brand_id' => $admin->brand_id
         ]);
         $role->permissions()->attach($request->permissions);
         return redirect()->route('admin.user.index', ['tab' => 'role'])->with('success', 'Thêm quyền thành công');
@@ -47,7 +50,7 @@ class RoleController extends Controller
     {
         $this->authorize('role.update', $role);
         $rolePermissions = $role->permissions()->pluck('id')->toArray();
-        $permissions = $this->permissionRepository->all();
+        $permissions = $this->permissionRepository->allByAdmin();
         return view('admin.role.update', [
             'role' => $role,
             'rolePermissions' => $rolePermissions,
@@ -59,7 +62,7 @@ class RoleController extends Controller
     {
         $this->authorize('role.update', $role);
         $role->permissions()->sync($request->permissions);
-        return redirect()->route('admin.user.index', ['tab' => 'role'])->with('success', 'Sửa quyền thành công');
+        return redirect()->route('admin.user.index', ['tab' => 'role'])->with('success', 'Cập nhật quyền thành công');
     }
 
     public function destroy(Role $role)

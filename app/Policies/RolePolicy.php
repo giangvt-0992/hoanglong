@@ -24,7 +24,7 @@ class RolePolicy
      */
     public function viewAny(Admin $admin)
     {
-        //
+        return $admin->hasAccess(config('permissions.view_role.slug'));
     }
 
     /**
@@ -59,7 +59,7 @@ class RolePolicy
      */
     public function update(Admin $admin, Role $role)
     {
-        return $admin->hasAccess(config('permissions.update_role.slug')) && $admin->id === $role->admin_id;
+        return $admin->hasAccess(config('permissions.update_role.slug')) && $admin->brand_id === $role->brand_id;
     }
 
     /**
@@ -74,7 +74,7 @@ class RolePolicy
         if ($role->slug === 'super-admin') {
             return false;
         }
-        return $admin->hasAccess(config('permissions.delete_role.slug')) && $admin->id === $role->admin_id;
+        return $admin->hasAccess(config('permissions.delete_role.slug')) && $admin->brand_id === $role->brand_id;
     }
 
     /**

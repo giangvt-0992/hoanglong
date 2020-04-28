@@ -19,3 +19,19 @@ if (!function_exists('getAuthAdmin')) {
         return $admin;
     }
 }
+
+if (!function_exists('getAuthAdminBrandId')) {
+    function getAuthAdminBrandId()
+    {
+        return auth('admin')->user()->brand_id;
+    }
+}
+
+if (!function_exists('decodeFormatNumber')) {
+    // 123,456 => 123456
+    function decodeFormatNumber($formatNumber)
+    {
+        $number = str_replace(',', '', $formatNumber);
+        return $number;
+    }
+}

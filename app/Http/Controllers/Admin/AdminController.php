@@ -33,7 +33,14 @@ class AdminController extends Controller
 
     public function index()
     {
-        $permissions = $this->permissionRepository->all();
+        $this->authorize('admin.viewAny');
+
+        $admin = getAuthAdmin();
+        if ($admin->isSuperAdmin()) {
+            $permissions = $this->permissionRepository->all();
+        } else {
+            $permissions = $admin->role->permissions;
+        }
         $roles = $this->roleRepository->all();
         $admins = $this->adminRepository->all();
         return view('admin.user.index', [
@@ -46,7 +53,13 @@ class AdminController extends Controller
     public function create()
     {
         $this->authorize('admin.create');
-        $brands = $this->brandRepository->all();
+
+        $admin = getAuthAdmin();
+        if ($admin->isSuperAdmin()) {
+            $brands = $this->brandRepository->all();
+        } else {
+            $brands = [$admin->brand];
+        }
         $roles = $this->roleRepository->all();
         return view('admin.user.create', [
             'brands' => $brands,

@@ -17,7 +17,17 @@ class EloquentPermissionRepository extends EloquentBaseRepository implements Per
 
     public function all()
     {
-        return $this->model->orderBy('created_at', 'DESC')->get();
+        return $this->model->orderBy('id', 'ASC')->get();
+    }
+
+    public function allByAdmin()
+    {
+        $admin = getAuthAdmin();
+        if ($admin->isSuperAdmin()) {
+            return $this->model->orderBy('id', 'ASC')->get();
+        } else {
+            return $admin->role->permissions;
+        }
     }
     
     public function paginate($items = null)

@@ -50,10 +50,10 @@
 								</div>
 								<div class="form-group">
 									<label>Hãng xe</label>
-									<select name="brandId" class="form-control" id="">
+									<select name="brandId" class="form-control select2" >
 										<option value=""></option>
 										@foreach ($brands as $brand)
-										<option value="{{$brand->id}}" @if($brand->id === old('brandId')) selected @endif>{{$brand->name}}</option>
+										<option value="{{$brand->id}}" @if($brand->id == old('brandId')) selected @endif>{{$brand->name}}</option>
 										@endforeach
 									</select>
 									@if($errors->has('brandId'))
@@ -62,10 +62,10 @@
 								</div>
 								<div class="form-group">
 									<label>Quyền</label>
-									<select name="roleId" class="form-control" id="">
+									<select name="roleId" class="form-control" >
 										<option value=""></option>
 										@foreach ($roles as $role)
-										<option value="{{$role->id}}" @if($role->id === old('roleId')) selected @endif>{{$role->name}}</option>
+										<option value="{{$role->id}}" @if($role->id == old('roleId')) selected @endif>{{$role->name}}</option>
 										@endforeach
 									</select>
 									@if($errors->has('roleId'))
@@ -87,4 +87,10 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('after-scripts')
+<script>
+	$(".select2").select2();
+</script>
 @endsection

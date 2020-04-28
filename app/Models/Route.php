@@ -14,7 +14,8 @@ class Route extends Model
         'des_place_id',
         'distance',
         'duration',
-        'brand_id'
+        'brand_id',
+        'price'
     ];
 
     public function brand()
@@ -40,5 +41,11 @@ class Route extends Model
     public function tripDepartDates()
     {
         return $this->hasManyThrough(TripDepartDate::class, Trip::class);
+    }
+
+    public function getDurationAttribute($value)
+    {
+        $duration = json_decode($value);
+        return $duration;
     }
 }

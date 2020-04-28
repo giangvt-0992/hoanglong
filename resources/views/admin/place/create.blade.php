@@ -40,26 +40,26 @@
 									@if($errors->has('map'))
 									<span class="text-danger">{{$errors->first('map')}}</span>
 									@endif
-                </div>
-                <div class="form-group">
+								</div>
+								<div class="form-group">
 									<label>Khu vực</label>
 									<select name="districtId" class="form-control" id="districtId" required>
 										<option value=""></option>
-                    @foreach ($provinces as $province)
-                    <optgroup label="{{$province->name}}">
-                      @foreach ($province->districts as $district)
-                      <option value="{{$district->id}}" @if($district->id == old('districtId')) selected @endif>{{$district->name}}</option>
-                      @endforeach
-                    </optgroup>
+										@foreach ($provinces as $province)
+										<optgroup label="{{$province->name}}">
+											@foreach ($province->districts as $district)
+											<option value="{{$district->id}}" @if($district->id == old('districtId')) selected @endif>{{$district->name}}</option>
+											@endforeach
+										</optgroup>
 										@endforeach
 									</select>
 									@if($errors->has('districtId'))
 									<span class="text-danger">{{$errors->first('districtId')}}</span>
 									@endif
 								</div>
-                <div class="form-group">
-                  <label>Mô tả</label>
-                  <textarea class="form-control" name="description" rows="5">{{old('description')}}</textarea>
+								<div class="form-group">
+									<label>Mô tả</label>
+									<textarea class="form-control" name="description" rows="5">{{old('description')}}</textarea>
 									@if($errors->has('description'))
 									<span class="text-danger">{{$errors->first('description')}}</span>
 									@endif
@@ -67,8 +67,8 @@
 								<div class="ln_solid"></div>
 								<div class="form-group">
 									<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-										<button class="btn btn-primary btn-cancel" type="button" data-next-route="{{route('admin.place.index')}}" >Hủy</button>
 										<button type="submit" class="btn btn-success">Thêm</button>
+										<button class="btn btn-primary btn-cancel" type="button" data-next-route="{{route('admin.place.index')}}" >Hủy</button>
 									</div>
 								</div>
 							</form>
@@ -83,6 +83,6 @@
 
 @section('after-scripts')
 <script>
-  $("#districtId").select2();
+	$("#districtId").select2();
 </script>
 @endsection

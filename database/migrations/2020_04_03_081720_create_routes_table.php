@@ -19,7 +19,7 @@ class CreateRoutesTable extends Migration
             $table->bigInteger('depart_place_id');
             $table->bigInteger('des_place_id');
             $table->bigInteger('distance');
-            $table->float('duration');
+            $table->json('duration');
             $table->bigInteger('brand_id');
             $table->timestamps();
         });

@@ -11,7 +11,7 @@ class Role extends Model
     protected $fillable = [
         'name',
         'slug',
-        'admin_id',
+        'brand_id',
     ];
 
     public function admins()

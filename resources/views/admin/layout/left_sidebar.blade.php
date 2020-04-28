@@ -34,6 +34,9 @@
                     <li>
                         <a href="{{route('admin.place.index')}}"><i class="fa fa-map-marker"></i> Địa điểm </a>
                     </li>
+                    <li>
+                        <a href="{{route('admin.route.index')}}"><i class="fa fa-road"></i> Tuyến đường </a>
+                    </li>
                 </ul>
             </div>
             {{-- <div class="menu_section">
