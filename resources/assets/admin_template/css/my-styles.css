@@ -12,7 +12,37 @@ ul.to_do li {
 
 .shorter {
   max-width: 250px;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.pl-0 {
+  padding-left: 0;
+}
+
+.pr-0 {
+  padding-right: 0;
+}
+
+.timepicker {
+  box-shadow: none;
+}
+
+.timepicker[readonly] {
+  background-color: inherit;
+}
+
+.select2 {
+  width: 100%!important;
+}
+
+.main_menu .fas {
+  width: 26px;
+  opacity: .99;
+  display: inline-block;
+  font-style: normal;
+  font-size: 18px;
+  -moz-osx-font-smoothing: grayscale;
 }

@@ -13,7 +13,6 @@ class Trip extends Model
         'depart_time',
         'arrive_time',
         'pick_up_schedule',
-        'get_off_schedule',
         'brand_id',
         'route_id',
         'car_type_id'

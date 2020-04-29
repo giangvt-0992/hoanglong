@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Contracts\Repositories\PlaceRepository;
+use App\Contracts\Repositories\ProvinceRepository;
 use App\Contracts\Repositories\RouteRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,13 +15,16 @@ class RouteController extends Controller
 {
     private $routeRepository;
     private $placeRepository;
+    private $provinceRepository;
 
     public function __construct(
         RouteRepository $routeRepository,
-        PlaceRepository $placeRepository
+        PlaceRepository $placeRepository,
+        ProvinceRepository $provinceRepository
     ) {
         $this->routeRepository = $routeRepository;
         $this->placeRepository = $placeRepository;
+        $this->provinceRepository = $provinceRepository;
     }
 
     public function index()
@@ -39,10 +43,19 @@ class RouteController extends Controller
         $this->authorize('route.create');
 
         $admin = getAuthAdmin();
-        $places = $admin->brand->places()->with('district.province:id,name')->get();
+        $places = $admin->brand->places;
+        $provinces = $this->provinceRepository->all();
+
+        $oldDepartProvince = $this->provinceRepository->find(old('departProvinceId'));
+        $oldDesProvince = $this->provinceRepository->find(old('desProvinceId'));
+        $oldDepartProvincePlaces = $oldDepartProvince ? $oldDepartProvince->places()->whereBrandId($admin->brand_id)->get() : [];
+        $oldDesProvincePlaces = $oldDesProvince ? $oldDesProvince->places()->whereBrandId($admin->brand_id)->get() : [];
 
         return view('admin.route.create', [
-            'places' => $places
+            'places' => $places,
+            'provinces' => $provinces,
+            'oldDepartProvincePlaces' => $oldDepartProvincePlaces,
+            'oldDesProvincePlaces' => $oldDesProvincePlaces,
         ]);
     }
 
@@ -51,12 +64,15 @@ class RouteController extends Controller
         $this->authorize('route.create');
 
         if ($this->routeRepository->checkRouteExist($request->departPlaceId, $request->desPlaceId)) {
-            return redirect()->back()->with('warning', 'Tuyến đường đã này đã tồn tại!')->withInput(); 
+            return redirect()->back()->with('warning', 'Tuyến đường đã này đã tồn tại!')->withInput();
         }
 
+        $listPassingPlaceId = $request->listPassingPlaceId;
+        !in_array($request->departPlaceId, $listPassingPlaceId) && $listPassingPlaceId[] = $request->departPlaceId;
+
         try {
-            DB::transaction(function () use ($request) {
-                $this->routeRepository->store([
+            DB::transaction(function () use ($request, $listPassingPlaceId) {
+                $route = $this->routeRepository->store([
                     'name' => $request->name,
                     'depart_place_id' => $request->departPlaceId,
                     'des_place_id' => $request->desPlaceId,
@@ -66,30 +82,12 @@ class RouteController extends Controller
                     'duration' => json_encode([
                         'hours' => $request->hours,
                         'minutes' => $request->minutes
-                    ])
+                    ]),
+                    'description' => $request->description,
                 ]);
-                if ($request->chkBackRoute) {
-                    $departPlace = $this->placeRepository->find($request->departPlaceId);
-                    $departProvinceName = $departPlace->district->province->name;
-                    $desPlace = $this->placeRepository->find($request->desPlaceId);
-                    $desProvinceName = $desPlace->district->province->name;
-
-                    $routeName = "Tuyến $desProvinceName - $departProvinceName ($desPlace->name - $departPlace->name)";
-                    
-                    $this->routeRepository->store([
-                        'name' => $routeName,
-                        'depart_place_id' => $request->desPlaceId,
-                        'des_place_id' => $request->departPlaceId,
-                        'distance' => decodeFormatNumber($request->distance),
-                        'price' => decodeFormatNumber($request->price),
-                        'brand_id' => getAuthAdminBrandId(),
-                        'duration' => json_encode([
-                            'hours' => $request->hours,
-                            'minutes' => $request->minutes
-                        ])
-                    ]);
-                }
+                $route->places()->attach($listPassingPlaceId);
             });
+            
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Thêm tuyền đường thất bại')->withInput();
         }
@@ -103,9 +101,22 @@ class RouteController extends Controller
         $admin = getAuthAdmin();
         $places = $admin->brand->places;
 
+        $provinces = $this->provinceRepository->all();
+        $departProvince = $route->departPlace->district->province;
+        $desProvince = $route->desPlace->district->province;
+        $departProvincePlaces = $departProvince->places()->whereBrandId($admin->brand_id)->get();
+        $desProvincePlaces = $desProvince->places()->whereBrandId($admin->brand_id)->get();
+        $listPassingPlaceId = $route->places()->pluck('id')->toArray();
+
         return view('admin.route.update', [
             'places' => $places,
-            'route' => $route
+            'provinces' => $provinces,
+            'route' => $route,
+            'departProvince' => $departProvince,
+            'desProvince' => $desProvince,
+            'departProvincePlaces' => $departProvincePlaces,
+            'desProvincePlaces' => $desProvincePlaces,
+            'listPassingPlaceId' => $listPassingPlaceId,
         ]);
     }
 
@@ -114,17 +125,26 @@ class RouteController extends Controller
         $this->authorize('route.update', $route);
 
         try {
-            $route->name = $request->name;
-            $route->depart_place_id = $request->departPlaceId;
-            $route->des_place_id = $request->desPlaceId;
-            $route->distance = decodeFormatNumber($request->distance);
-            $route->price = decodeFormatNumber($request->price);
-            $route->brand_id = getAuthAdminBrandId();
-            $route->duration = json_encode([
-                'hours' => $request->hours,
-                'minutes' => $request->minutes
-            ]);
-            $route->save();
+            $listPassingPlaceId = $request->listPassingPlaceId;
+            !in_array($request->departPlaceId, $listPassingPlaceId) && $listPassingPlaceId[] = $request->departPlaceId;
+
+            DB::transaction(function () use ($route, $request, $listPassingPlaceId) {
+                $route->name = $request->name;
+                $route->depart_place_id = $request->departPlaceId;
+                $route->des_place_id = $request->desPlaceId;
+                $route->distance = decodeFormatNumber($request->distance);
+                $route->price = decodeFormatNumber($request->price);
+                $route->brand_id = getAuthAdminBrandId();
+                $route->duration = json_encode([
+                    'hours' => $request->hours,
+                    'minutes' => $request->minutes
+                ]);
+                $route->description = $request->description;
+                $route->places()->sync($listPassingPlaceId);
+                
+                $route->save();
+            });
+            
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Thêm tuyến đường thất bại');
         }
@@ -140,10 +160,24 @@ class RouteController extends Controller
             return redirect()->back()->with('error', 'Xóa tuyến đường thất bại! Tuyến đường đã được ghép chuyến');
         }
         try {
-            $route->delete();
+            DB::transaction(function () use ($route) {
+                $route->delete();
+                $route->places()->detach();
+            });
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Xóa tuyến đường thất bại!');
         }
         return redirect()->back()->with('success', 'Xóa tuyến đường thành công');
+    }
+
+    public function passingPlaces(Request $request)
+    {
+        $route = $this->routeRepository->find($request->routeId);
+        $passingPlace = $route->places;
+
+        return response()->json([
+            'status' => 200,
+            'data' => $passingPlace
+        ]);
     }
 }

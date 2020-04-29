@@ -36,4 +36,9 @@ class Place extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function routes()
+    {
+        return $this->belongsToMany(Route::class, 'passing_places', 'place_id', 'route_id');
+    }
 }

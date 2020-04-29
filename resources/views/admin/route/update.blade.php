@@ -23,19 +23,15 @@
 								'route' => $route->id
 							])}}">
 								@csrf
-								<div class="form-group">
-									<label>Tên tuyến đường</label>
-									<input type="text" class="form-control" placeholder="Tên tuyến đường" name="name" value="{{old('name', $route->name)}}" required>
-									@if($errors->has('name'))
-									<span class="text-danger">{{$errors->first('name')}}</span>
-									@endif
-								</div>
 								<div class="form-group col-md-6 pl-0">
-									<label>Điểm đi</label>
-									<select name="departPlaceId" class="form-control" id="departPlaceId" required>
-										<option value=""></option>
-										@foreach ($places as $place)
-										<option value="{{$place->id}}" @if($place->id == old('departPlaceId', $route->depart_place_id)) selected @endif>{{$place->name}}</option>
+									<label>Thành phố</label>
+									<select name="departProvinceId" class="form-control" id="departProvinceId" data-route-get-places="{{route('admin.province.places')}}" required>
+										<option value="">Thành phố đi</option>
+										@foreach ($provinces as $province)
+										<option 
+										value="{{$province->id}}"
+										@if ($province->id == old('departProvinceId', $departProvince->id)) selected @endif
+										>{{$province->name}}</option>
 										@endforeach
 									</select>
 									@if($errors->has('departPlaceId'))
@@ -43,10 +39,37 @@
 									@endif
 								</div>
 								<div class="form-group col-md-6 pr-0">
+									<label>Điểm đi</label>
+									<select name="departPlaceId" class="form-control" id="departPlaceId" required>
+										<option value=""></option>
+										@foreach ($departProvincePlaces as $place)
+										<option value="{{$place->id}}" @if($place->id == old('departPlaceId', $route->depart_place_id)) selected @endif>{{$place->name}}</option>
+										@endforeach
+									</select>
+									@if($errors->has('departPlaceId'))
+									<span class="text-danger">{{$errors->first('departPlaceId')}}</span>
+									@endif
+								</div>
+								<div class="form-group col-md-6 pl-0">
+									<label>Thành phố</label>
+									<select name="desProvinceId" class="form-control" id="desProvinceId" data-route-get-places="{{route('admin.province.places')}}" required>
+										<option value="">Thành phố đến</option>
+										@foreach ($provinces as $province)
+										<option 
+										value="{{$province->id}}"
+										@if ($province->id == old('desProvinceId', $desProvince->id)) selected @endif
+										>{{$province->name}}</option>
+										@endforeach
+									</select>
+									@if($errors->has('desProvinceId'))
+									<span class="text-danger">{{$errors->first('desProvinceId')}}</span>
+									@endif
+								</div>
+								<div class="form-group col-md-6 pr-0">
 									<label>Điểm đến</label>
 									<select name="desPlaceId" class="form-control" id="desPlaceId" required>
 										<option value=""></option>
-										@foreach ($places as $place)
+										@foreach ($desProvincePlaces as $place)
 										<option value="{{$place->id}}" @if($place->id == old('desPlaceId', $route->des_place_id)) selected @endif>{{$place->name}}</option>
 										@endforeach
 									</select>
@@ -54,6 +77,29 @@
 									<span class="text-danger">{{$errors->first('desPlaceId')}}</span>
 									@endif
 								</div>
+								<div class="form-group">
+									<label>Tên tuyến đường</label>
+									<input type="text" class="form-control" placeholder="Tên tuyến đường" name="name" value="{{old('name', $route->name)}}" required>
+									@if($errors->has('name'))
+									<span class="text-danger">{{$errors->first('name')}}</span>
+									@endif
+								</div>
+								<div class="form-group">
+									<label>Các điểm đón khách</label>
+									<select name="listPassingPlaceId[]" class="form-control" id="listPassingPlaceId" multiple="multiple" required>
+										<option value=""></option>
+										@foreach ($places as $place)
+										<option 
+										value="{{$place->id}}"
+										@if(in_array($place->id, old('listPassingPlaceId', $listPassingPlaceId))) selected @endif
+										data-province="{{$place->district->province->name}}"
+										>{{$place->name}}</option>
+										@endforeach
+									</select>
+									@if($errors->has('listPassingPlaceId'))
+									<span class="text-danger">{{$errors->first('listPassingPlaceId')}}</span>
+									@endif
+								</div>						
 								<div class="form-group form-group col-md-6 pl-0">
 									<label>Giờ</label>
 									<input type="number" class="form-control" placeholder="Giờ" name="hours" value="{{old('hours', $route->duration->hours)}}" min="0" required />
@@ -77,9 +123,16 @@
 								</div>
 								<div class="form-group col-md-6 pr-0">
 									<label>Giá tiền</label>
-									<input type="text" class="form-control number-format" placeholder="Giá tiền" name="price" value="{{old('price', $route->price)}}" min="0" required>
+									<input type="text" class="form-control number-format" placeholder="Giá tiền" name="price" value="{{old('price', number_format($route->price))}}" min="0" required>
 									@if($errors->has('price'))
 									<span class="text-danger">{{$errors->first('price')}}</span>
+									@endif
+								</div>
+								<div class="form-group">
+									<label for="">Mô tả</label>
+									<textarea class="form-control" name="description" id="" rows="5">{{old('description', $route->description)}}</textarea>
+									@if($errors->has('description'))
+									<span class="text-danger">{{$errors->first('description')}}</span>
 									@endif
 								</div>
 								<div class="clear"></div>
@@ -104,5 +157,77 @@
 <script>
 	$("#departPlaceId").select2();
 	$("#desPlaceId").select2();
+	$("#listPassingPlaceId").select2();
+	$("#desProvinceId").select2();
+	$("#departProvinceId").select2();
+
+	$("#departProvinceId").change(function () {
+		$("#departPlaceId").empty();
+		if ($(this).val()) {
+			$.ajax({
+				type: "POST",
+				url: $(this).attr('data-route-get-places'),
+				data: {
+					provinceId: $(this).val()
+				},
+				success: function(response) {
+					if (response.status === 200) {
+						const data = response.data;
+						for (const item of data) {
+							$("#departPlaceId").append(`<option value="${item.id}">${item.name}</option>`);
+						}
+					}
+				},
+				error: function (error) {
+				}
+			});
+		}
+	})
+
+	$("#desProvinceId").change(function () {
+		if ($(this).val()) {
+			$.ajax({
+				type: "POST",
+				url: $(this).attr('data-route-get-places'),
+				data: {
+					provinceId: $(this).val()
+				},
+				success: function(response) {
+					if (response.status === 200) {
+						$("#desPlaceId").empty();
+						const data = response.data;
+						for (const item of data) {
+							$("#desPlaceId").append(`<option value="${item.id}">${item.name}</option>`);
+						}
+					}
+				},
+				error: function (error) {
+				}
+			});
+		}
+	});
+
+	function checkDepartDesPlace() {
+		const departPlaceId = $("#departPlaceId").val();
+		const desPlaceId = $("#desPlaceId").val();
+		if (desPlaceId && departPlaceId) {
+			if (departPlaceId === desPlaceId) {
+				new PNotify({
+						title: "Tuyến đường không hợp lệ",
+						text: `Điểm đi và điểm đến không được trùng nhau`,
+						type: "error",
+						styling: "bootstrap3"
+					});
+			}
+		}
+	}
+	
+	$("#departPlaceId").change(function () {
+		checkDepartDesPlace();
+	});
+
+	$("#desPlaceId").change(function () {
+		checkDepartDesPlace();
+	});
 </script>
 @endsection

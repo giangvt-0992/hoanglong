@@ -18,7 +18,9 @@ class RepositoryServiceProvider extends ServiceProvider
         'Permission',
         'Role',
         'Place',
-        'District'
+        'District',
+        'Trip',
+        'CarType',
     ];
     /**
      * Register services.
