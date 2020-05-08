@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Trip extends Model
 {
@@ -37,5 +38,25 @@ class Trip extends Model
     public function tripDepartDates()
     {
         return $this->hasMany(TripDepartDate::class);
+    }
+
+    public function getPickupPlace()
+    {
+        $pickup = $this->pick_up_schedule;
+        
+        $pickupArr = json_decode($pickup);
+        $locations = Arr::pluck($pickupArr, 'location');
+        $pickupPlace = Place::whereIn('id', $locations)->get();
+
+        $newArr = [];
+        
+        foreach ($pickupArr as $p) {
+            $place = $pickupPlace->find($p->location);
+            $place && $newArr[] = [
+                'time' => $p->time,
+                'location' => $place
+            ];
+        }
+        return $newArr;
     }
 }

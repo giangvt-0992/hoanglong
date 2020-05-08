@@ -80,8 +80,7 @@ class BookingController extends Controller
 
     public function bookRoute(Request $request)
     {
-        // $formData = $request->formData;
-        $formData = "passengerName=giang&passengerPhone=039867&passengerEmail=a%40gmial.com&passengerAddress=a&price=0&quantity=1&date=16-04-2020&paymenttype=1&tddId=7268&brandId=5&departName=Jerrell+Row&departTime=03%3A43%3A00&desName=Langosh+Points&desTime=06%3A25%3A00&routeName=Lorenzo+Hand+DVM&depProvinceName=Tr%C3%A0+Vinh&desProvinceName=S%C3%B3c+Tr%C4%83ng";
+        $formData = $request->formData;
         $ticketData = [];
         parse_str($formData, $ticketData);
             
@@ -99,10 +98,26 @@ class BookingController extends Controller
             return null;
         }
 
+        $selectedSeats = explode(',', $ticketData['selectedSeats']);
+
+        $seatMap = $trip->seatMap();
+        foreach ($selectedSeats as $index) {
+            if ($seatMap[$index] == 1) {
+                return response()->json([
+                    'status' => "error",
+                    'data' => null,
+                    "message" => __("Seat :index has been booked", ['index' => $index])
+                ]);
+            } else {
+                $seatMap[$index] = 1;
+            }
+        }
+
         DB::beginTransaction();
         try {
             $ticket = $this->ticketRepository->createTicket($ticketData);
             $trip->available_seats = $trip->available_seats - $ticketData['quantity'];
+            $trip->seat_map = json_encode($seatMap);
             $trip->save();
             DB::commit();
         } catch (\Exception $e) {
@@ -123,7 +138,7 @@ class BookingController extends Controller
                 'data' => [
                     'view' => $view
                 ],
-                "message" => 'Add ticket success'
+                "message" => __('Book ticket successfully')
             ]);
     }
 }

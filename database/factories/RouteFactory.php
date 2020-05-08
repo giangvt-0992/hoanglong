@@ -16,7 +16,7 @@ $factory->define(Route::class, function (Faker $faker, $var) {
         'des_place_id' => $faker->randomElement($places),
         'distance' => $x = $faker->numberBetween(60, 200),
         'duration' => json_encode([
-            'hours' => $hours = intval($x/60),
+            'hours' => $hours = floor($x/60),
             'minutes' => $x - $hours * 60
         ]),
         'brand_id' => $var['brand_id']

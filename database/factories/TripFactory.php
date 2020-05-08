@@ -13,8 +13,8 @@ $factory->define(Trip::class, function (Faker $faker, $var) {
     $distance = $route->distance;
     $now = rand(1262055681, 1263455681);
     $endStamp = $now + $distance * 60;
-    $depart_place = $route->departPlace->name;
-    $des_place = $route->desPlace->name;
+    $depart_place = $route->departPlace->id;
+    $des_place = $route->desPlace->id;
     return [
         'name' => $faker->name,
         'depart_time' => $start = date("H:i", $now),

@@ -73,7 +73,7 @@
                 </tr>
                 <tr>
                     <td>
-                        {{ __('Expected customers will board the car in :place at :time')}}
+                        <b>{{ __('Expected customers will board the car in :place at', ['place' => $ticketData['pickupPlaceName']])}}</b>
                     </td>
                     <td>
                         <span class="bold">{{$ticketData['departTime'] . ' Ngày ' . $ticketData['date']}}</span>
