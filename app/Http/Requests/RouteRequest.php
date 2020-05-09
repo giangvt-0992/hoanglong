@@ -31,6 +31,8 @@ class RouteRequest extends FormRequest
             'hours' => 'required',
             'minutes' => 'required',
             'price' => 'required',
+            'listPassingPlaceId' => 'required',
+            'description' => 'nullable|min:10',
         ];
     }
 
@@ -46,6 +48,8 @@ class RouteRequest extends FormRequest
             'hours.required' => 'Số giờ không được để trống',
             'minutes.required' => 'Số phút không được để trống',
             'price.required' => 'Giá tiền không được để trống',
+            'listPassingPlaceId.required' => 'Danh sách điểm đón không được để trống',
+            'description.min' => 'Mô tả phải có độ dài ít nhất :min ký tự',
         ];
     }
 }

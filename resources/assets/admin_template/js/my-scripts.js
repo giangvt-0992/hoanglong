@@ -16,6 +16,18 @@ function dicPage(page) {
         case 'trip':
             word = 'chuyến';
             break;
+        case 'route':
+            word = 'tuyến đường';
+            break;
+        case 'route':
+            word = 'tuyến đường';
+            break;
+        case 'ticket':
+            word = 'vé';
+            break;
+        case 'office':
+            word = 'văn phòng';
+            break;
         default:
             break;
     };
@@ -104,3 +116,30 @@ $(document).ready( function () {
     }, 3000);
 });
 
+//Format money in textbox
+function cms_encode_currency_format(num) {
+    if (num < 0) {
+        return 0;
+    }
+
+    if (isNaN(num)) {
+        return '';
+    }
+
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+function cms_decode_currency_format(obs) {
+    return parseInt(obs.replace(/,/g, ''));
+}
+
+$('.number-format').keyup(function () {
+    let value = $(this).val();
+    if (value == '') {
+        value = '';
+    } else {
+        value = cms_decode_currency_format(value);
+        value = cms_encode_currency_format(value);
+    }
+    $(this).val(value);
+});

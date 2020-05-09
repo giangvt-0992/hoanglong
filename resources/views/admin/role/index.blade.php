@@ -20,7 +20,7 @@
         <td>{{$loop->iteration}}</td>
         <td>{{$role->name}}</td>
         <td>{{$role->slug}}</td>
-        <td class="text-center"><a href="{{route('admin.role.update', ['role' => $role->id])}}" class="btn btn-warning" ><i class="fa fa-pencil"></i></a></td>
+        <td class="text-center"><a href="{{route('admin.role.update', ['role' => $role->id])}}" class="btn btn-warning" ><i class="fas fa-pencil-alt"></i></a></td>
         <td class="text-center"><a href="{{route('admin.role.destroy', ['role' => $role->id])}}" class="btn btn-danger btn-delete" data-page="role"><i class="fa fa-trash"></i></a></td>
       </tr>
       @endforeach

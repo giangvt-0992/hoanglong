@@ -26,16 +26,19 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li>
-                        <a href="{{route('admin.user.index')}}"><i class="fa fa-users"></i> Nguời dùng và phân quyền </a>
+                        <a href="{{route('admin.user.index')}}"><i class="fas fa-users"></i> Nguời dùng và phân quyền </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.brand.index')}}"><i class="fa fa-bus"></i> Nhà xe </a>
+                        <a href="{{route('admin.brand.index')}}"><i class="fas fa-bus"></i> Nhà xe </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.place.index')}}"><i class="fa fa-map-marker"></i> Địa điểm </a>
+                        <a href="{{route('admin.place.index')}}"><i class="fas fa-map-marker-alt"></i> Địa điểm </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.route.index')}}"><i class="fa fa-road"></i> Tuyến đường </a>
+                        <a href="{{route('admin.route.index')}}"><i class="fas fa-road"></i> Tuyến đường </a>
+                    </li>
+                    <li>
+                        <a href="{{route('admin.trip.index')}}"><i class="fas fa-shuttle-van"></i> Chuyến </a>
                     </li>
                 </ul>
             </div>

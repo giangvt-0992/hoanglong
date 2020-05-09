@@ -15,7 +15,8 @@ class Route extends Model
         'distance',
         'duration',
         'brand_id',
-        'price'
+        'price',
+        'description',
     ];
 
     public function brand()
@@ -46,6 +47,12 @@ class Route extends Model
     public function getDurationAttribute($value)
     {
         $duration = json_decode($value);
-        return 'abc';
+        return $duration;
     }
+
+    public function places()
+    {
+        return $this->belongsToMany(Place::class, 'passing_places', 'route_id', 'place_id');
+    }
+    
 }

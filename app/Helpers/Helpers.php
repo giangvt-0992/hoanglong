@@ -55,3 +55,9 @@ if (!function_exists('decodeDurationJson')) {
 //         return $durationStr;
 //     }
 // }
+if (!function_exists('isDuplicateArray')) {
+    function isDuplicateArray($array)
+    {
+        return count($array) != count(array_unique($array));
+    }
+}
