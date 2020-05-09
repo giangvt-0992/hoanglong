@@ -65,8 +65,8 @@
     "Hotline": "Đường dây nóng",
     "I agreed with the terms and policies for using service": "Tôi đồng ý với các điều khoản sử dụng dịch vụ",
     "Operation Center Department, Giang Tuan Transport Co.,Ltd, No 5, Pham Ngu Lao, Ngo Quyen Distric, Hai Phong, VietNam.": "Phòng Điều hành trung tâm, Công ty TNHH vận tải Giang Tuấn, Số 21 Ngõ 41 Đông Tác Đống Đa Hà Nội",
-    "Payment method": "Hình thức thanh toán",
-    "Expected customers will board the car at": "Dự kiến khách hàng sẽ lên xe lúc",
+    "Payments method": "Hình thức thanh toán",
+    "Expected customers will board the car in :place at": "Dự kiến khách hàng sẽ lên xe tại :place lúc",
     "Total price": "Tổng tiền",
     "Booking confirmation": "Xác nhận đặt vé",
     "Verification code": "Mã xác nhận",
@@ -83,5 +83,13 @@
     "Hello": "Xin chào",
     "Booking ticket successfully!": "Đặt vé thành công",
     "Route": "Tuyến",
-    "Trip": "Chuyến"
+    "Trip": "Chuyến",
+    "The number of beds will be canceled if you are not successful payment": "Số ghế sẽ bị hủy nếu như bạn không thanh toán thành công",
+    "Select pickup address": "Chọn điểm lên xe",
+    "Please select seat": "Xin mời chọn số ghế",
+    "Seat :index has been booked": "Ghế số :index đã được đặt",
+    "Selecting": "Đang chọn",
+    "Available": "Ghế trống",
+    "Reserved": "Ghế đã được đặt",
+    "Book ticket successfully": "Đặt vé thành công"
 }

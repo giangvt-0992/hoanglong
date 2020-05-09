@@ -111,13 +111,12 @@ $desProvinceName = $desProvince != null ? $desProvince->name : '';
                                     <td class="hidden-xs hidden-sm"><b>{{$route->desName}}</b></td>
                                     <td class="hidden-xs hidden-sm">{{$route->arriveTime}}</td>
 
-                                    <td class="hidden-xs hidden-sm">{{$route->duration}}</td>
-
+                                    <td class="hidden-xs hidden-sm">{{decodeDurationJson($route->duration)}}</td>
                                     <td><b>{{$route->availableSeats}}</b></td>
                                     <td class="hidden-xs hidden-sm">{{$route->carType}}</td>
                                     <td>{{number_format($route->price)}}</td>
                                     <td>
-                                    <a class="btn buttonTransparent btnSetVehicleId" data-brand-id="{{$route->brandId}}" data-brand-name="{{$route->brandName}}" data-tdd-id="{{$route->tripDepartDateId}}" data-depart-id="{{$route->departId}}" data-depart-name="{{$route->departName}}" data-des-id="{{$route->desId}}" data-des-name="{{$route->desName}}" data-depart-time="{{$route->departTime}}" data-date="{{$date}}" data-price="{{$route->price}}" data-datecheck="{{$date}}" data-quantity="{{$quantity}}"  data-route-name="{{$route->routeName}}" data-des-time="{{$route->arriveTime}}" data-dep-province-name="{{$depProvinceName}}" data-des-province-name="{{$desProvinceName}}">{{ __('book') }}</a>
+                                    <a class="btn buttonTransparent btnSetVehicleId" data-brand-id="{{$route->brandId}}" data-brand-name="{{$route->brandName}}" data-tdd-id="{{$route->tripDepartDateId}}" data-depart-id="{{$route->departId}}" data-depart-name="{{$route->departName}}" data-des-id="{{$route->desId}}" data-des-name="{{$route->desName}}" data-depart-time="{{$route->departTime}}" data-date="{{$date}}" data-price="{{$route->price}}" data-datecheck="{{$date}}" data-quantity="{{$quantity}}"  data-route-name="{{$route->routeName}}" data-des-time="{{$route->arriveTime}}" data-dep-province-name="{{$depProvinceName}}" data-des-province-name="{{$desProvinceName}}" data-trip-id="{{$route->tripId}}">{{ __('book') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach

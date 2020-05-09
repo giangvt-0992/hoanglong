@@ -1,6 +1,6 @@
-// var errors = data.responseJSON.errors;
 var bill, user_info, code, data_email;
 let culture;
+let selectedSeat = [];
 $(".btnGoToStep").unbind('click');
 $(".btnGoToStep").click(function (e) {
     e.preventDefault();
@@ -57,6 +57,7 @@ $(".btnSetVehicleId").click(function () {
         routeName: $(this).attr('data-route-name'),
         depProvinceName: $(this).attr('data-dep-province-name'),
         desProvinceName: $(this).attr('data-des-province-name'),
+        tripId: $(this).attr('data-trip-id'),
     }
     gotostep(2);
 });
@@ -163,7 +164,7 @@ var checkPrivacy = function () {
     }
 };
 $("#confirm-button").unbind('click');
-$("#confirm-button").click(function (e) {
+$("#confirm-button").click( async function (e) {
     e.preventDefault();
     culture = $(this).attr('data-culture');
     var checkFullname = $("#passengerName").val().trim();
@@ -230,6 +231,7 @@ $("#confirm-button").click(function (e) {
     $("#routeNameHd").val(bill.routeName);
     $("#depProvinceNameHd").val(bill.depProvinceName);
     $("#desProvinceNameHd").val(bill.desProvinceName);
+    $("#selectedSeatsHd").val(selectedSeat.join(','));
 
     $("#passengerNameTbl").text(bill.passengerName);
     $("#passengerPhoneTbl").text(bill.passengerPhone);
@@ -251,6 +253,9 @@ $("#confirm-button").click(function (e) {
         $("#paymenttypeTbl").text(text);
     }
     createCaptcha();
+
+    await getPickupPlaces(bill.tripId);
+    await getSeatMap(bill.tddId);
     gotostep(3);
     return false;
 });
@@ -288,16 +293,20 @@ function clearBorderError() {
 
 function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    return num;
 }
 
 $(".btnConfirmTicket").unbind('click');
 $(".btnConfirmTicket").click(function () {
     var confirmCodeText = document.getElementById('CaptchaCodeText').value;
+    if (selectedSeat.length < bill.quantity) {
+        Alert.Warning("Bạn chưa chọn đủ số lượng ghế");
+        return;
+    }
     if (confirmCodeText === code) {
         $("#notecaptcha").hide();
         const form = $('#form_step3');
         $('#pageLoading').addClass('show');
+        $("#selectedSeatsHd").val(selectedSeat.join(','));
         $.ajax({
             type: 'POST',
             url: form.attr('action'),
@@ -335,4 +344,91 @@ $(".btnConfirmTicket").click(function () {
 
 });
 
+function getPickupPlaces (tripId) {
+    
+    $.ajax({
+        url: "/get-pickup-places",
+        type: 'post',
+        data: {tripId : tripId},
+        success: function (res) {
+            if (res.status === 200) {
+                $("#slPickupPlace").empty();
 
+                res.data.map((schedule, index) => {
+                    const {time, location} = schedule;
+                    let option = '';
+                    if (index === 0) {
+                        $("#mapPickupPlace").attr("src", location.map_url);
+                        option = `<option value="${location.id}" selected data-map-url="${location.map_url}" data-name="${location.name}">${time} - ${location.name}</option>`;
+                        $("#pickupPlaceHd").val(location.id);
+                        $("#pickupPlaceNameHd").val(location.name);
+                    } else {
+                        option = `<option value="${location.id}" data-map-url="${location.map_url}">${time} - ${location.name}</option>`;
+                    }
+                    
+                    $("#slPickupPlace").append(option);
+                });
+            }
+        },
+        error: function (error) {
+            console.log(error);
+            
+        }
+    })
+}
+
+$("#slPickupPlace").change(function () {
+    const mapUrl = $("#slPickupPlace option:selected").attr('data-map-url');
+    $("#mapPickupPlace").attr("src", mapUrl);
+    $("#pickupPlaceHd").val($(this).val());
+    $("#pickupPlaceNameHd").val($("#slPickupPlace option:selected").attr('data-name'));
+})
+
+$('.book-seat').click(function () {
+    bookSeat($(this));
+});
+
+function bookSeat() {
+    const quantity = parseInt(bill.quantity);
+  
+  
+  const index = selectedSeat.indexOf($(this).attr('data-id'));
+  if (index === -1) {
+    if (selectedSeat.length >= quantity) {
+        if (culture == "vi") {
+            Alert.Warning("Số lượng ghế đã vượt quá giới hạn.");
+        } else {
+            Alert.Warning("The number of seats has exceeded the limit.");
+        }
+        return;
+    }
+    selectedSeat.push($(this).attr('data-id'));
+    $(this).toggleClass('seat-default');
+    $(this).toggleClass('seat-blue');
+  } else {
+    selectedSeat = [ ...selectedSeat.slice(0,index), ...selectedSeat.slice(index+1)];
+    $(this).toggleClass('seat-default');
+    $(this).toggleClass('seat-blue');
+  }
+  $('#selectedSeat').text(selectedSeat.join(','));
+  $("#selectedSeatsHd").val(selectedSeat.join(','));
+}
+
+const getSeatMap = (tddId) => {
+    $.ajax({
+        url: "/get-seat-map",
+        type: 'post',
+        data: {tddId : tddId},
+        success: function (res) {
+            if (res.status === 200) {
+                $("#list_seat").empty();
+                $("#list_seat").append(res.data.view);
+                $(".book-seat").on('click', bookSeat);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+            
+        }
+    })
+}

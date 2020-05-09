@@ -18,7 +18,8 @@ class Ticket extends Model
         'total',
         'user_id',
         'unit_price',
-        'code'
+        'code',
+        'pickup_place_id'
     ];
 
     public function tripDepartDate()

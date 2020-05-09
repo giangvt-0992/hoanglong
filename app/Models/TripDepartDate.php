@@ -30,4 +30,11 @@ class TripDepartDate extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function seatMap() {
+        $seatJson = $this->seat_map;
+        $seatArray = json_decode($seatJson, true);
+        return $seatArray;
+    }
+
 }

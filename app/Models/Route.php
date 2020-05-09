@@ -46,6 +46,6 @@ class Route extends Model
     public function getDurationAttribute($value)
     {
         $duration = json_decode($value);
-        return $duration;
+        return 'abc';
     }
 }

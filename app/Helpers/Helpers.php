@@ -35,3 +35,23 @@ if (!function_exists('decodeFormatNumber')) {
         return $number;
     }
 }
+
+if (!function_exists('decodeDurationJson')) {
+    // 123,456 => 123456
+    function decodeDurationJson($duration)
+    {
+        $duration = json_decode($duration);
+        $durationStr = "$duration->hours" . "h$duration->minutes'";
+        return $durationStr;
+    }
+}
+
+// if (!function_exists('decodeDurationJson')) {
+//     // 123,456 => 123456
+//     function decodeDurationJson($duration)
+//     {
+//         $duration = json_decode($duration);
+//         $durationStr = "$duration->hours" . "h$duration->minutes'";
+//         return $durationStr;
+//     }
+// }

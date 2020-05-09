@@ -40,6 +40,7 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
             'passengerAddress' => $data['passengerAddress'],
         ];
         
+        $selectedSeats = explode(',', $data['selectedSeats']);
         $code = $this->generateRandomCode(11);
         $ticket = [
             'trip_depart_date_id' => $data['tddId'],
@@ -49,10 +50,10 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
             'brand_id' => $data['brandId'],
             'user_id' => $data['userId'],
             'passenger_info' => json_encode($passengerInfo),
-            'list_seat' => json_encode([]),
-            'code' => $code
+            'list_seat' => json_encode($selectedSeats),
+            'code' => $code,
+            'pickup_place_id' => $data['pickupPlace']
         ];
-
         return $this->model->create($ticket);
     }
 

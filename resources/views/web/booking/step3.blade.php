@@ -103,20 +103,47 @@
     <div class="panel panel-default pnlconfirmseat packagesFilter margin-top-10">
         <div class="panel-heading">
             <h3 class="panel-title"> {{__('Booking confirmation')}} </h3>
-            <div class="row">
-                
-                <div class="col-sm-2 col-xs-12">  {{ __('Verification code')}} </div>
-                <div class="col-sm-4 col-xs-12 form-group">
-                    <input type="hidden" name="CapImageText" id="CapImageText" value="383802">
-                    <div id="captcha">
-                    </div>
-                    <input type="text" class="form-control" autocomplete="off"  placeholder="" id="CaptchaCodeText" name="CaptchaCodeText" required="required">
-                    <span class="notecaptcha" id="notecaptcha" style="display: none;">({{ __('Incorrect code')}})</span>
-                    <span class="note">({{ __('Please enter the verification code')}})</span>
-                </div>
-            </div>
+            
         </div>
         <div class="panel-body confirminfo">
+            <div class="row">
+                <div class="col-md-12 listseat">
+                    <div class="row limit-seat" id="list_seat">
+                        
+                    </div>
+                    <div class="row margin-bottom-10">
+                        <div class="col-sm-2 col-xs-12">{{__('Please select seat')}}</div>
+                        <div class="col-sm-9 col-xs-12"><span id="selectedSeat"></span><br><span class="note">(The number of beds will be canceled if you are not successful payment)</span><input type="hidden" name=" seat blockshift blockshift3d" id=" seat blockshift blockshift3d"></div>
+                    </div>
+                    <div class="row margin-bottom-10">
+                        <div class="col-sm-2 col-xs-12">{{__('Select pickup address')}}</div>
+                        <div class="col-sm-4 col-xs-12">
+                            <select class="form-control" id="slPickupPlace">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    {{-- <div class="row margin-bottom-10">
+                        <div class="col-sm-4 col-xs-12 col-sm-offset-2">
+                            - You should ask any Vietnamese arround you who living in this area, they'll show you the way to this address. Sorry for this inconvenience.
+                        </div>
+                    </div> --}}
+                    <div class="row margin-bottom-10" style="height: 300px; position:relative; overflow: hidden;">
+                        <div class="col-md-12">
+                        <iframe src="" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="mapPickupPlace"></iframe>
+                    </div>
+                    </div>
+                    <div class="col-sm-2 col-xs-12">  {{ __('Verification code')}} </div>
+                    <div class="col-sm-4 col-xs-12 form-group">
+                        <input type="hidden" name="CapImageText" id="CapImageText" value="383802">
+                        <div id="captcha">
+                        </div>
+                        <input type="text" class="form-control" autocomplete="off"  placeholder="" id="CaptchaCodeText" name="CaptchaCodeText" required="required">
+                        <span class="notecaptcha" id="notecaptcha" style="display: none;">({{ __('Incorrect code')}})</span>
+                        <span class="note">({{ __('Please enter the verification code')}})</span>
+                    </div>
+                </div>
+        </div>
             <form action="{{route('booking-route', ['locale' => app()->getLocale()])}}" method="POST" class="form" id="form_step3">
                 {{-- <input type="hidden" name="_token" value="{{csrf_token()}}"> --}}
                 <input type="hidden" name="passengerName" id="passengerNameHd">
@@ -136,6 +163,9 @@
                 <input type="hidden" name="routeName" id="routeNameHd">
                 <input type="hidden" name="depProvinceName" id="depProvinceNameHd">
                 <input type="hidden" name="desProvinceName" id="desProvinceNameHd">
+                <input type="hidden" name="selectedSeats" id="selectedSeatsHd">
+                <input type="hidden" name="pickupPlace" id="pickupPlaceHd">
+                <input type="hidden" name="pickupPlaceName" id="pickupPlaceNameHd">
                 <div class="listseat ">
                     <div class="row">
                         <div class="col-sm-2 col-xs-12"></div>
