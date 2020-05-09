@@ -68,6 +68,13 @@ Route::group([
         });
 
         Route::group([
+            'as' => 'province.',
+            'prefix' => 'provinces'
+        ], function () {
+            Route::post('/places', 'ProvinceController@places')->name('places');
+        });
+
+        Route::group([
             'as' => 'route.',
             'prefix' => 'routes'
         ], function () {
@@ -77,6 +84,19 @@ Route::group([
             Route::get('/{route}/edit', 'RouteController@edit')->name('update');
             Route::post('/{route}/edit', 'RouteController@update');
             Route::get('/{route}/destroy', 'RouteController@destroy')->name('destroy');
+            Route::post('/passingPlaces', 'RouteController@passingPlaces')->name('passingPlaces');
+        });
+
+        Route::group([
+            'as' => 'trip.',
+            'prefix' => 'trips'
+        ], function () {
+            Route::get('/', 'TripController@index')->name('index');
+            Route::get('/create', 'TripController@create')->name('create');
+            Route::post('/', 'TripController@store')->name('store');
+            Route::get('/{trip}/edit', 'TripController@edit')->name('update');
+            Route::post('/{trip}/edit', 'TripController@update');
+            Route::get('/{trip}/destroy', 'TripController@destroy')->name('destroy');
         });
     });
 });

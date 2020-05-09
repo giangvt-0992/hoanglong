@@ -20,7 +20,6 @@ $factory->define(Trip::class, function (Faker $faker, $var) {
         'depart_time' => $start = date("H:i", $now),
         'arrive_time' => $end = date("H:i", $endStamp),
         'pick_up_schedule' => json_encode([['time' => $start,'location' =>  $depart_place]]),
-        'get_off_schedule' => json_encode([['time' => $end,'location' =>  $des_place]]),
         'brand_id' => $route->brand_id,
         'route_id' => $route->id,
         'car_type_id' => $faker->numberBetween(1, 10)

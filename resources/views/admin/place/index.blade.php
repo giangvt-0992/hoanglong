@@ -38,7 +38,7 @@
 									<td>{{$place->address}}</td>
 									<td class="shorter">{{$place->map_url}}</td>
 									<td>{{$place->district->name}}</td>
-									<td class="text-center"><a href="{{route('admin.place.update', ['place' => $place->id])}}" class="btn btn-warning" ><i class="fa fa-pencil"></i></a></td>
+									<td class="text-center"><a href="{{route('admin.place.update', ['place' => $place->id])}}" class="btn btn-warning" ><i class="fas fa-pencil-alt"></i></a></td>
 									<td class="text-center"><a href="{{route('admin.place.destroy', ['place' => $place->id])}}" class="btn btn-danger btn-delete" data-page="place"><i class="fa fa-trash"></i></a></td>
 								</tr>
 								@endforeach

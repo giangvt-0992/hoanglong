@@ -11,7 +11,8 @@
 
     <!-- Bootstrap -->
     <link href="{{url('admin_template/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{url('admin_template/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{url('admin_template/css/all.min.css')}}" rel="stylesheet">
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/fontawesome.min.css" rel="stylesheet"> --}}
     <!-- NProgress -->
     <link href="{{url('admin_template/css/nprogress.css')}}" rel="stylesheet">
     <link href="{{url('admin_template/vendors/iCheck/skins/flat/blue.css')}}" rel="stylesheet">
@@ -27,6 +28,8 @@
 
     <link href="{{url('admin_template/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
 
+    <link href="{{url('admin_template/vendors/gijgo-datetimepicker/css/gijgo.min.css')}}" rel="stylesheet"/>
+    
     <!-- Custom Theme Style -->
     <link href="{{url('admin_template/css/custom.min.css')}}" rel="stylesheet">
     <link href="{{url('admin_template/css/my-styles.css')}}" rel="stylesheet">
@@ -70,6 +73,12 @@
     <script src="{{url('admin_template/vendors/pnotify/dist/pnotify.buttons.js')}}"></script>
     <script src="{{url('admin_template/vendors/iCheck/icheck.min.js')}}"></script>
     <script src="{{url('admin_template/vendors/select2/dist/js/select2.min.js')}}"></script>
+
+    <script src="{{url('admin_template/vendors/gijgo-datetimepicker/js/gijgo.min.js')}}"></script>
+
+    {{-- <script src="{{url('admin_template/vendors/moment/moment.min.js')}}"></script>
+
+    <script src="{{url('admin_template/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script> --}}
     <!-- Custom Theme Scripts -->
     <script src="{{url('admin_template/js/custom.min.js')}}"></script>
     <script src="{{url('admin_template/js/dropzone-config.js')}}"></script>

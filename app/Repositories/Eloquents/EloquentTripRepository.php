@@ -20,13 +20,13 @@ class EloquentTripRepository extends EloquentBaseRepository implements TripRepos
 
     public function all()
     {
-        return $this->model->with('departPlace:id,name', 'desPlace:id,name')->get();
+        return $this->model->get();
     }
 
     public function allByAdmin()
     {
         $admin = getAuthAdmin();
-        return $this->model->whereBrandId($admin->brand_id)->with('departPlace:id,name', 'desPlace:id,name')->get();
+        return $this->model->whereBrandId($admin->brand_id)->get();
     }
     
     public function paginate($items = null)
