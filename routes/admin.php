@@ -10,6 +10,13 @@ Route::group([
     Route::get('logout', 'AuthController@logout')->name('logout');
     Route::post('/file/upload', 'ImageController@upload')->name('image.upload');
     Route::post('/file/delete', 'ImageController@delete')->name('image.delete');
+    Route::post('reset-password-mail', 'ResetPasswordController@sendMail')->name('password.sendmail');
+    Route::get('reset-password', 'ResetPasswordController@showResetForm');
+    Route::post('reset-password', 'ResetPasswordController@resetPassword')->name('password.reset');
+    // Route::post('reset-password', 'ResetPasswordController@sendMail')->name('password.reset');
+    // Route::get('reset-password/{token}', 'ResetPasswordController@reset')->name('password.reset');
+    // Route::put('reset-password/{token}', 'ResetPasswordController@reset');
+    // Route::post('sendmail', 'ResetPasswordController@sendMail')->name('reset.password');
     Route::group([
         'middleware' => ['admin', 'image.unuse', 'auth:admin']
     ], function () {
