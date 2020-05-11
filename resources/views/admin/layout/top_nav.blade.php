@@ -26,66 +26,30 @@
                 
                 <li role="presentation" class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-green">6</span>
+                        <i class="far fa-bell"></i>
+                        <span class="badge bg-green">{{count($notifications)}}</span>
                     </a>
                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                        <li>
-                            <a>
-                                <span class="image"><img src="admin_template/images/img.jpg" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image"><img src="admin_template/images/img.jpg" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image"><img src="admin_template/images/img.jpg" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image"><img src="admin_template/images/img.jpg" alt="Profile Image" /></span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="text-center">
-                                <a>
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
+                        <div style="max-height: 250px; overflow-y: scroll;" id="notiWrapper">
+                            @foreach ($notifications as $notification)
+                            <li>
+                                <a href="{{route('admin.ticket.detail', ['code' => $notification->data['code']])}}">
+                                  <span class="message">
+                                    {{$notification->data['message']}}
+                                  </span>
+                                  <span>
+                                  <span class="time">{{date("H:i d-m-y", strtotime($notification->created_at))}}</span>
+                                  </span>
                                 </a>
-                            </div>
-                        </li>
+                              </li>
+                            @endforeach
+                        </div>
+                            <li>
+                                <div class="text-center">
+                                    <a href="javascript:;" id="markReadAll">Đánh dấu tất cả đã đọc</a>
+                                </div>
+                            </li>
+                        
                     </ul>
                 </li>
             </ul>

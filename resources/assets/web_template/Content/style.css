@@ -400,3 +400,53 @@
         margin: 0px -40px !important;
     }
 }
+
+.seat {
+    font: bold 16px Arial, Helvetica, Clean, sans-serif;
+
+    height: 48px;
+    width: 48px;
+    line-height: 48px;
+
+    text-align: center;
+}
+.seat-default {
+    background-image: url('../../images/seat_default_48.png');
+    cursor: pointer;
+} 
+.seat-blue {
+    color: #fff;
+    background-image: url('../../images/seat_blue_48.png');
+    cursor: pointer;
+}
+.seat-gray {
+    color: #fff;
+    background-image: url('../../images/seat_gray_48.png');
+    cursor: no-drop;
+}
+.ml-auto {
+    margin-left: auto;
+}
+.mr-auto {
+    margin-right: auto;
+}
+.m-auto {
+    margin: 0 auto;
+}
+.seat-description-wrapper {
+    padding-top: 24px;
+}
+.seat-description {
+    display: flex;
+    height: 48px;
+    line-height: 48px;
+    margin-bottom: 10px;
+    
+}
+.seat-description p {
+    line-height: 48px;
+    margin: 0;
+    padding-left: 10px;
+}
+
+    

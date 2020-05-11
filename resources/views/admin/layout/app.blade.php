@@ -33,7 +33,12 @@
     <!-- Custom Theme Style -->
     <link href="{{url('admin_template/css/custom.min.css')}}" rel="stylesheet">
     <link href="{{url('admin_template/css/my-styles.css')}}" rel="stylesheet">
-
+<style>
+  li.read {
+    background: #fff!important;
+    border-top: 1px solid #e0dddd;
+  }
+</style>
   </head>
 
   <body class="nav-md">
@@ -83,6 +88,76 @@
     <script src="{{url('admin_template/js/custom.min.js')}}"></script>
     <script src="{{url('admin_template/js/dropzone-config.js')}}"></script>
     <script src="{{url('admin_template/js/my-scripts.js')}}"></script>
+    <script src="{{url('admin_template/js/pusher.min.js')}}"></script>
+    <script>
+      Pusher.logToConsole = true;
+
+      var pusher = new Pusher('8c4f80a61d10b83a842d', {
+        cluster: 'ap1'
+      });
+
+      var channel = pusher.subscribe('my-channel');
+      channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data));
+
+        if (data.type == 'ticket') {
+          let template = `
+          <li>
+            <a href="${data.route}">
+              <span class="message">
+                ${data.message}
+              </span>
+              <span>
+                <span class="time">${data.time}</span>
+              </span>
+            </a>
+          </li>
+          `;
+          $("#notiWrapper").prepend(template);
+          $("#menu1 li").bind('click', openNoti());
+        }
+      });
+
+      $("#markReadAll").click( function (e) {
+        e.preventDefault();
+        if ($("#menu1 div li").length > 0) {
+          $.ajax({
+          type: 'get',
+          url: 'admin/mark-as-read-all',
+          data: {},
+          success: function (data) {
+            console.log(data);
+            
+            if (data.status === 200) {
+              $("#menu1 li").each(function () {
+                $(this).addClass('read');
+              })
+            }
+          },
+          error: function (error) {
+            console.log(error);
+            
+          }
+        })
+        }
+        
+        
+      });
+
+      $("#menu1 div li").click(function (e) {
+        const href= $(this).children("a").attr('href');
+        if (href) {
+          window.location = href;
+        }
+      });
+
+      function openNoti() {
+        const href= $(this).children("a").attr('href');
+        if (href) {
+          window.location = href;
+        }
+      }
+    </script>
     @yield('after-scripts')
   </body>
 </html>

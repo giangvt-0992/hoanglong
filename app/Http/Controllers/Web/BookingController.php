@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Contracts\Repositories\BrandRepository;
 use App\Contracts\Repositories\ProvinceRepository;
 use App\Contracts\Repositories\RouteRepository;
 use App\Contracts\Repositories\TicketRepository;
 use App\Contracts\Repositories\TripDepartDateRepository;
 use App\Contracts\Repositories\UserRepository;
+use App\Events\NewTicketEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendMailJob;
 use App\Mail\SendMail;
+use App\Models\Brand;
+use App\Models\Route;
+use App\Models\Ticket;
+use App\Notifications\NewTicketNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Pusher\Pusher;
 
 class BookingController extends Controller
 {
@@ -23,19 +30,22 @@ class BookingController extends Controller
     protected $userRepository;
     protected $ticketRepository;
     protected $tripDepartDateRepository;
+    protected $brandRepository;
 
     public function __construct(
         RouteRepository $routeRepository,
         ProvinceRepository $provinceRepository,
         UserRepository $userRepository,
         TicketRepository $ticketRepository,
-        TripDepartDateRepository $tripDepartDateRepository
+        TripDepartDateRepository $tripDepartDateRepository,
+        BrandRepository $brandRepository
     ) {
         $this->routeRepository = $routeRepository;
         $this->provinceRepository = $provinceRepository;
         $this->userRepository = $userRepository;
         $this->ticketRepository = $ticketRepository;
         $this->tripDepartDateRepository = $tripDepartDateRepository;
+        $this->brandRepository = $brandRepository;
     }
 
     public function index(Request $request)
@@ -132,6 +142,9 @@ class BookingController extends Controller
         $ticketData['ticketCode'] = $ticket->code;
         $view = view('web.booking.step4', ['ticketData' => $ticketData])->render();
         SendMailJob::dispatch($ticketData);
+        $brand = $ticket->brand;
+        $routeName = $ticketData['routeName'];
+        $this->newTicketNotification($brand, $ticket, $routeName);
 
         return response()->json([
                 'status' => "success",
@@ -140,5 +153,50 @@ class BookingController extends Controller
                 ],
                 "message" => __('Book ticket successfully')
             ]);
+    }
+
+    public function newTicketNotification(Brand $brand,Ticket $ticket, $routeName)
+    {
+        $data = [
+            'type' => 'ticket',
+            'message' => "Tuyến xe $routeName có 1 vé xe mới ",
+            'code' => $ticket->code,
+            'time' => date('H:i:s d-m-Y', strtotime($ticket->created_at))
+        ];
+        if ($brand) {
+            
+            $brand->notify(new NewTicketNotification($data));
+        }
+
+        $data1 = [
+            'type' => 'ticket',
+            'message' => "Tuyến xe $routeName có 1 vé xe mới ",
+            'route' => route('admin.ticket.detail', [
+                'code' => $ticket->code
+            ]),
+            'time' => date('H:i:s d-m-Y', strtotime($ticket->created_at))
+        ];
+
+        $options = [
+            'cluster' => 'ap1',
+            'useTLS' => true
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('my-channel', 'my-event', $data1);
+        // event(new NewTicketEvent($data));
+    }
+
+    public function test()
+    {
+        $brand = $this->brandRepository->find(9);
+        $ticket = Ticket::find(10);
+        $this->newTicketNotification($brand, $ticket, 'Hà Nội - Thái Bình');
     }
 }
