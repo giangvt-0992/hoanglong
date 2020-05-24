@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TripRequest;
 use App\Models\Trip;
+use Illuminate\Support\Facades\DB;
 
 class TripController extends Controller
 {
@@ -151,5 +152,36 @@ class TripController extends Controller
             return redirect()->route('admin.trip.index')->with('error', 'Xóa chuyến không thành công.');
         }
         return redirect()->route('admin.trip.index')->with('success', 'Xóa chuyến thành công');
+    }
+
+    public function active(Trip $trip)
+    {
+        $this->authorize('trip.delete', $trip);
+
+        $route = $trip->route;
+        // echo('<pre>');
+        // print_r($route->getOriginal('is_active'));
+        // echo('<pre>');
+        // exit();
+        if ($route && $route->getOriginal('is_active') == false) {
+            return redirect()->route('admin.trip.index')->with('error', 'Kích hoạt chuyến không thành công. Vui lòng kích hoạt tuyến ' . $route->name . ' trước!');
+        }
+
+        $isActive = true;
+        if ($this->tripRepository->toggleIsActive($trip, $isActive)) {
+            return redirect()->route('admin.trip.index')->with('success', 'Kích hoạt chuyến thành công.');
+        }
+        return redirect()->route('admin.trip.index')->with('error', 'Kích hoạt chuyến không thành công.');
+    }
+
+    public function inactive(Trip $trip)
+    {
+        $this->authorize('trip.delete', $trip);
+
+        $isActive = false;
+        if ($this->tripRepository->toggleIsActive($trip, $isActive)) {
+            return redirect()->route('admin.trip.index')->with('success', 'Ngưng kích hoạt chuyến thành công.');
+        }
+        return redirect()->route('admin.trip.index')->with('error', 'Ngưng kích hoạt chuyến không thành công.');
     }
 }

@@ -40,6 +40,9 @@
                     <li>
                         <a href="{{route('admin.trip.index')}}"><i class="fas fa-shuttle-van"></i> Chuyến </a>
                     </li>
+                    <li>
+                        <a href="{{route('admin.trip_date.index')}}"><i class="fas fa-calendar-alt"></i> Lịch chạy </a>
+                    </li>
                 </ul>
             </div>
             {{-- <div class="menu_section">

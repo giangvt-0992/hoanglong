@@ -180,4 +180,38 @@ class RouteController extends Controller
             'data' => $passingPlace
         ]);
     }
+
+    public function getTrips(Route $route)
+    {
+        $trips = $route->trips()->select('id', 'name')->get();
+
+        return response()->json([
+            'status' => 200,
+            'data' => [
+                'trips' => $trips
+            ],
+        ]);
+    }
+    
+    public function active(Route $route)
+    {
+        $this->authorize('route.delete', $route);
+
+        $isActive = true;
+        if ($this->routeRepository->toggleIsActive($route, $isActive)) {
+            return redirect()->route('admin.route.index')->with('success', 'Kích hoạt tuyến thành công.');
+        }
+        return redirect()->route('admin.route.index')->with('error', 'Kích hoạt tuyến không thành công.');
+    }
+
+    public function inactive(Route $route)
+    {
+        $this->authorize('route.delete', $route);
+
+        $isActive = false;
+        if ($this->routeRepository->toggleIsActive($route, $isActive)) {
+            return redirect()->route('admin.route.index')->with('success', 'Ngưng kích hoạt tuyến thành công.');
+        }
+        return redirect()->route('admin.route.index')->with('error', 'Ngưng kích hoạt tuyến không thành công.');
+    }
 }

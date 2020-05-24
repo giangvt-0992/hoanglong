@@ -17,6 +17,7 @@ class Route extends Model
         'brand_id',
         'price',
         'description',
+        'is_active'
     ];
 
     public function brand()
@@ -55,4 +56,8 @@ class Route extends Model
         return $this->belongsToMany(Place::class, 'passing_places', 'route_id', 'place_id');
     }
     
+    public function getIsActiveAttribute($value)
+    {
+        return $value ? 'Kích hoạt' : 'Ngưng kích hoạt';
+    }
 }

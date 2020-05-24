@@ -26,13 +26,22 @@ ul.to_do li {
   padding-right: 0;
 }
 
-.timepicker {
+.timepicker, .datepicker {
+  box-shadow: none;
+  background-color: #fff;
+}
+
+.timepicker[readonly], .datepicker[readonly] {
+  background-color: #fff;
+}
+
+/* .datepicker {
   box-shadow: none;
 }
 
-.timepicker[readonly] {
-  background-color: inherit;
-}
+.datepicker[readonly] {
+  background-color: #fff;
+} */
 
 .select2 {
   width: 100%!important;

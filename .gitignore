@@ -14,3 +14,7 @@ npm-debug.log
 yarn-error.log
 /laradock
 /docker/mysql
+/.framgia-ci-reports
+/.framgia-ci-result.temp.yml
+/.vscode
+/.swp

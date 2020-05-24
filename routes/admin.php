@@ -89,6 +89,9 @@ Route::group([
             Route::post('/{route}/edit', 'RouteController@update');
             Route::get('/{route}/destroy', 'RouteController@destroy')->name('destroy');
             Route::post('/passingPlaces', 'RouteController@passingPlaces')->name('passingPlaces');
+            Route::get('/{route}/trips', 'RouteController@getTrips')->name('trips');
+            Route::get('/{route}/active', 'RouteController@active')->name('active');
+            Route::get('/{route}/inactive', 'RouteController@inactive')->name('inactive');
         });
 
         Route::group([
@@ -101,6 +104,8 @@ Route::group([
             Route::get('/{trip}/edit', 'TripController@edit')->name('update');
             Route::post('/{trip}/edit', 'TripController@update');
             Route::get('/{trip}/destroy', 'TripController@destroy')->name('destroy');
+            Route::get('/{trip}/active', 'TripController@active')->name('active');
+            Route::get('/{trip}/inactive', 'TripController@inactive')->name('inactive');
         });
 
         Route::group([
@@ -111,9 +116,22 @@ Route::group([
             Route::get('/detail/{code}', 'TicketController@detail')->name('detail');
             Route::get('/create', 'TicketController@create')->name('create');
             Route::post('/', 'TicketController@store')->name('store');
-            Route::get('/{Ticket}/edit', 'TicketController@edit')->name('update');
-            Route::post('/{Ticket}/edit', 'TicketController@update');
-            Route::get('/{Ticket}/destroy', 'TicketController@destroy')->name('destroy');
+            Route::get('/{ticket}/edit', 'TicketController@edit')->name('update');
+            Route::post('/{ticket}/edit', 'TicketController@update');
+            Route::get('/{ticket}/destroy', 'TicketController@destroy')->name('destroy');
+        });
+
+        Route::group([
+            'as' => 'trip_date.',
+            'prefix' => 'trip_dates'
+        ], function () {
+            Route::get('/', 'TripDepartDateController@index')->name('index');
+            Route::post('/create_single_schedule', 'TripDepartDateController@createSingleSchedule');
+            Route::post('/create_multi_schedule', 'TripDepartDateController@createMultiSchedule');
+            Route::post('/change_status_schedule', 'TripDepartDateController@changeStatusSchedule');
+            Route::get('/change_status_schedule', 'TripDepartDateController@changeStatusSchedule1');
+            Route::get('/search', 'TripDepartDateController@search')->name('search');
+            Route::get('/test', 'TripDepartDateController@test')->name('test');
         });
     });
 });

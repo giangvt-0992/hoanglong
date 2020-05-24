@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 
 if (!function_exists('isActiveRoute')) {
     function isActiveRoute($routeName)
@@ -59,5 +60,23 @@ if (!function_exists('isDuplicateArray')) {
     function isDuplicateArray($array)
     {
         return count($array) != count(array_unique($array));
+    }
+}
+
+if (!function_exists('insertArrayData')) {
+    function insertArrayData($tableName ,$arrayData)
+    {
+        $insertDataCollect = collect($arrayData);
+        $chunks = $insertDataCollect->chunk(200);
+        try {
+            DB::transaction(function() use ($chunks, $tableName){
+                foreach ($chunks as $chunk) {
+                    DB::table($tableName)->insertOrIgnore($chunk->toArray());
+                }
+            });
+        } catch (\Throwable $th) {
+            return false;
+        }
+        return true;
     }
 }

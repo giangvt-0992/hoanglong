@@ -7,6 +7,8 @@ use App\Contracts\Repositories\RouteRepository;
 use App\Models\District;
 use App\Models\Place;
 use App\Models\Route;
+use App\Models\Trip;
+use App\Models\TripDepartDate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -95,7 +97,10 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
         ->where([
             ['tdd.depart_date', $formartDate],
             ['tdd.available_seats', '>=',$data['quantity']],
-            ['t.depart_time', '>=', $timeNow]
+            ['t.depart_time', '>=', $timeNow],
+            ['tdd.is_active', '=', true],
+            ['t.is_active', '=', true],
+            ['r.is_active', '=', true]
             ])
         ->get();
         return $routes;
@@ -111,5 +116,22 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
             return true;
         }
         return false;
+    }
+
+    public function toggleIsActive(Route $route, $isActive)
+    {
+        // try {
+            DB::transaction(function () use ($route, $isActive) {
+                $listTripId = $route->trips()->pluck('id')->toArray();
+                Trip::whereIn('id', $listTripId)->update(['is_active' => $isActive]);
+                TripDepartDate::whereIn('trip_id', $listTripId)->update(['is_active' => $isActive]);
+
+                $route->is_active = $isActive;
+                $route->save();
+            });
+        // } catch (\Throwable $th) {
+        //     return false;
+        // }
+        return true;
     }
 }

@@ -13,7 +13,8 @@ class TripDepartDate extends Model
         'available_seats',
         'seat_map',
         'brand_id',
-        'trip_id'
+        'trip_id',
+        'is_active'
     ];
 
     public function trip()
@@ -37,4 +38,8 @@ class TripDepartDate extends Model
         return $seatArray;
     }
 
+    public function getIsActiveAttribute($value)
+    {
+        return $value ? 'Kích hoạt' : 'Ngưng kích hoạt';
+    }
 }
