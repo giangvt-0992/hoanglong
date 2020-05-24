@@ -5,7 +5,7 @@
 		@include('admin.layout.flash')
 		<div class="page-title">
 			<div class="title_left">
-				<p>Home / Chuyến</p>
+				<p>Home / Chuyến xe</p>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -25,9 +25,8 @@
 									<th class="text-center">Tên</th>
 									<th class="text-center">Giờ đi</th>
 									<th class="text-center">Giờ đến</th>
-									{{-- <th class="text-center">Lịch đón khách</th> --}}
-									{{-- <th class="text-center">Lịch trả khách</th> --}}
 									<th class="text-center">Loại xe</th>
+									<th class="text-center">Trạng thái</th>
 									<th class="text-center">Hành động</th>
 								</tr>
 							</thead>
@@ -38,10 +37,17 @@
 									<td class="text-center" style="max-width: 160px;">{{$trip->name}}</td>
 									<td class="text-center">{{date('H:i', strtotime($trip->depart_time))}}</td>
 									<td class="text-center">{{date('H:i', strtotime($trip->arrive_time))}}</td>
-									{{-- <td class="text-center"></td> --}}
-									{{-- <td class="text-center"></td> --}}
 									<td class="text-center">{{$trip->carType->name}}</td>
-									<td class="text-center"><a href="{{route('admin.trip.update', ['route' => $trip->id])}}" class="btn btn-warning" title="Cập nhật"><i class="fas fa-pencil-alt"></i></a> <a href="{{route('admin.trip.destroy', ['route' => $trip->id])}}" class="btn btn-danger btn-delete" data-page="trip" title="Xóa"><i class="fa fa-trash"></i></a></td>
+									<td class="text-center">{{$trip->is_active}}</td>
+									<td class="text-center">
+										<a href="{{route('admin.trip.update', ['trip' => $trip->id])}}" class="btn btn-warning" title="Cập nhật"><i class="fas fa-pencil-alt"></i></a>
+										@if ($trip->getOriginal('is_active'))
+										<a href="{{route('admin.trip.inactive', ['trip' => $trip->id])}}" class="btn btn-dark" title="Ngưng kích hoạt"><i class="fas fa-ban"></i></a>
+										@else
+										<a href="{{route('admin.trip.active', ['trip' => $trip->id])}}" class="btn btn-success" title="Kích hoạt"><i class="fas fa-recycle"></i></a>
+										@endif
+										<a href="{{route('admin.trip.destroy', ['trip' => $trip->id])}}" class="btn btn-danger btn-delete" data-page="trip" title="Xóa"><i class="fa fa-trash"></i></a>
+									</td>
 								</tr>
 								@endforeach
 							</tbody>

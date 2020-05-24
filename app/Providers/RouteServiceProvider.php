@@ -8,6 +8,7 @@ use App\Models\Place;
 use App\Models\Role;
 use App\Models\Route as ModelsRoute;
 use App\Models\Trip;
+use App\Models\TripDepartDate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -50,6 +51,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('route', function ($value) {
             return ModelsRoute::findOrFail($value);
+        });
+        Route::bind('tripDepartDate', function ($value) {
+            return TripDepartDate::findOrFail($value);
         });
     }
 

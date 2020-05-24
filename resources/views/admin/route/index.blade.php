@@ -41,7 +41,14 @@
 									<td class="text-center">{{number_format($route->distance) . ' km'}}</td>
 									<td class="text-center">{{$route->duration->hours . ':' . $route->duration->minutes}}</td>
 									<td class="text-center">{{number_format($route->price)}}</td>
-									<td class="text-center"><a href="{{route('admin.route.update', ['route' => $route->id])}}" class="btn btn-warning" title="Cập nhật"><i class="fas fa-pencil-alt"></i></a> <a href="{{route('admin.route.destroy', ['route' => $route->id])}}" class="btn btn-danger btn-delete" data-page="route" title="Xóa"><i class="fa fa-trash"></i></a></td>
+									<td class="text-center">
+										<a href="{{route('admin.route.update', ['route' => $route->id])}}" class="btn btn-warning" title="Cập nhật"><i class="fas fa-pencil-alt"></i></a>
+										@if ($route->getOriginal('is_active'))
+										<a href="{{route('admin.route.inactive', ['route' => $route->id])}}" class="btn btn-dark" title="Ngưng kích hoạt"><i class="fas fa-ban"></i></a>
+										@else
+										<a href="{{route('admin.route.active', ['route' => $route->id])}}" class="btn btn-success" title="Kích hoạt"><i class="fas fa-recycle"></i></a>
+										@endif
+										<a href="{{route('admin.route.destroy', ['route' => $route->id])}}" class="btn btn-danger btn-delete" data-page="route" title="Xóa"><i class="fa fa-trash"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>

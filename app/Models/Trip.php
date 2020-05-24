@@ -16,7 +16,8 @@ class Trip extends Model
         'pick_up_schedule',
         'brand_id',
         'route_id',
-        'car_type_id'
+        'car_type_id',
+        'is_active'
     ];
 
     public function brand()
@@ -62,5 +63,10 @@ class Trip extends Model
     public function getPickUpScheduleAttribute($value)
     {
         return json_decode($value, TRUE) ?? [];
+    }
+
+    public function getIsActiveAttribute($value)
+    {
+        return $value ? 'Kích hoạt' : 'Ngưng kích hoạt';
     }
 }

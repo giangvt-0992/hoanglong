@@ -2,8 +2,12 @@
 
 namespace App\Console;
 
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +28,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('trip:create-monthly-schedule')
+                 ->monthlyOn(24, '20:51')
+                 ;
     }
 
     /**

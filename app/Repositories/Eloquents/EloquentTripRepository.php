@@ -4,6 +4,8 @@ namespace App\Repositories\Eloquents;
 
 use App\Contracts\Repositories\TripRepository;
 use App\Models\Trip;
+use App\Models\TripDepartDate;
+use Illuminate\Support\Facades\DB;
 
 class EloquentTripRepository extends EloquentBaseRepository implements TripRepository
 {
@@ -37,5 +39,20 @@ class EloquentTripRepository extends EloquentBaseRepository implements TripRepos
     public function find($id)
     {
         return $this->model->find($id);
+    }
+
+    public function toggleIsActive(Trip $trip, $isActive)
+    {
+        try {
+            DB::transaction(function () use ($trip, $isActive) {
+                TripDepartDate::where('trip_id', '=', $trip->id)->update(['is_active' => $isActive]);
+
+                $trip->is_active = $isActive;
+                $trip->save();
+            });
+        } catch (\Throwable $th) {
+            return false;
+        }
+        return true;
     }
 }
