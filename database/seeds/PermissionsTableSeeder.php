@@ -33,10 +33,6 @@ class PermissionsTableSeeder extends Seeder
         if ($admin) {
             $arrayPerId = Permission::whereNotIn(
                 'slug', [
-                    'xem-nguoi-dung',
-                    'them-nguoi-dung',
-                    'sua-nguoi-dung',
-                    'xoa-nguoi-dung',
                     'xem-hang-xe',
                     'them-hang-xe',
                     'sua-hang-xe',
@@ -53,10 +49,22 @@ class PermissionsTableSeeder extends Seeder
                     'them-nguoi-dung',
                     'sua-nguoi-dung',
                     'xoa-nguoi-dung',
+                    'xem-quyen',
+                    'them-quyen',
+                    'sua-quyen',
+                    'xoa-quyen',
                     'xem-hang-xe',
                     'them-hang-xe',
                     'sua-hang-xe',
                     'xoa-hang-xe',
+                    'xem-tinh',
+                    'sua-tinh',
+                    'xoa-tinh',
+                    'them-tinh',
+                    'xem-khu-vuc',
+                    'them-khu-vuc',
+                    'sua-khu-vuc',
+                    'xoa-khu-vuc',
                     ]
             )->pluck('id')->toArray();
             $superAdmin->permissions()->attach($superAdminPermisionId);

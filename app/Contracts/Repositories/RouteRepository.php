@@ -11,5 +11,5 @@ interface RouteRepository extends BaseRepository
     public function find($id);
     public function allByAdmin();
     public function toggleIsActive(Route $route, $isActive);
-    public function findTrips($data = []);
+    public function findTrips($data);
 }

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Policies\AdminPolicy;
 use App\Policies\BrandPolicy;
 use App\Policies\PlacePolicy;
+use App\Policies\ProvincePolicy;
 use App\Policies\RolePolicy;
 use App\Policies\RoutePolicy;
 use App\Policies\TripPolicy;
@@ -37,5 +38,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('place', PlacePolicy::class);
         Gate::resource('route', RoutePolicy::class);
         Gate::resource('trip', TripPolicy::class);
+        Gate::resource('province', ProvincePolicy::class);
     }
 }

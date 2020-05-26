@@ -143,5 +143,37 @@ return [
     'view_role' => [
         'title' => 'Xem quyền',
         'slug' => 'xem-quyen'
-    ]
+    ],
+    'view_province' => [
+        'title' => 'Xem tỉnh/thành phố',
+        'slug' => 'xem-tinh'
+    ],
+    'update_province' => [
+        'title' => 'Sửa tỉnh/thanh-phố',
+        'slug' => 'sua-tinh'
+    ],
+    'create_province' => [
+        'title' => 'Thêm tỉnh/thành phố',
+        'slug' => 'them-tinh'
+    ],
+    'delete_province' => [
+        'title' => 'Xóa tỉnh/thành phố',
+        'slug' => 'xoa-tinh'
+    ],
+    'view_district' => [
+        'title' => 'Xem khu vực/quận',
+        'slug' => 'xem-khu-vuc'
+    ],
+    'update_district' => [
+        'title' => 'Sửa khu vực/quận',
+        'slug' => 'sua-khu-vuc'
+    ],
+    'create_district' => [
+        'title' => 'Thêm khu vực/quận',
+        'slug' => 'them-khu-vuc'
+    ],
+    'delete_district' => [
+        'title' => 'Xóa khu vực/quận',
+        'slug' => 'xoa-khu-vuc'
+    ],
 ];

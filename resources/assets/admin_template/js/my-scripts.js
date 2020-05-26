@@ -28,6 +28,9 @@ function dicPage(page) {
         case 'office':
             word = 'văn phòng';
             break;
+        case 'province':
+            word = 'tỉnh thành';
+            break;
         default:
             break;
     };

@@ -133,5 +133,17 @@ Route::group([
             Route::get('/search', 'TripDepartDateController@search')->name('search');
             Route::get('/test', 'TripDepartDateController@test')->name('test');
         });
+
+        Route::group([
+            'as' => 'province.',
+            'prefix' => 'provinces'
+        ], function () {
+            Route::get('/', 'ProvinceController@index')->name('index');
+            Route::get('/create', 'ProvinceController@create')->name('create');
+            Route::post('/', 'ProvinceController@store')->name('store');
+            Route::get('/{province}/edit', 'ProvinceController@edit')->name('edit');
+            Route::post('/{province}', 'ProvinceController@update')->name('update');
+            Route::get('/{province}/delete', 'ProvinceController@destroy')->name('destroy');
+        });
     });
 });
