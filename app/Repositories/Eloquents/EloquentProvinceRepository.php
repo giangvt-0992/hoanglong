@@ -34,4 +34,13 @@ class EloquentProvinceRepository extends EloquentBaseRepository implements Provi
     {
         return $this->model->with('districts')->get();
     }
+
+    public function checkNameIsUse($name)
+    {
+        $count = $this->model
+        // ->whereRaw("CONVERT(varchar, name) = ?", 'thai binh')->count();
+        ->whereRaw("name = CONVERT('$name' USING BINARY)")
+        ->count();
+        return $count > 0;
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Admin;
 use App\Models\Brand;
 use App\Models\Place;
+use App\Models\Province;
 use App\Models\Role;
 use App\Models\Route as ModelsRoute;
 use App\Models\Trip;
@@ -54,6 +55,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('tripDepartDate', function ($value) {
             return TripDepartDate::findOrFail($value);
+        });
+        Route::bind('province', function ($value) {
+            return Province::findOrFail($value);
         });
     }
 
