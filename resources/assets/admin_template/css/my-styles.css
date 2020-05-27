@@ -55,3 +55,7 @@ ul.to_do li {
   font-size: 18px;
   -moz-osx-font-smoothing: grayscale;
 }
+.select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
+  min-height: 34px!important;
+  height: 34px;
+}
