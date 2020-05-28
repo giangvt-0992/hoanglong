@@ -44,7 +44,10 @@
                         <a href="{{route('admin.trip_date.index')}}"><i class="fas fa-calendar-alt"></i> Lịch chạy </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.province.index')}}"><i class="fas fa-calendar-alt"></i> Lịch chạy </a>
+                        <a href="{{route('admin.province.index')}}"><i class="fas fa-city"></i> Tỉnh thành </a>
+                    </li>
+                    <li>
+                        <a href="{{route('admin.district.index')}}"><i class="fas fa-map-signs"></i> Quận huyện </a>
                     </li>
                 </ul>
             </div>

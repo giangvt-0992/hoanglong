@@ -19,9 +19,6 @@ function dicPage(page) {
         case 'route':
             word = 'tuyến đường';
             break;
-        case 'route':
-            word = 'tuyến đường';
-            break;
         case 'ticket':
             word = 'vé';
             break;
@@ -31,6 +28,8 @@ function dicPage(page) {
         case 'province':
             word = 'tỉnh thành';
             break;
+        case 'district':
+            word = 'quận huyện';
         default:
             break;
     };
@@ -99,7 +98,7 @@ $(".btn-delete").click(function(e) {
 
     Swal.fire({
         title: "Xác nhận xóa?",
-        text: `Bạn có xóa ${dicPage(page)} này không!`,
+        text: `Bạn có muốn xóa ${dicPage(page)} này không!`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",

@@ -70,14 +70,12 @@ Route::group([
             Route::post('/{place}/edit', 'PlaceController@update');
             Route::get('/{place}/destroy', 'PlaceController@destroy')->name('destroy');
         });
-
         Route::group([
             'as' => 'province.',
             'prefix' => 'provinces'
         ], function () {
             Route::post('/places', 'ProvinceController@places')->name('places');
         });
-
         Route::group([
             'as' => 'route.',
             'prefix' => 'routes'
@@ -139,11 +137,26 @@ Route::group([
             'prefix' => 'provinces'
         ], function () {
             Route::get('/', 'ProvinceController@index')->name('index');
+            Route::post('/districts', 'ProvinceController@getDistricts')->name('get_districts');
             Route::get('/create', 'ProvinceController@create')->name('create');
             Route::post('/', 'ProvinceController@store')->name('store');
             Route::get('/{province}/edit', 'ProvinceController@edit')->name('edit');
             Route::post('/{province}', 'ProvinceController@update')->name('update');
             Route::get('/{province}/delete', 'ProvinceController@destroy')->name('destroy');
+            // Route::post('/places', 'ProvinceController@places')->name('places');
+        });
+
+        Route::group([
+            'as' => 'district.',
+            'prefix' => 'districts'
+        ], function () {
+            Route::get('/', 'DistrictController@index')->name('index');
+            Route::get('/create', 'DistrictController@create')->name('create');
+            Route::post('/', 'DistrictController@store')->name('store');
+            Route::get('/{district}/edit', 'DistrictController@edit')->name('edit');
+            Route::post('/{district}', 'DistrictController@update')->name('update');
+            Route::get('/{district}/delete', 'DistrictController@destroy')->name('destroy');
+            Route::get('/search', 'DistrictController@search')->name('search');
         });
     });
 });

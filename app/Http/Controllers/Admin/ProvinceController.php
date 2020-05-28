@@ -103,4 +103,26 @@ class ProvinceController extends Controller
         }
         return redirect()->route('admin.province.index')->with('success', 'Xóa tỉnh thành thành công');
     }
+
+    public function getDistricts(Request $request)
+    {
+        // return $request->provinceId;
+        $province = $this->provinceRepository->find($request->provinceId);
+        
+        if (!$province) {
+            return response()->json([
+                'status' => 404,
+                'data' => [],
+                'message' => 'Không tìm thấy tỉnh thành'
+            ]);
+        }
+        $districts = $province->districts()->select('id', 'name')->get();
+        return response()->json([
+            'status' => 200,
+            'data' => [
+                'districts' => $districts
+            ],
+            'message' => ''
+        ]);
+    }
 }

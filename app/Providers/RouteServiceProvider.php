@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\Brand;
+use App\Models\District;
 use App\Models\Place;
 use App\Models\Province;
 use App\Models\Role;
@@ -58,6 +59,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('province', function ($value) {
             return Province::findOrFail($value);
+        });
+        Route::bind('district', function ($value) {
+            return District::findOrFail($value);
         });
     }
 
