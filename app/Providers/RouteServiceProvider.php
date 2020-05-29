@@ -9,6 +9,7 @@ use App\Models\Place;
 use App\Models\Province;
 use App\Models\Role;
 use App\Models\Route as ModelsRoute;
+use App\Models\Ticket;
 use App\Models\Trip;
 use App\Models\TripDepartDate;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +63,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('district', function ($value) {
             return District::findOrFail($value);
+        });
+        Route::bind('ticket_code', function ($value) {
+            return Ticket::whereCode($value)->firstOrFail();
         });
     }
 

@@ -42,16 +42,15 @@ class Trip extends Model
 
     public function getPickupPlace()
     {
-        $pickup = $this->pick_up_schedule;
+        $pickup = $this->getOriginal('pick_up_schedule');
         
         $pickupArr = json_decode($pickup);
-        $locations = Arr::pluck($pickupArr, 'location');
+        $locations = Arr::pluck($pickupArr, 'place_id');
         $pickupPlace = Place::whereIn('id', $locations)->get();
-
         $newArr = [];
         
         foreach ($pickupArr as $p) {
-            $place = $pickupPlace->find($p->location);
+            $place = $pickupPlace->find($p->place_id);
             $place && $newArr[] = [
                 'time' => $p->time,
                 'location' => $place

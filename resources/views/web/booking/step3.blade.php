@@ -166,6 +166,8 @@
                 <input type="hidden" name="selectedSeats" id="selectedSeatsHd">
                 <input type="hidden" name="pickupPlace" id="pickupPlaceHd">
                 <input type="hidden" name="pickupPlaceName" id="pickupPlaceNameHd">
+                <input type="hidden" name="pickupTime" id="pickupTimeHd">
+                <input type="hidden" name="tripName" id="tripNameHd">
                 <div class="listseat ">
                     <div class="row">
                         <div class="col-sm-2 col-xs-12"></div>

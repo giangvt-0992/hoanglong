@@ -54,7 +54,7 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
         $desProvince = $data['desProvince'];
         $desPlaces = $desProvince->places()->pluck('places.id')->toArray();
 
-        $formartDate = date("Y-m-d", strtotime($data['departDate']));
+        $formatDate = date("Y-m-d", strtotime($data['departDate']));
 
         $now = Carbon::now()->timestamp;
         if ($now >= strtotime($data['departDate'])) {
@@ -71,6 +71,7 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
             'r.duration',
             'r.price',
             't.id as tripId',
+            't.name as tripName',
             't.depart_time as departTime',
             't.arrive_time as arriveTime',
             't.pick_up_schedule as pickUpSchedule',
@@ -95,7 +96,7 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
         ->join('places as p1', 'r.depart_place_id', 'p1.id')
         ->join('places as p2', 'r.des_place_id', 'p2.id')
         ->where([
-            ['tdd.depart_date', $formartDate],
+            ['tdd.depart_date', $formatDate],
             ['tdd.available_seats', '>=',$data['quantity']],
             ['t.depart_time', '>=', $timeNow],
             ['tdd.is_active', '=', true],
@@ -120,7 +121,7 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
 
     public function toggleIsActive(Route $route, $isActive)
     {
-        // try {
+        try {
             DB::transaction(function () use ($route, $isActive) {
                 $listTripId = $route->trips()->pluck('id')->toArray();
                 Trip::whereIn('id', $listTripId)->update(['is_active' => $isActive]);
@@ -129,9 +130,9 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
                 $route->is_active = $isActive;
                 $route->save();
             });
-        // } catch (\Throwable $th) {
-        //     return false;
-        // }
+        } catch (\Throwable $th) {
+            return false;
+        }
         return true;
     }
 }
