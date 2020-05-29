@@ -5,8 +5,13 @@
                 {{-- <input type="hidden" name="_token" value="{{csrf_token()}}"> --}}
                 <div class="col-sm-3 col-xs-12">
                     <div class="sectionTitleDouble">
-                        <p>Choose</p>
-                        <h2>your <br/><span>destination</span></h2>
+                        @if (app()->getLocale() === 'en')
+                        <p>{{__('Choose')}}</p>
+                        <h2>{{__('your')}} <br/><span>{{__('destination')}}</span></h2>
+                        @else
+                        <p>Chọn</p>
+                        <h2><span>điểm đến</span><br/>của bạn</h2>
+                        @endif
                     </div>
                 </div>
                 <div class="col-sm-9 col-xs-12">
@@ -50,10 +55,11 @@
                                 </select>
                             </div>
                         </div>
-                        
                     </div>
-                    <div class="col-sm-3 col-xs-12">
-                        <input type="submit" class="btn btn-block buttonCustomPrimary btnSearchShift" value="{{__('Search route')}}" data-blank="1"/>
+                    <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 row">
+                        <div class="col-sm-12 col-xs-12">
+                            <input type="submit" class="btn btn-block buttonCustomPrimary btnSearchShift" value="{{__('Search route')}}" data-blank="1"/>
+                        </div>
                     </div>
                 </div>
                 

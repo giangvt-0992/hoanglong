@@ -21,53 +21,60 @@ $desProvinceName = $desProvince != null ? $desProvince->name : '';
                         </div>
                     </div>
                     <div class="col-sm-9 col-xs-12">
-                        <form action="{{route('booking', ['locale' => $locale])}}" method="get" id="form">
-                            <div class="row">
-                                <div class="col-sm-3 col-xs-12">
-                                    <div class="searchTour">
-                                        <select class="select2bootstrap" id="departure" name="departure_id"><option value="" selected>{{__('Departure')}}</option>
-                                            @foreach($provinces as $province)
-                                            <option value="{{$province->id}}" @if($departureId == $province->id) selected @endif>{{$province->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 col-xs-12">
-                                    <div class="searchTour">
-                                        <select class="select2bootstrap" id="destination" name="destination_id"><option value="">{{__('Destination')}}</option>
-                                            @foreach($provinces as $province)
-                                            <option value="{{$province->id}}" @if($destinationId == $province->id) selected @endif>{{$province->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 col-xs-12">
-                                    <div class="input-group date ed-datepicker">
-                                        <input type="text" class="form-control jqueryuidatepicker" data-mindate="+1D" data-maxdate="+100D" data-format="dd-mm-yy" id="datebook" name="depart_date" readonly="readonly" value="{{$date}}">
-                                        <div class="input-group-addon">
-                                            <span class="fa fa-calendar"></span>
+                        <div class="row">
+                            <form action="{{route('booking', ['locale' => $locale])}}" method="get" id="form">
+                                <div class="col-sm-9 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-xs-12">
+                                            <div class="searchTour">
+                                                <select class="select2bootstrap" id="departure" name="departure_id"><option value="" selected>{{__('Departure')}}</option>
+                                                    @foreach($provinces as $province)
+                                                    <option value="{{$province->id}}" @if($departureId == $province->id) selected @endif>{{$province->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12">
+                                            <div class="searchTour">
+                                                <select class="select2bootstrap" id="destination" name="destination_id"><option value="">{{__('Destination')}}</option>
+                                                    @foreach($provinces as $province)
+                                                    <option value="{{$province->id}}" @if($destinationId == $province->id) selected @endif>{{$province->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12">
+                                            <div class="input-group date ed-datepicker">
+                                                <input type="text" class="form-control jqueryuidatepicker" data-mindate="+1D" data-maxdate="+100D" data-format="dd-mm-yy" id="datebook" name="depart_date" readonly="readonly" value="{{$date}}">
+                                                <div class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12">
+                                            <div class="searchTour">
+                                                <select name="quantity" class="select2bootstrap" id="quantity">
+                                                    @for ($i = 1; $i < 6; $i++)
+                                                    <option value="{{$i}}" @if($quantity == $i) selected @endif>{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3 col-xs-12">
-                                    <input type="hidden" id="hddate" />
-                                    <input type="hidden" id="hdculture" value="{{app()->getLocale()}}" />
-                                    <input type="hidden" name="step" value="step1">
-                                    <input type="button" value="{{__('Search route')}}" class="btn buttonCustomPrimary btnSearchShift" data-blank="1" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3 col-xs-12">
-                                    <div class="searchTour">
-                                        <select name="quantity" class="select2bootstrap" id="quantity">
-                                            @for ($i = 1; $i < 6; $i++)
-                                            <option value="{{$i}}" @if($quantity == $i) selected @endif>{{$i}}</option>
-                                            @endfor
-                                        </select>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12">
+                                            <input type="hidden" id="hddate" />
+                                            <input type="hidden" id="hdculture" value="{{app()->getLocale()}}" />
+                                            <input type="hidden" name="step" value="step1">
+                                            <input type="button" value="{{__('Search route')}}" class="btn buttonCustomPrimary btnSearchShift" style="width: 100%" data-blank="1" />
+                                        </div>
+                                        
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,8 +95,8 @@ $desProvinceName = $desProvince != null ? $desProvince->name : '';
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                <th class="hidden-xs hidden-sm">{{__('Brand')}}</th>
-                                <th class="hidden-xs hidden-sm">{{__('Code trips')}}</th>
+                                    <th class="hidden-xs hidden-sm">{{__('Brand')}}</th>
+                                    <th class="hidden-xs hidden-sm">{{__('Code trips')}}</th>
                                     <th class="hidden-xs hidden-sm">{{__('Departure')}}</th>
                                     <th>{{__('Start time')}}</th>
                                     <th class="hidden-xs hidden-sm">{{__('Destination')}}</th>
@@ -110,13 +117,13 @@ $desProvinceName = $desProvince != null ? $desProvince->name : '';
                                     <td>{{$route->departTime}}</td>
                                     <td class="hidden-xs hidden-sm"><b>{{$route->desName}}</b></td>
                                     <td class="hidden-xs hidden-sm">{{$route->arriveTime}}</td>
-
+                                    
                                     <td class="hidden-xs hidden-sm">{{decodeDurationJson($route->duration)}}</td>
                                     <td><b>{{$route->availableSeats}}</b></td>
                                     <td class="hidden-xs hidden-sm">{{$route->carType}}</td>
                                     <td>{{number_format($route->price)}}</td>
                                     <td>
-                                    <a class="btn buttonTransparent btnSetVehicleId" data-brand-id="{{$route->brandId}}" data-brand-name="{{$route->brandName}}" data-tdd-id="{{$route->tripDepartDateId}}" data-depart-id="{{$route->departId}}" data-depart-name="{{$route->departName}}" data-des-id="{{$route->desId}}" data-des-name="{{$route->desName}}" data-depart-time="{{$route->departTime}}" data-date="{{$date}}" data-price="{{$route->price}}" data-datecheck="{{$date}}" data-quantity="{{$quantity}}"  data-route-name="{{$route->routeName}}" data-des-time="{{$route->arriveTime}}" data-dep-province-name="{{$depProvinceName}}" data-des-province-name="{{$desProvinceName}}" data-trip-id="{{$route->tripId}}" data-trip-name="{{$route->tripName}}">{{ __('book') }}</a>
+                                        <a class="btn buttonTransparent btnSetVehicleId" data-brand-id="{{$route->brandId}}" data-brand-name="{{$route->brandName}}" data-tdd-id="{{$route->tripDepartDateId}}" data-depart-id="{{$route->departId}}" data-depart-name="{{$route->departName}}" data-des-id="{{$route->desId}}" data-des-name="{{$route->desName}}" data-depart-time="{{$route->departTime}}" data-date="{{$date}}" data-price="{{$route->price}}" data-datecheck="{{$date}}" data-quantity="{{$quantity}}"  data-route-name="{{$route->routeName}}" data-des-time="{{$route->arriveTime}}" data-dep-province-name="{{$depProvinceName}}" data-des-province-name="{{$desProvinceName}}" data-trip-id="{{$route->tripId}}" data-trip-name="{{$route->tripName}}">{{ __('book') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach

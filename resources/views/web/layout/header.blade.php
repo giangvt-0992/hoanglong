@@ -23,8 +23,8 @@
                     <li class="@if(isActiveRoute('booking')) active @endif">
                         <a href="{{route('booking', app()->getLocale())}}"> {{__('Booking Ticket')}} </a>
                     </li>
-                    <li class="@if(isActiveRoute('price-table')) active @endif">
-                        <a href="{{ route('price-table', app()->getLocale())}}"> {{__('Price')}} </a>
+                    <li class="@if(isActiveRoute('tracking')) active @endif">
+                        <a href="{{route('tracking', app()->getLocale())}}">{{__('Tracking')}}</a>
                     </li>
                     <li class="@if(isActiveRoute('ticket-purchase-guide')) active @endif">
                         <a href="{{route('ticket-purchase-guide', app()->getLocale())}}">{{__('Ticket purchase guide')}}</a>

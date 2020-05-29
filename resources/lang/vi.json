@@ -21,6 +21,8 @@
     "Data is in processing": "Dữ liệu đang được xử lý",
     "Enter your information": "Nhập thông tin",
     "Confirm your information": "Xác nhận thông tin",
+    "Confirm ticket information": "Xác nhận thông tin vé",
+    "Ticket information": "Thông tin vé xe",
     "Booking Successfully": "Đặt vé thành công",
     "Book ticket": "Đặt vé",
     "Book": "Đặt",
@@ -94,5 +96,8 @@
     "Book ticket successfully": "Đặt vé thành công",
     "unpaid" : "Chưa thanh toán",
     "paid": "Đã thanh toán",
-    "cancel": "Hủy"
+    "cancel": "Hủy",
+    "Tracking": "Tra cứu vé xe",
+    "day": "ngày",
+    "There is no result for the key" : "Không tìm thấy kết quả nào cho từ khóa"
 }
