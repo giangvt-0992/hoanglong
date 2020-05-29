@@ -1,4 +1,7 @@
 {
     "CÔNG TY VẬN TẢI GIANG TUẤN": "GIANG TUAN TRANSPORT COMPANY",
-    "tax number": "Tax number"
+    "tax number": "Tax number",
+    "unpaid" : "Unpaid",
+    "paid": "Paid",
+    "cancel": "Cancel"
 }

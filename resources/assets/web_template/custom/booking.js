@@ -58,6 +58,7 @@ $(".btnSetVehicleId").click(function () {
         depProvinceName: $(this).attr('data-dep-province-name'),
         desProvinceName: $(this).attr('data-des-province-name'),
         tripId: $(this).attr('data-trip-id'),
+        tripName: $(this).attr('data-trip-name')
     }
     gotostep(2);
 });
@@ -167,10 +168,10 @@ $("#confirm-button").unbind('click');
 $("#confirm-button").click( async function (e) {
     e.preventDefault();
     culture = $(this).attr('data-culture');
-    var checkFullname = $("#passengerName").val().trim();
+    var checkFullName = $("#passengerName").val().trim();
     var checkPhone = $("#passengerPhone").val().trim();
     var checkEmail = $("#passengerEmail").val().trim();
-    if (checkFullname == '') {
+    if (checkFullName == '') {
         $("#passengerName").focus();
         if (culture == "vi") {
             Alert.Warning("Xin vui lòng điền tên của bạn.");
@@ -232,6 +233,7 @@ $("#confirm-button").click( async function (e) {
     $("#depProvinceNameHd").val(bill.depProvinceName);
     $("#desProvinceNameHd").val(bill.desProvinceName);
     $("#selectedSeatsHd").val(selectedSeat.join(','));
+    $("#tripNameHd").val(bill.tripName);
 
     $("#passengerNameTbl").text(bill.passengerName);
     $("#passengerPhoneTbl").text(bill.passengerPhone);
@@ -351,6 +353,8 @@ function getPickupPlaces (tripId) {
         type: 'post',
         data: {tripId : tripId},
         success: function (res) {
+            console.log(res);
+            
             if (res.status === 200) {
                 $("#slPickupPlace").empty();
 
@@ -359,11 +363,12 @@ function getPickupPlaces (tripId) {
                     let option = '';
                     if (index === 0) {
                         $("#mapPickupPlace").attr("src", location.map_url);
-                        option = `<option value="${location.id}" selected data-map-url="${location.map_url}" data-name="${location.name}">${time} - ${location.name}</option>`;
+                        option = `<option value="${location.id}" selected data-map-url="${location.map_url}" data-name="${location.name}" data-time=${time}>${time} - ${location.name}</option>`;
                         $("#pickupPlaceHd").val(location.id);
                         $("#pickupPlaceNameHd").val(location.name);
+                        $("#pickupTimeHd").val(time);
                     } else {
-                        option = `<option value="${location.id}" data-map-url="${location.map_url}">${time} - ${location.name}</option>`;
+                        option = `<option value="${location.id}" data-map-url="${location.map_url}" data-time=${time}>${time} - ${location.name}</option>`;
                     }
                     
                     $("#slPickupPlace").append(option);
@@ -382,6 +387,7 @@ $("#slPickupPlace").change(function () {
     $("#mapPickupPlace").attr("src", mapUrl);
     $("#pickupPlaceHd").val($(this).val());
     $("#pickupPlaceNameHd").val($("#slPickupPlace option:selected").attr('data-name'));
+    $("#pickupTimeHd").val($("#slPickupPlace option:selected").attr('data-time'));
 })
 
 $('.book-seat').click(function () {

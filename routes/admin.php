@@ -111,12 +111,13 @@ Route::group([
             'prefix' => 'tickets'
         ], function () {
             Route::get('/', 'TicketController@index')->name('index');
-            Route::get('/detail/{code}', 'TicketController@detail')->name('detail');
+            Route::get('/{ticket_code}/show', 'TicketController@show')->name('show');
             Route::get('/create', 'TicketController@create')->name('create');
             Route::post('/', 'TicketController@store')->name('store');
-            Route::get('/{ticket}/edit', 'TicketController@edit')->name('update');
-            Route::post('/{ticket}/edit', 'TicketController@update');
-            Route::get('/{ticket}/destroy', 'TicketController@destroy')->name('destroy');
+            Route::get('/{ticket_code}/edit', 'TicketController@edit')->name('update');
+            Route::post('/{ticket_code}/edit', 'TicketController@update');
+            Route::get('/{ticket_code}/destroy', 'TicketController@destroy')->name('destroy');
+            Route::get('/search', 'TicketController@search')->name('search');
         });
 
         Route::group([

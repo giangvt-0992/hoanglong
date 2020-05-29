@@ -91,5 +91,8 @@
     "Selecting": "Đang chọn",
     "Available": "Ghế trống",
     "Reserved": "Ghế đã được đặt",
-    "Book ticket successfully": "Đặt vé thành công"
+    "Book ticket successfully": "Đặt vé thành công",
+    "unpaid" : "Chưa thanh toán",
+    "paid": "Đã thanh toán",
+    "cancel": "Hủy"
 }

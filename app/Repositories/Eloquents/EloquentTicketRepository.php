@@ -3,17 +3,22 @@
 namespace App\Repositories\Eloquents;
 
 use App\Contracts\Repositories\TicketRepository;
+use App\Models\Route;
 use App\Models\Ticket;
+use App\Models\TripDepartDate;
 use Illuminate\Support\Facades\DB;
 
 class EloquentTicketRepository extends EloquentBaseRepository implements TicketRepository
 {
     protected $model;
+    protected $routeModel;
 
     public function __construct(
-        Ticket $model
+        Ticket $model,
+        Route $routeModel
     ) {
         $this->model = $model;
+        $this->routeModel = $routeModel;
     }
 
     public function all()
@@ -34,10 +39,24 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
     public function createTicket($data)
     {
         $passengerInfo = [
-            'passengerName' => $data['passengerName'],
-            'passengerPhone' => $data['passengerPhone'],
-            'passengerEmail' => $data['passengerEmail'],
-            'passengerAddress' => $data['passengerAddress'],
+            'name' => $data['passengerName'],
+            'phone' => $data['passengerPhone'],
+            'email' => $data['passengerEmail'],
+            'address' => $data['passengerAddress'],
+        ];
+
+        $trip_info = [
+            'unit_price' => $data['price'],
+            'route_name' => $data['routeName'],
+            'pickup_place' => $data['pickupPlaceName'],
+            'pickup_time' => $data['pickupTime'],
+            'dep_province_name' => $data['depProvinceName'],
+            'des_province_name' => $data['desProvinceName'],
+            'depart_name' => $data['departName'],
+            'depart_time' => $data['departTime'],
+            'des_name' => $data['desName'],
+            'des_time' => $data['desTime'],
+            'trip_name' => $data['tripName']
         ];
         
         $selectedSeats = explode(',', $data['selectedSeats']);
@@ -45,14 +64,13 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
         $ticket = [
             'trip_depart_date_id' => $data['tddId'],
             'quantity' => $data['quantity'],
-            'unit_price' => $data['price'],
             'total' => $data['price'] * $data['quantity'],
             'brand_id' => $data['brandId'],
             'user_id' => $data['userId'],
             'passenger_info' => json_encode($passengerInfo),
             'list_seat' => json_encode($selectedSeats),
             'code' => $code,
-            'pickup_place_id' => $data['pickupPlace']
+            'trip_info' => json_encode($trip_info)
         ];
         return $this->model->create($ticket);
     }
@@ -71,5 +89,42 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
             $count = $this->model->where('code', $code)->count();
         } while ($count >  0);
         return $code;
+    }
+
+    public function allByAdmin()
+    {
+        return $this->model->whereBrandId(getAuthAdminBrandId())->get();
+    }
+
+    public function searchByAdmin($data)
+    {
+        $where = [];
+        $listTripId = [];
+
+        if (isset($data['route_id']) && !isset($data['trip_id'])) {
+            $route = $this->routeModel->findOrFail($data['route_id']);
+            $listTripId = $route->trips()->pluck('id')->toArray();
+        }
+
+        if (isset($data['trip_id'])) {
+            $listTripId = [$data['trip_id']];
+        }
+
+        if (isset($data['status'])) {
+            $where[] = ['status', $data['status']];
+        }
+
+        $tickets = $this->model->whereHas('tripDepartDate', function ($q) use ($listTripId) {
+            if (count($listTripId)) {
+                $q->whereIn('trip_id', $listTripId);
+            }
+        })
+        ->where($where)
+        ->where(function ($q) use ($data) {
+            isset($data['from_date']) && $q->whereDate('created_at', '>=', $data['from_date']);
+            isset($data['to_date']) && $q->whereDate('created_at', '<=', $data['to_date']);
+        })
+        ->get();
+        return $tickets;
     }
 }

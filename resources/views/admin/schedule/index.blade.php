@@ -16,7 +16,7 @@
 						<select class="form-control" name="searchRouteId" id="searchRouteId" name="searchRouteId">
 							<option value="" selected>Tuyến xe</option>
 							@foreach($routes as $route)
-							<option value="{{$route->id}}" @if($route->id == Request::get('searchRouteId')) selected @endif>{{$route->name}}</option>
+							<option value="{{$route->id}}" @if($route->id == request('searchRouteId')) selected @endif>{{$route->name}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -25,7 +25,7 @@
 							@if(isset($tripsByRoute))
 								<option value="">Tất cả</option>
 								@foreach ($tripsByRoute as $trip)
-								<option value="{{$trip->id}}" @if($trip->id == Request::get('searchTripId')) selected @endif>{{$trip->name}}</option>
+								<option value="{{$trip->id}}" @if($trip->id == request('searchTripId')) selected @endif>{{$trip->name}}</option>
 								@endforeach
 							@else
 								<option value="">Vui lòng chọn tuyến xe</option>
@@ -33,7 +33,7 @@
 						</select>
 					</div>
 					<div class="col-md-4 col-xs-12">
-						@php $searchIsActive = Request::get('searchIsActive') ?? -1;@endphp
+						@php $searchIsActive = request('searchIsActive') ?? -1;@endphp
 						<select class="form-control" name="searchIsActive" id="">
 							<option value="-1" @if($searchIsActive == -1) selected @endif>Tất cả</option>
 							<option value="1" @if($searchIsActive == 1) selected @endif>Hoạt động</option>
@@ -44,7 +44,7 @@
 				<div class="col-md-12">
 					<div class="col-md-offset-2 col-md-4  col-xs-12">
 						@php 
-						$fromDate = old('searchFromDate', $fromDate);
+						$fromDate = request('searchFromDate', $fromDate);
 						@endphp
 						<input type="text" name="searchFromDate" 
 						@if($fromDate) value="{{date('d-m-Y', strtotime($fromDate))}}" @endif
@@ -55,7 +55,7 @@
 					</div>
 					<div class="col-md-4  col-xs-12">
 						@php
-						$toDate = old('searchFromDate', $toDate);
+						$toDate = request('searchToDate', $toDate);
 						@endphp
 						<input type="text" name="searchToDate" 
 						@if($toDate) value="{{date('d-m-Y', strtotime($toDate))}}" @endif

@@ -32,12 +32,14 @@ Route::group([
         Route::get('/bang-gia', 'HomeController@index')->name('price-table');
         Route::get('/huong-dan-dat-ve', 'HomeController@index')->name('ticket-purchase-guide');
         Route::post('/book-route', 'BookingController@bookRoute')->name('booking-route');
+        Route::get('/book-route', 'BookingController@bookRoute')->name('booking-route');
     });
     Route::get('/redirect/{social}', 'SocialAuthController@redirect')->name('social-redirect');
     Route::get('/callback/{social}', 'SocialAuthController@callback')->name('social-callback');
     Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('change-language');
     Route::post('/search-route', 'BookingController@search')->name('search-route');
     Route::post('/get-pickup-places', 'TripController@getPickupPlaces')->name('get-pickup-places');
+    Route::get('/get-pickup-places1', 'TripController@getPickupPlaces1')->name('get-pickup-places');
     Route::post('/get-seat-map', 'TripController@getSeatMap')->name('get-seat-map');
     Route::get('/get-seat-map', 'TripController@getSeatMap')->name('get-seat-map');
     Route::get('/logout', 'AuthController@logout')->name('logout');

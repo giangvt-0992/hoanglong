@@ -33,22 +33,22 @@
                         <div style="max-height: 250px; overflow-y: scroll;" id="notiWrapper">
                             @foreach ($notifications as $notification)
                             <li>
-                                <a href="{{route('admin.ticket.detail', ['code' => $notification->data['code']])}}">
-                                  <span class="message">
-                                    {{$notification->data['message']}}
-                                  </span>
-                                  <span>
-                                  <span class="time">{{date("H:i d-m-y", strtotime($notification->created_at))}}</span>
-                                  </span>
+                                <a href="{{route('admin.ticket.show', ['code' => $notification->data['code']])}}">
+                                    <span class="message">
+                                        {{$notification->data['message']}}
+                                    </span>
+                                    <span>
+                                        <span class="time">{{date("H:i d-m-y", strtotime($notification->created_at))}}</span>
+                                    </span>
                                 </a>
-                              </li>
+                            </li>
                             @endforeach
                         </div>
-                            <li>
-                                <div class="text-center">
-                                    <a href="javascript:;" id="markReadAll">Đánh dấu tất cả đã đọc</a>
-                                </div>
-                            </li>
+                        <li>
+                            <div class="text-center">
+                                <a href="javascript:;" id="markReadAll">Đánh dấu tất cả đã đọc</a>
+                            </div>
+                        </li>
                         
                     </ul>
                 </li>

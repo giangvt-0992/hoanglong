@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TicketStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +20,8 @@ class Ticket extends Model
         'user_id',
         'unit_price',
         'code',
-        'pickup_place_id'
+        'trip_info',
+        'status',
     ];
 
     public function tripDepartDate()
@@ -35,5 +37,33 @@ class Ticket extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getPassengerInfoAttribute($value)
+    {
+        $passengerInfo = json_decode($value, true);
+        return $passengerInfo;
+    }
+
+    public function getTripInfoAttribute($value)
+    {
+        $tripInfo = json_decode($value, true);
+        return $tripInfo;
+    }
+
+    public function getStatusAttribute($value)
+    {
+        return __($value);
+    }
+
+    public function getStatusColor()
+    {
+        $colorList = [
+            TicketStatus::Unpaid => 'warning',
+            TicketStatus::Paid => 'success',
+            TicketStatus::Cancel => 'danger',
+        ];
+        $color = $colorList[$this->getOriginal('status')];
+        return $color;
     }
 }

@@ -9,6 +9,7 @@ use App\Policies\PlacePolicy;
 use App\Policies\ProvincePolicy;
 use App\Policies\RolePolicy;
 use App\Policies\RoutePolicy;
+use App\Policies\TicketPolicy;
 use App\Policies\TripPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -41,5 +42,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('trip', TripPolicy::class);
         Gate::resource('province', ProvincePolicy::class);
         Gate::resource('district', DistrictPolicy::class);
+        Gate::resource('ticket', TicketPolicy::class);
     }
 }
