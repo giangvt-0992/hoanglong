@@ -2,7 +2,7 @@
 <div class="step4" style="display: none;">
     <div class="panel panel-default pnlconfirminfo packagesFilter">
         <div class="panel-heading">
-            <h3 class="panel-title">Xác nhận thông tin đặt vé</h3>
+            <h3 class="panel-title">{{__('Confirm ticket information')}}</h3>
         </div>
 
         <div class="panel-body confirminfo row-fluid">

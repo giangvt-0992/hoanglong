@@ -127,4 +127,9 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
         ->get();
         return $tickets;
     }
+
+    public function findByCode($code)
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }

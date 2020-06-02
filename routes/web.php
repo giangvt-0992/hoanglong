@@ -32,7 +32,7 @@ Route::group([
         Route::get('/bang-gia', 'HomeController@index')->name('price-table');
         Route::get('/huong-dan-dat-ve', 'HomeController@index')->name('ticket-purchase-guide');
         Route::post('/book-route', 'BookingController@bookRoute')->name('booking-route');
-        Route::get('/book-route', 'BookingController@bookRoute')->name('booking-route');
+        Route::get('/tracking', 'BookingController@tracking')->name('tracking');
     });
     Route::get('/redirect/{social}', 'SocialAuthController@redirect')->name('social-redirect');
     Route::get('/callback/{social}', 'SocialAuthController@callback')->name('social-callback');
