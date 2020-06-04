@@ -26,10 +26,13 @@
                     <li class="@if(isActiveRoute('tracking')) active @endif">
                         <a href="{{route('tracking', app()->getLocale())}}">{{__('Tracking')}}</a>
                     </li>
+                    <li class="@if(isActiveRoute('brand')) active @endif">
+                        <a href="{{route('brand', app()->getLocale())}}">{{__('Brand')}}</a>
+                    </li>
                     <li class="@if(isActiveRoute('ticket-purchase-guide')) active @endif">
                         <a href="{{route('ticket-purchase-guide', app()->getLocale())}}">{{__('Ticket purchase guide')}}</a>
                     </li>
-                    <?php $user = auth('web')->user(); ?>
+                    {{-- @php $user = auth('web')->user(); @endphp
                     @if(isset($user))
                     <li class="dropdown singleDrop">
                         <a href="javascript::" style="padding-top: 0;">
@@ -46,7 +49,7 @@
                     <li class="img-link">                                
                         <a href="{{route('social-redirect', 'google')}}" target="_blank"><img src="{{ url('web_template/Images/google.png') }}" class="icon" height="15" /></a>
                     </li>
-                    @endif
+                    @endif --}}
                     <li>
                         @if (app()->getLocale() === config('app.support_language.english')) 
                         <a href="{{route('change-language', ['language' => 'vi'])}}"><img src="{{url('web_template/Images/icon/icon-vn.png')}}" class="icon icon-vn" width="23" height="15" data-returnurl=""></a>

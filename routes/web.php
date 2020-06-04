@@ -30,9 +30,10 @@ Route::group([
         Route::get('/dat-ve', 'BookingController@index')->name('booking');
         Route::get('/send-mail', 'BookingController@sendMail')->name('sendmail');
         Route::get('/bang-gia', 'HomeController@index')->name('price-table');
-        Route::get('/huong-dan-dat-ve', 'HomeController@index')->name('ticket-purchase-guide');
+        Route::get('/huong-dan-dat-ve', 'HomeController@getTicketGuidePage')->name('ticket-purchase-guide');
         Route::post('/book-route', 'BookingController@bookRoute')->name('booking-route');
         Route::get('/tracking', 'BookingController@tracking')->name('tracking');
+        Route::get('/nha-xe', 'BrandController@index')->name('brand');
     });
     Route::get('/redirect/{social}', 'SocialAuthController@redirect')->name('social-redirect');
     Route::get('/callback/{social}', 'SocialAuthController@callback')->name('social-callback');

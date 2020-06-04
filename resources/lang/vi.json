@@ -99,5 +99,10 @@
     "cancel": "Hủy",
     "Tracking": "Tra cứu vé xe",
     "day": "ngày",
-    "There is no result for the key" : "Không tìm thấy kết quả nào cho từ khóa"
+    "There is no result for the key" : "Không tìm thấy kết quả nào cho từ khóa",
+    "Phone number": "Số điện thoại",
+    "Information": "Thông tin nhà xe",
+    "Image": "Hình ảnh",
+    "Description": "Mô tả",
+    "Search": "Tìm kiếm"
 }

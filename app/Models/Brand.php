@@ -20,6 +20,11 @@ class Brand extends Model
         'image'
     ];
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', '=', 1);
+    }
+
     public function admins()
     {
         return $this->hasMany(Admin::class);
@@ -58,5 +63,12 @@ class Brand extends Model
     public function places()
     {
         return $this->hasMany(Place::class);
+    }
+
+    public function getPhoneStringAttribute()
+    {
+        $phone = json_decode($this->phone, true);
+        $phoneString = join(" - ", $phone);
+        return $phoneString;
     }
 }

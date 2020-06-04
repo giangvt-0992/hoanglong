@@ -21,4 +21,9 @@ class HomeController extends Controller
 
         return redirect()->route($previousRouteName, ['locale' => app()->getLocale()]);
     }
+
+    public function getTicketGuidePage()
+    {
+        return view('web.ticket_guide.index');
+    }
 }

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(['web.booking.index','web.layout.search', 'web.home.price-table', 'admin-page.route'], function ($view) {
-            $nextdate = Carbon::now()->addDays(1)->format('d-m-Y');
+            $nextDate = Carbon::now()->addDays(1)->format('d-m-Y');
             $key = md5(vsprintf('%s.%s.%s', [
                 'web',
                 'all',
@@ -37,13 +37,13 @@ class AppServiceProvider extends ServiceProvider
             $provinces = Cache::remember($key, 1000, function () {
                 return Province::all();
             });
-            $view->with(['provinces'=>$provinces, 'nextdate'=>$nextdate]);
+            $view->with(['provinces'=>$provinces, 'nextdate'=>$nextDate]);
         });
 
         view()->composer(['admin.layout.top_nav'], function ($view) {
             $admin = getAuthAdmin();
             $brand = $admin->brand;
-            $notifications = $brand ? $brand->notifications()->where('data->type', 'ticket')->get() : [];
+            $notifications = $brand ? $brand->notifications()->where('data->type', 'ticket')->get() : collect([]);
             $view->with(['notifications'=>$notifications]);
         });
     }
