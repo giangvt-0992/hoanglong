@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer(['admin.layout.top_nav'], function ($view) {
             $admin = getAuthAdmin();
             $brand = $admin->brand;
-            $notifications = $brand ? $brand->unreadNotifications()->where('data->type', 'ticket')->get() : [];
+            $notifications = $brand ? $brand->notifications()->where('data->type', 'ticket')->get() : [];
             $view->with(['notifications'=>$notifications]);
         });
     }

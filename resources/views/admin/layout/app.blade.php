@@ -123,14 +123,14 @@
         if ($("#menu1 div li").length > 0) {
           $.ajax({
           type: 'get',
-          url: 'admin/mark-as-read-all',
+          url: '/admin/mark-as-read-all',
           data: {},
           success: function (data) {
             console.log(data);
             
             if (data.status === 200) {
               $("#menu1 li").each(function () {
-                $(this).addClass('read');
+                $(this).addClass('as-read');
               })
             }
           },

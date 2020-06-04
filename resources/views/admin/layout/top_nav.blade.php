@@ -27,13 +27,13 @@
                 <li role="presentation" class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                         <i class="far fa-bell"></i>
-                        <span class="badge bg-green">{{count($notifications)}}</span>
+                        <span class="badge bg-green">{{count($notifications->where('read_at', ''))}}</span>
                     </a>
                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                         <div style="max-height: 250px; overflow-y: scroll;" id="notiWrapper">
                             @foreach ($notifications as $notification)
-                            <li>
-                                <a href="{{route('admin.ticket.show', ['code' => $notification->data['code']])}}">
+                            <li class="@if($notification->read_at) as-read @endif">
+                                <a href="{{route('admin.ticket.show', ['code' => $notification->data['code'], 'notify_id' => $notification->id])}}">
                                     <span class="message">
                                         {{$notification->data['message']}}
                                     </span>
