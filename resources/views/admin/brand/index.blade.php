@@ -28,7 +28,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_content">
-						<table id="datatable" class="table table-striped table-bordered">
+						<table id="datatable" class="table table-bordered dataTable no-footer">
 							<thead>
 								<tr>
 									<th>STT</th>
@@ -46,13 +46,13 @@
 								<tr>
 									<td>{{$loop->index + 1 }}</td>
 									<td>{{$brand->name}}</td>
-									<td>{{$brand->description}}</td>
+									<td class="truncate">{{$brand->description}}</td>
 									<td>{{$brand->is_active == true ? 'Kích hoạt' : 'Ngưng kích hoạt'}}</td>
 									{{-- <td>{{$brand->phone}}</td> --}}
 									<td>
-										<a class="btn btn-primary" href="{{route('admin.brand.update', ['brand' => $brand->id])}}"><i class="fas fa-pencil-alt" title="Cập nhật"></i></a>
+										<a class="btn btn-warning" href="{{route('admin.brand.update', ['brand' => $brand->id])}}"><i class="fas fa-pencil-alt" title="Cập nhật"></i></a>
 										@if ($brand->is_active == config('constants.IS_ACTIVE_STATUS.ACTIVE'))
-										<a class="btn btn-danger btn-deactivate" href="{{route('admin.brand.destroy', ['brand' => $brand->id])}}" title="Ngưng kích hoạt" data-page="brand" ><i class="fa fa-trash"></i></a>
+										<a class="btn btn-danger btn-deactivate" href="{{route('admin.brand.destroy', ['brand' => $brand->id])}}" title="Ngưng kích hoạt" data-page="brand" ><i class="fa fa-ban"></i></a>
 										@else 
 										<a class="btn btn-success btn-active" href="{{route('admin.brand.active', ['brand' => $brand->id])}}" title="Kích hoạt" data-page="brand" ><i class="fa fa-recycle"></i></a>
 										@endif

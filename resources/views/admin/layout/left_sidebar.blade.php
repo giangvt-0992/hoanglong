@@ -25,33 +25,11 @@
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+                    @foreach($sidebar as $item)
                     <li>
-                        <a href="{{route('admin.user.index')}}"><i class="fas fa-users"></i> Nguời dùng và phân quyền </a>
+                        <a href="{{route($item['url'])}}"><i class="{{$item['icon']}}"></i> {{$item['title']}} </a>
                     </li>
-                    <li>
-                        <a href="{{route('admin.brand.index')}}"><i class="fas fa-bus"></i> Nhà xe </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.place.index')}}"><i class="fas fa-map-marker-alt"></i> Địa điểm </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.route.index')}}"><i class="fas fa-road"></i> Tuyến đường </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.trip.index')}}"><i class="fas fa-shuttle-van"></i> Chuyến </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.trip_date.index')}}"><i class="fas fa-clipboard-list"></i> Lịch chạy </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.district.index')}}"><i class="fas fa-map-signs"></i> Quận huyện </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.province.index')}}"><i class="fas fa-city"></i> Tỉnh thành </a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin.ticket.index')}}"><i class="fas fa-ticket-alt"></i> Vé xe </a>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
             {{-- <div class="menu_section">

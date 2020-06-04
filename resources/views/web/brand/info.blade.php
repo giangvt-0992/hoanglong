@@ -12,6 +12,7 @@
         </p>
         <br />
         <p><b>{{__('Phone number')}} <i class="fa fa-phone"></i>: {{$searchBrand->phoneString}}</b></p>
+        <p><b>{{__('Bank account number')}} <i class="fa fa-university"></i></b>: {{$searchBrand->bankString}}</p>
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="coachestype">
