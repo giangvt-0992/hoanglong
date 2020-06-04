@@ -10,7 +10,7 @@ class NotificationController extends Controller
     public function markAsReadAll()
     {
         $admin = getAuthAdmin();
-        $brand = $admin->brand->unreadNotifications->markAsRead();
+        $admin->brand->unreadNotifications->markAsRead();
         return response()->json([
             'status' => 200
         ]);

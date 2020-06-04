@@ -28,6 +28,8 @@ class TicketController extends Controller
     {
         $this->authorize('ticket.viewAny');
 
+        getAuthAdmin()->brand->unreadNotifications->markAsRead();
+
         $fromDate = date('Y-m-d');
         // $data = [
         //     'from_date' => $fromDate
@@ -45,9 +47,11 @@ class TicketController extends Controller
         return redirect()->route('admin.ticket.search', ['from_date' => $fromDate]);
     }
 
-    public function show(Ticket $ticket)
+    public function show(Request $request, Ticket $ticket)
     {
         $this->authorize('ticket.view', $ticket);
+
+        $ticket->brand->unreadNotifications->where('id', $request->notify_id)->markAsRead();
 
         return view('admin.ticket.detail', [
             'ticket' => $ticket,
