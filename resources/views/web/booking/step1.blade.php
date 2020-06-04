@@ -111,7 +111,7 @@ $desProvinceName = $desProvince != null ? $desProvince->name : '';
                             <tbody>
                                 @foreach($routes as $route)
                                 <tr>
-                                    <td class="hidden-xs hidden-sm">{{$route->brandName}}</td>
+                                    <td class="hidden-xs hidden-sm"><a href="{{route('brand', ['locale' => app()->getLocale(), 'id' => $route->brandId])}}" target="_blank">{{$route->brandName}}</a></td>
                                     <td class="hidden-xs hidden-sm">{{$route->tripName}}</td>
                                     <td class="hidden-xs hidden-sm"><b>{{$route->departName}}</b></td>
                                     <td>{{$route->departTime}}</td>

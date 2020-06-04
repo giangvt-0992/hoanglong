@@ -34,4 +34,9 @@ class EloquentBrandRepository extends EloquentBaseRepository implements BrandRep
     {
         return $this->model->find($id);
     }
+
+    public function allActive()
+    {
+        return $this->model->active()->get();
+    }
 }
