@@ -10,6 +10,7 @@ use App\Http\Requests\BrandRequest;
 use App\Models\Admin;
 use App\Models\Brand;
 use App\Models\Image;
+use Illuminate\Support\Facades\Cache;
 
 class BrandController extends Controller
 {
@@ -91,6 +92,12 @@ class BrandController extends Controller
             }
 
             \Session::forget('imageUploaded');
+            $key = md5(vsprintf('%s.%s.%s', [
+                'web',
+                'allActive',
+                'brand'
+            ]));
+            Cache::forget($key);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Thêm nhà xe không thành công')->withInput();
         }
@@ -163,6 +170,12 @@ class BrandController extends Controller
         }
 
         \Session::forget('imageUploaded');
+        $key = md5(vsprintf('%s.%s.%s', [
+            'web',
+            'allActive',
+            'brand'
+        ]));
+        Cache::forget($key);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Thêm nhà xe không thành công')->withInput();
         }
@@ -183,6 +196,12 @@ class BrandController extends Controller
         $brand->is_active = false;
         $brand->save();
         Admin::where('brand_id', $brand->id)->update(['is_active' => $brand->is_active]);
+        $key = md5(vsprintf('%s.%s.%s', [
+            'web',
+            'allActive',
+            'brand'
+        ]));
+        Cache::forget($key);
         // $imagesBrand = $brand->images();
         // $brand->images->detach();
         // $this->imageRepository->unlink($imagesBrand);

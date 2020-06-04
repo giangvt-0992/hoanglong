@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\SidebarHelper;
 use App\Models\Province;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -42,9 +43,26 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer(['admin.layout.top_nav'], function ($view) {
             $admin = getAuthAdmin();
+
             $brand = $admin->brand;
             $notifications = $brand ? $brand->notifications()->where('data->type', 'ticket')->get() : collect([]);
             $view->with(['notifications'=>$notifications]);
+        });
+
+        view()->composer(['admin.layout.left_sidebar'], function ($view) {
+            
+            $admin = getAuthAdmin();
+
+            $key = md5(vsprintf('%s.%s.%s', [
+                $admin->role->name,
+                'show',
+                'sidebar'
+            ]));
+            $sidebar = Cache::remember($key, 1000, function () {
+                return SidebarHelper::getSideBar();
+            });
+            $sidebar = SidebarHelper::getSideBar();
+            $view->with(['sidebar'=>$sidebar]);
         });
     }
 }

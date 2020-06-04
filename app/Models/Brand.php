@@ -71,4 +71,11 @@ class Brand extends Model
         $phoneString = join(" - ", $phone);
         return $phoneString;
     }
+
+    public function getBankStringAttribute()
+    {
+        $bank = json_decode($this->bank, true);
+        $bankString = join("   ", $bank);
+        return $bankString;
+    }
 }

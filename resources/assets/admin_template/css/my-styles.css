@@ -59,3 +59,10 @@ ul.to_do li {
   min-height: 34px!important;
   height: 34px;
 }
+
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
