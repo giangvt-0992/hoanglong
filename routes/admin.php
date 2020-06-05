@@ -159,5 +159,15 @@ Route::group([
             Route::get('/{district}/delete', 'DistrictController@destroy')->name('destroy');
             Route::get('/search', 'DistrictController@search')->name('search');
         });
+
+        Route::group([
+            'as' => 'profile.',
+            'prefix' => 'profile'
+        ], function () {
+            Route::get('/', 'ProfileController@index')->name('index');
+            Route::post('/', 'ProfileController@update')->name('update');
+            Route::get('/change-password', 'ProfileController@getChangePasswordForm')->name('change_password');
+            Route::post('/change-password', 'ProfileController@changePassword');
+        });
     });
 });
