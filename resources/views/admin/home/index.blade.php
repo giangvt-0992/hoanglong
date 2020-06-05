@@ -1,7 +1,8 @@
 @extends('admin.layout.app')
 @section('content')
 <div class="right_col" role="main">
-	<div class="">
+	<div class="" style="margin-top: 50px;">
+    @include('admin.layout.flash')
 		<div class="page-title">
 			<div class="title_left">
 				<h3>Users <small>Some examples to get you started</small></h3>
