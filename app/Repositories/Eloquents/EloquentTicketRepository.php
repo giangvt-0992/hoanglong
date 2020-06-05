@@ -50,6 +50,7 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
             'route_name' => $data['routeName'],
             'pickup_place' => $data['pickupPlaceName'],
             'pickup_time' => $data['pickupTime'],
+            'pickup_url' => $data['pickupPlaceUrl'],
             'dep_province_name' => $data['depProvinceName'],
             'des_province_name' => $data['desProvinceName'],
             'depart_name' => $data['departName'],
@@ -131,5 +132,10 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
     public function findByCode($code)
     {
         return $this->model->where('code', $code)->first();
+    }
+
+    public function changeStatus($code, $status)
+    {
+        return $this->model->where('code', $code)->update(['status' => $status]);
     }
 }

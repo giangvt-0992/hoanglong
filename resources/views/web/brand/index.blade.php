@@ -28,8 +28,8 @@ lightHeader
             <div class="col-sm-3 col-xs-12">
               <div class="sectionTitleDouble">
                 @if(app()->getLocale() == 'vi')
-                <p style="color: #fff;">Nhà</p>
-                <h2><span>Xe</span></h2>
+                <p style="color: #fff;">Thông tin</p>
+                <h2>Nhà <span>Xe</span></h2>
                 @else
                 <p style="color: #fff;">Select</p>
                 <h2><span>Brand</span></h2>

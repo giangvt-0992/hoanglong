@@ -29,6 +29,9 @@ Route::group([
         Route::get('/', 'HomeController@index')->name('index');
         Route::get('/dat-ve', 'BookingController@index')->name('booking');
         Route::get('/send-mail', 'BookingController@sendMail')->name('sendmail');
+        Route::post('/cancel-ticket-mail', 'BookingController@sendCancelTicketMail')->name('send-cancel-ticket-mail');
+        Route::post('/cancel-ticket', 'BookingController@cancelTicket')->name('cancel-ticket');
+        // Route::get('/cancel-ticket-mail', 'BookingController@sendCancelTicketMail')->name('send-cancel-ticket-mail');
         Route::get('/bang-gia', 'HomeController@index')->name('price-table');
         Route::get('/huong-dan-dat-ve', 'HomeController@getTicketGuidePage')->name('ticket-purchase-guide');
         Route::post('/book-route', 'BookingController@bookRoute')->name('booking-route');
