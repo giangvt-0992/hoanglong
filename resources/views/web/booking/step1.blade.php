@@ -16,8 +16,15 @@ $desProvinceName = $desProvince != null ? $desProvince->name : '';
                 <div class="row gridResize">
                     <div class="col-sm-3 col-xs-12">
                         <div class="sectionTitleDouble">
-                            <p>{{ __("Book") }}</p>
-                            <h2><span>{{ __("Ticket") }}</span></h2>
+                            @if ($locale == 'vi')
+                            <p style="margin-bottom: 8px;">Chọn</p>
+                            <h2 style="margin-bottom: 8px;">điểm đi</h2>
+                            <h2><span>Điểm đến</span></h2>
+                            @else
+                            <p style="margin-bottom: 8px;">Choose</p>
+                            <h2 style="margin-bottom: 8px;">departure</h2>
+                            <h2><span>destination</span></h2>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-9 col-xs-12">

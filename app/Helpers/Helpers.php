@@ -12,6 +12,16 @@ if (!function_exists('isActiveRoute')) {
         return false;
     }
 }
+if (!function_exists('createResponse')) {
+    function createResponse($status, $data, $message)
+    {
+        return [
+            'status' => $status,
+            'data' => $data,
+            'message'=> $message
+        ];
+    }
+}
 
 if (!function_exists('getAuthAdmin')) {
     function getAuthAdmin()

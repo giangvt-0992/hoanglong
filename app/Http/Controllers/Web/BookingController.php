@@ -8,10 +8,13 @@ use App\Contracts\Repositories\RouteRepository;
 use App\Contracts\Repositories\TicketRepository;
 use App\Contracts\Repositories\TripDepartDateRepository;
 use App\Contracts\Repositories\UserRepository;
+use App\Enums\TicketStatus;
 use App\Events\NewTicketEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\CancelTicketJob;
 use App\Jobs\SendMailJob;
+use App\Mail\CancelTicketMail;
 use App\Mail\SendMail;
 use App\Models\Brand;
 use App\Models\Route;
@@ -20,6 +23,7 @@ use App\Notifications\NewTicketNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Pusher\Pusher;
 
@@ -212,5 +216,52 @@ class BookingController extends Controller
         return view('web.tracking.index', [
             'ticket' => $ticket
         ]);
+    }
+
+    public function sendCancelTicketMail(Request $request)
+    {
+        $ticket = $this->ticketRepository->findByCode($request->ticketCode);
+
+        if (!$ticket) {
+            return response()->json(createResponse(404, [], __('Do not find ticket with code:' . $request->ticketCode)));
+        }
+        $randomNumberString = str_random(6);
+        $ticketData = [
+            'to' => $ticket->passenger_info['email'],
+            'cancelTicketCode' => $randomNumberString,
+            'ticketCode' => $ticket->code,
+            'passengerName' => $ticket->passenger_info['name'],
+        ];
+        // CancelTicketJob::dispatch($ticketData);
+        
+        $data = [
+            'cancelTicketCode' => $randomNumberString,
+            'timeExpire' => time() + 100
+        ];
+        Session::put("cancelTicketData$request->ticketCode", $data);
+        return response()->json(createResponse(200, $data, __('Check your mail to get cancel ticket code')));
+    }
+
+    public function cancelTicket(Request $request)
+    {
+        $cancelCode = $request->cancelCode;
+        $ticketCode = $request->ticketCode;
+        
+        if (!Session::has("cancelTicketData$ticketCode")) {
+            return response()->json(createResponse(404, [], __('Your code is invalid'))); 
+        }
+
+        $cancelTicketData = Session::get("cancelTicketData$ticketCode");
+
+        if ($cancelCode != $cancelTicketData['cancelTicketCode'] || $cancelTicketData['timeExpire'] < time()) {
+            return response()->json(createResponse(505, [], __('Your code has expired')));
+        }
+        try {
+            $this->ticketRepository->changeStatus($ticketCode, TicketStatus::getValue('Cancel'));
+        } catch (\Throwable $th) {
+            return response()->json(createResponse(400, [], __('Cancel ticket fail, please try again')));
+        }
+        Session::forget("cancelTicketData$ticketCode");
+        return response()->json(createResponse(200, [], __('Cancel ticket successfully'))); 
     }
 }
