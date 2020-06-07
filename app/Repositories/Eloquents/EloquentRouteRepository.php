@@ -9,6 +9,7 @@ use App\Models\Place;
 use App\Models\Route;
 use App\Models\Trip;
 use App\Models\TripDepartDate;
+use App\Services\CancelTripService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -101,7 +102,8 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
             ['t.depart_time', '>=', $timeNow],
             ['tdd.is_active', '=', true],
             ['t.is_active', '=', true],
-            ['r.is_active', '=', true]
+            ['r.is_active', '=', true],
+            ['b.is_active', '=', true]
             ])
         ->get();
         return $routes;
@@ -126,7 +128,8 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
                 $listTripId = $route->trips()->pluck('id')->toArray();
                 Trip::whereIn('id', $listTripId)->update(['is_active' => $isActive]);
                 TripDepartDate::whereIn('trip_id', $listTripId)->update(['is_active' => $isActive]);
-
+                $listTDDId = TripDepartDate::whereIn('trip_id', $listTripId)->pluck('id')->toArray();
+                CancelTripService::cancelTrip($listTDDId);
                 $route->is_active = $isActive;
                 $route->save();
             });

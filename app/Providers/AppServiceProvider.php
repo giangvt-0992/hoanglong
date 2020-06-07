@@ -51,16 +51,16 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer(['admin.layout.left_sidebar'], function ($view) {
             
-            $admin = getAuthAdmin();
+            // $admin = getAuthAdmin();
 
-            $key = md5(vsprintf('%s.%s.%s', [
-                $admin->role->name,
-                'show',
-                'sidebar'
-            ]));
-            $sidebar = Cache::remember($key, 1000, function () {
-                return SidebarHelper::getSideBar();
-            });
+            // $key = md5(vsprintf('%s.%s.%s', [
+            //     $admin->role->name,
+            //     'show',
+            //     'sidebar'
+            // ]));
+            // $sidebar = Cache::remember($key, 1000, function () {
+            //     return SidebarHelper::getSideBar();
+            // });
             $sidebar = SidebarHelper::getSideBar();
             $view->with(['sidebar'=>$sidebar]);
         });

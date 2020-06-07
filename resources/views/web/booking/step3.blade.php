@@ -113,7 +113,7 @@
                     </div>
                     <div class="row margin-bottom-10">
                         <div class="col-sm-2 col-xs-12">{{__('Please select seat')}}</div>
-                        <div class="col-sm-9 col-xs-12"><span id="selectedSeat"></span><br><span class="note">(The number of beds will be canceled if you are not successful payment)</span><input type="hidden" name=" seat blockshift blockshift3d" id=" seat blockshift blockshift3d"></div>
+                        <div class="col-sm-9 col-xs-12"><span id="selectedSeat"></span><br><span class="note">({{__('The number of beds will be canceled if you are not successful payment')}})</span><input type="hidden" name=" seat blockshift blockshift3d" id=" seat blockshift blockshift3d"></div>
                     </div>
                     <div class="row margin-bottom-10">
                         <div class="col-sm-2 col-xs-12">{{__('Select pickup address')}}</div>

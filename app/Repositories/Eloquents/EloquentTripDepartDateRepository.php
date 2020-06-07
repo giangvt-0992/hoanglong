@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquents;
 use App\Contracts\Repositories\TripDepartDateRepository;
 use App\Models\Route;
 use App\Models\TripDepartDate;
+use App\Services\CancelTripService;
 
 class EloquentTripDepartDateRepository extends EloquentBaseRepository implements TripDepartDateRepository
 {
@@ -66,11 +67,15 @@ class EloquentTripDepartDateRepository extends EloquentBaseRepository implements
     
     public function changeStatus($data = [])
     {
-        return $this->model->whereIn('trip_id', $data['listTripId'])
+        $trip = $this->model->whereIn('trip_id', $data['listTripId'])
         ->where([
             ['depart_date', '>=', $data['fromDate']],
             ['depart_date', '<=', $data['toDate']],
-        ])
-        ->update(['is_active' => $data['is_active']]);
+        ])->get();
+        
+        $listTDDId = $trip->pluck('id')->toArray();
+        CancelTripService::cancelTrip($listTDDId);
+
+        $trip->update(['is_active' => $data['is_active']]);
     }
 }

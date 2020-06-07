@@ -207,7 +207,7 @@ lightHeader
                   <td>
                     {{ __('Status')}}
                   </td>
-                  <td class="text-{{$ticket->getStatusColor()}}">
+                  <td class="bold text-{{$ticket->getStatusColor()}}">
                     {{$ticket->status}}
                   </td>
                 </tr>

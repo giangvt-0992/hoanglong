@@ -43,6 +43,7 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
             'phone' => $data['passengerPhone'],
             'email' => $data['passengerEmail'],
             'address' => $data['passengerAddress'],
+            'locale' => app()->getLocale()
         ];
 
         $trip_info = [
@@ -123,7 +124,7 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
         ->where($where)
         ->where(function ($q) use ($data) {
             isset($data['from_date']) && $q->whereDate('created_at', '>=', $data['from_date']);
-            isset($data['to_date']) && $q->whereDate('created_at', '<=', $data['to_date']);
+            isset($data['to_date']) && $q->whereDate('created_at', '>=', $data['to_date']);
         })
         ->get();
         return $tickets;
@@ -137,5 +138,21 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
     public function changeStatus($code, $status)
     {
         return $this->model->where('code', $code)->update(['status' => $status]);
+    }
+
+    public function rollback($ticketCode)
+    {
+        $ticket = $this->model->where('code', $ticketCode)->firstOrFail();
+        $listSeat = json_decode($ticket->list_seat);
+
+        $tripDepartDate = $ticket->tripDepartDate;
+        $seatMap = json_decode($tripDepartDate->seat_map, true);
+        
+        foreach ($listSeat as $index) {
+            $seatMap[$index] = 0;
+        }
+        $tripDepartDate->seat_map = json_encode($seatMap);
+        $tripDepartDate->available_seats = $tripDepartDate->available_seats + count($listSeat);
+        return $tripDepartDate->save();
     }
 }

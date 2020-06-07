@@ -11,4 +11,5 @@ interface TicketRepository extends BaseRepository
     public function createTicket($data);
     public function changeStatus($code, $status);
     public function allByAdmin();
+    public function rollback($ticketCode);
 }

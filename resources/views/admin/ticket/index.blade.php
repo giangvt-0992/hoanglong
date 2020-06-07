@@ -77,7 +77,6 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2><i class="fa fa-bars"></i> Danh sách vé xe</h2>
-						<a href="{{route('admin.ticket.create')}}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Thêm Tình thành</a>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
