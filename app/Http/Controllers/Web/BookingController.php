@@ -202,9 +202,8 @@ class BookingController extends Controller
 
     public function test()
     {
-        $brand = $this->brandRepository->find(9);
-        $ticket = Ticket::find(10);
-        $this->newTicketNotification($brand, $ticket, 'Hà Nội - Thái Bình');
+        $ticketCode = '1VlbMVge3jE';
+        $this->ticketRepository->rollback($ticketCode);
     }
 
     public function tracking(Request $request)
@@ -232,7 +231,7 @@ class BookingController extends Controller
             'ticketCode' => $ticket->code,
             'passengerName' => $ticket->passenger_info['name'],
         ];
-        // CancelTicketJob::dispatch($ticketData);
+        CancelTicketJob::dispatch($ticketData);
         
         $data = [
             'cancelTicketCode' => $randomNumberString,
@@ -256,12 +255,20 @@ class BookingController extends Controller
         if ($cancelCode != $cancelTicketData['cancelTicketCode'] || $cancelTicketData['timeExpire'] < time()) {
             return response()->json(createResponse(505, [], __('Your code has expired')));
         }
+
         try {
-            $this->ticketRepository->changeStatus($ticketCode, TicketStatus::getValue('Cancel'));
+            $ticket = $this->ticketRepository->findByCode($ticketCode);
+            if ($ticket->code != TicketStatus::getValue('Cancel')) {
+                DB::transaction(function () use ($ticketCode) {
+                    $this->ticketRepository->changeStatus($ticketCode, TicketStatus::getValue('Cancel'));
+                    $this->ticketRepository->rollback($ticketCode);
+                });
+            }
         } catch (\Throwable $th) {
             return response()->json(createResponse(400, [], __('Cancel ticket fail, please try again')));
         }
         Session::forget("cancelTicketData$ticketCode");
         return response()->json(createResponse(200, [], __('Cancel ticket successfully'))); 
     }
+
 }

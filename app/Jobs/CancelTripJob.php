@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\CancelTicketMail;
+use App\Mail\CancelTripMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -10,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 
-class CancelTicketJob implements ShouldQueue
+class CancelTripJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -33,8 +34,6 @@ class CancelTicketJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->data['view'] = 'web.mail.cancel_ticket';
-        $this->data['subject'] = __('Cancel ticket request!');
-        Mail::to($this->data['to'])->send(new CancelTicketMail($this->data));
+        Mail::to($this->data['to'])->send(new CancelTripMail($this->data));
     }
 }

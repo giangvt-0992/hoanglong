@@ -61,8 +61,8 @@ class TicketController extends Controller
     public function search(Request $request)
     {
         $data = $request->all();
-        $data['from_date'] = date('Y-m-d', strtotime($request->from_date));
-        $data['to_date'] = date('Y-m-d', strtotime($request->to_date));
+        $data['from_date'] = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : null;
+        $data['to_date'] = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : null;
 
         $tickets = $this->ticketRepository->searchByAdmin($data);
         $routes = $this->routeRepository->allByAdmin();

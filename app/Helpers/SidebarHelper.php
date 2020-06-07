@@ -20,7 +20,7 @@ class SidebarHelper {
       'title' => 'Tuyến đường',
       'url' => 'admin.route.index',
       'icon' => 'fas fa-road',
-      'permission' => '	xem-tuyen-duong'
+      'permission' => 'xem-tuyen-duong'
     ],
     'trip' => [
       'title' => 'Chuyến',
