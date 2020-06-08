@@ -98,7 +98,6 @@
 
       var channel = pusher.subscribe('my-channel');
       channel.bind('my-event', function(data) {
-        alert(JSON.stringify(data));
 
         if (data.type == 'ticket') {
           let template = `
@@ -115,6 +114,8 @@
           `;
           $("#notiWrapper").prepend(template);
           $("#menu1 li").bind('click', openNoti());
+          let count = parseInt($("#countUnreadMessage").text());
+          $("#countUnreadMessage").text(count + 1);
         }
       });
 
@@ -131,6 +132,7 @@
             if (data.status === 200) {
               $("#menu1 li").each(function () {
                 $(this).addClass('as-read');
+                $("#countUnreadMessage").text(0);
               })
             }
           },

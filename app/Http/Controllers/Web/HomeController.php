@@ -17,9 +17,12 @@ class HomeController extends Controller
     {
         app()->setLocale($language);
 
+        $previousUrl = str_replace(["/vi/", "/en/"], "/$language/",url()->previous());
+
         $previousRouteName = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
 
-        return redirect()->route($previousRouteName, ['locale' => app()->getLocale()]);
+        // return redirect()->route($previousRouteName, ['locale' => app()->getLocale()]);
+        return redirect($previousUrl);
     }
 
     public function getTicketGuidePage()

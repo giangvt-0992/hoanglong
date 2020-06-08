@@ -51,7 +51,7 @@ class TicketController extends Controller
     {
         $this->authorize('ticket.view', $ticket);
 
-        $ticket->brand->unreadNotifications->where('id', $request->notify_id)->markAsRead();
+        $ticket->brand->unreadNotifications()->where('data->code', $ticket->code)->get()->markAsRead();
 
         return view('admin.ticket.detail', [
             'ticket' => $ticket,

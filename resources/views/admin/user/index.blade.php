@@ -52,5 +52,7 @@
 @section('after-scripts')
 <script>
 	$("#datatable").DataTable();
+  $("#datatable1").DataTable();
+  $("#datatable2").DataTable();
 </script>
 @endsection

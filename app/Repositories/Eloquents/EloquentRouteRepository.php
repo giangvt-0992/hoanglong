@@ -64,6 +64,8 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
             $timeNow = '00:00:00';
         }
 
+        $whereBrandId = isset($data['brand_id']) ? [['b.id', $data['brand_id']]] : [];
+
         $routes = DB::table('routes as r')
         ->select(
             'r.id as routeId',
@@ -88,6 +90,7 @@ class EloquentRouteRepository extends EloquentBaseRepository implements RouteRep
             'p2.name as desName',
             'p2.id as desId'
         )
+        ->where($whereBrandId)
         ->whereIn('depart_place_id', $departPlaces)
         ->whereIn('des_place_id', $desPlaces)
         ->join('trips as t', 'r.id', 't.route_id')

@@ -181,6 +181,14 @@ lightHeader
                 </tr>
                 <tr>
                   <td>
+                    {{ __('Seat booked') }}
+                  </td>
+                  <td>
+                    <span class="bold">{{$ticket->getListSeatString()}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     {{ __('Ticket price') }}
                   </td>
                   <td>
@@ -213,7 +221,7 @@ lightHeader
                 </tr>
               </tbody>
             </table>
-            @if ($ticket->getOriginal('status') == 'unpaid')
+            @if ($ticket->getOriginal('status') == 'unpaid' && $checkCanCancel)
             <div class="row" id="divCancelBooking">
               <div class="col-md-offset-2 col-md-4 col-sm-12">
                 <button class="btn buttonCustomPrimary" id="btnCancelTicket" data-href="{{route('send-cancel-ticket-mail', ['locale' => app()->getLocale()])}}" data-locale="{{app()->getLocale()}}">{{__('Cancel booking')}}</button>

@@ -4,7 +4,7 @@
   <div class="clearfix"></div>
 </div>
 <div class="x_content">
-  <table class="table table-bordered">
+  <table class="table table-bordered" id="datatable">
     <thead>
       <tr>
         <th>STT</th>

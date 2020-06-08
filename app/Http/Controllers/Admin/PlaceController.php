@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlaceRequest;
 use App\Models\Place;
+use App\Models\Trip;
+use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
@@ -98,21 +100,16 @@ class PlaceController extends Controller
         $this->authorize('place.delete', $place);
 
         $checkRoutes = $place->departRoutes()->count() + $place->desRoutes()->count();
-        if ($checkRoutes > 0) {
-            return redirect()->back()->with('error', 'Xóa địa điểm thật bại, địa điểm này đã được ghép tuyến');
+        $checkTrip = Trip::whereRaw('JSON_CONTAINS(pick_up_schedule->"$[*].place_id", "\"'.$place->id.'\"")')->count();
+        if ($checkRoutes > 0 || $checkTrip > 0) {
+            return redirect()->back()->with('error', 'Xóa địa điểm thật bại, địa điểm này đã được ghép chuyến');
         }
-        $place->delete();
         
-        // try {
-        //     $place->name = $request->name;
-        //     $place->address = $request->address;
-        //     $place->map_url = $request->map;
-        //     $place->district_id = $request->districtId;
-        //     $place->description = $request->description;
-        //     $place->save();
-            return redirect()->route('admin.place.index')->with('success', 'Xóa địa điểm thành công');
-        // } catch (\Exception $e) {
-        //     return redirect()->back()->with('error', 'Cập nhật địa điểm thất bại')->withInput();
-        // }
+        try {
+            $place->delete();
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.place.index')->with('error', 'Xóa địa điểm thất bại');
+        }
+        return redirect()->route('admin.place.index')->with('success', 'Xóa địa điểm thành công');
     }
 }

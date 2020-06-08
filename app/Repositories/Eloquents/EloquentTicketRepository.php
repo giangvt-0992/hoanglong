@@ -124,7 +124,7 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
         ->where($where)
         ->where(function ($q) use ($data) {
             isset($data['from_date']) && $q->whereDate('created_at', '>=', $data['from_date']);
-            isset($data['to_date']) && $q->whereDate('created_at', '>=', $data['to_date']);
+            isset($data['to_date']) && $q->whereDate('created_at', '<=', $data['to_date']);
         })
         ->get();
         return $tickets;
@@ -154,5 +154,15 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
         $tripDepartDate->seat_map = json_encode($seatMap);
         $tripDepartDate->available_seats = $tripDepartDate->available_seats + count($listSeat);
         return $tripDepartDate->save();
+    }
+
+    public function getTicketByDate($date)
+    {
+        return $this->model->whereDate('created_at', $date)->brand()->isNotCancel()->get();
+    }
+
+    public function getTicketByMonth($month)
+    {
+        return $this->model->whereMonth('created_at', $month)->brand()->isNotCancel()->get();
     }
 }

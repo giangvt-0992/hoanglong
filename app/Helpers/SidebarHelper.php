@@ -4,29 +4,17 @@ namespace App\Helpers;
 
 class SidebarHelper {
   static $menu = [
-    'brand' => [
-      'title' => 'Nhà xe',
-      'url' => 'admin.brand.index',
-      'icon' => 'fas fa-bus',
-      'permission' => 'xem-hang-xe'
+    'dashboard' => [
+      'title' => 'Dashboard',
+      'url' => 'admin.index',
+      'icon' => 'fas fa-tachometer-alt',
+      'permission' => 'dashboard'
     ],
-    'place' => [
-      'title' => 'Địa diểm',
-      'url' => 'admin.place.index',
-      'icon' => 'fas fa-map-marker-alt',
-      'permission' => 'xem-dia-diem'
-    ],
-    'route' => [
-      'title' => 'Tuyến đường',
-      'url' => 'admin.route.index',
-      'icon' => 'fas fa-road',
-      'permission' => 'xem-tuyen-duong'
-    ],
-    'trip' => [
-      'title' => 'Chuyến',
-      'url' => 'admin.trip.index',
-      'icon' => 'fas fa-shuttle-van',
-      'permission' => 'xem-chuyen'
+    'ticket' => [
+      'title' => 'Vé xe',
+      'url' => 'admin.ticket.index',
+      'icon' => 'fas fa-ticket-alt',
+      'permission' => 'xem-ve'
     ],
     'schedule' => [
       'title' => 'Lịch chạy',
@@ -34,7 +22,25 @@ class SidebarHelper {
       'icon' => 'fas fa-clipboard-list',
       'permission' => 'xem-lich-chay'
     ],
-    'disctrict' => [
+    'trip' => [
+      'title' => 'Chuyến',
+      'url' => 'admin.trip.index',
+      'icon' => 'fas fa-shuttle-van',
+      'permission' => 'xem-chuyen'
+    ],
+    'route' => [
+      'title' => 'Tuyến đường',
+      'url' => 'admin.route.index',
+      'icon' => 'fas fa-road',
+      'permission' => 'xem-tuyen-duong'
+    ],
+    'place' => [
+      'title' => 'Địa diểm',
+      'url' => 'admin.place.index',
+      'icon' => 'fas fa-map-marker-alt',
+      'permission' => 'xem-dia-diem'
+    ],
+    'district' => [
       'title' => 'Quận huyện',
       'url' => 'admin.district.index',
       'icon' => 'fas fa-map-signs',
@@ -46,11 +52,11 @@ class SidebarHelper {
       'icon' => 'fas fa-city',
       'permission' => 'xem-tinh'
     ],
-    'ticket' => [
-      'title' => 'Vé xe',
-      'url' => 'admin.ticket.index',
-      'icon' => 'fas fa-ticket-alt',
-      'permission' => 'xem-ve'
+    'brand' => [
+      'title' => 'Nhà xe',
+      'url' => 'admin.brand.index',
+      'icon' => 'fas fa-bus',
+      'permission' => 'xem-hang-xe'
     ],
     'user' => [
       'title' => 'Người dùng và phân quyền',
@@ -68,7 +74,7 @@ class SidebarHelper {
       $menu = self::$menu;
       $showMenu = [];
       foreach ($menu as $key => $value) {
-        if (in_array($value['permission'], $userPermissions)) {
+        if (in_array($value['permission'], $userPermissions) || $value['permission'] == 'dashboard') {
           $showMenu[] = $value;
         }
       }

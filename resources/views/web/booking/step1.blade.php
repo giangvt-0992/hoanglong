@@ -67,6 +67,16 @@ $desProvinceName = $desProvince != null ? $desProvince->name : '';
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-sm-4 col-xs-12">
+                                            <div class="searchTour">
+                                                <select name="brand_id" class="select2bootstrap" id="brand">
+                                                    <option value="">{{__('Brand')}}</option>
+                                                    @foreach($brands as $brand)
+                                                    <option value="{{$brand->id}}" @if($brand->id == request('brand_id')) selected @endif>{{$brand->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3 col-xs-12">
