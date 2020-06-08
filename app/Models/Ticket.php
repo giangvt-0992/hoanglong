@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TicketStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -65,5 +66,22 @@ class Ticket extends Model
         ];
         $color = $colorList[$this->getOriginal('status')];
         return $color;
+    }
+
+    public function scopeBrand(Builder $builder) {
+        $brandId = getAuthAdminBrandId();
+        
+        $builder->where('brand_id', '=', $brandId);
+    }
+
+    public function scopeIsNotCancel(Builder $builder)
+    {
+        $builder->where('status', '!=', TicketStatus::getValue('Cancel'));
+    }
+
+    public function getListSeatString()
+    {
+        $list = json_decode($this->list_seat, true);
+        return join(", ", $list);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\SidebarHelper;
+use App\Models\Brand;
 use App\Models\Province;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -38,7 +39,9 @@ class AppServiceProvider extends ServiceProvider
             $provinces = Cache::remember($key, 1000, function () {
                 return Province::all();
             });
-            $view->with(['provinces'=>$provinces, 'nextdate'=>$nextDate]);
+
+            $brands = Brand::active()->get();
+            $view->with(['provinces'=>$provinces, 'nextdate'=>$nextDate, 'brands' => $brands]);
         });
 
         view()->composer(['admin.layout.top_nav'], function ($view) {

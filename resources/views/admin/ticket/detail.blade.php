@@ -58,6 +58,10 @@
                   <td class="">{{$ticket->quantity}}</td>
                 </tr>
 								<tr>
+                  <td class="">Ghế đã đặt</td>
+                  <td class="">{{$ticket->getListSeatString()}}</td>
+                </tr>
+								<tr>
                   <td class="">Thành tiền</td>
                   <td class="">{{number_format($ticket->total)}} VND</td>
                 </tr>

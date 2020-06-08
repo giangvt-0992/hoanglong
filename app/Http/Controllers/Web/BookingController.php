@@ -62,7 +62,8 @@ class BookingController extends Controller
                 'departProvince' => $departProvince,
                 'desProvince' => $desProvince,
                 'quantity'  => $request->quantity,
-                'departDate' => $request->depart_date
+                'departDate' => $request->depart_date,
+                'brand_id' => $request->brand_id
             ];
             $routes = $this->routeRepository->findTrips($data);
             \Session::put('step', config('constants.step.STEP1'));
@@ -85,7 +86,8 @@ class BookingController extends Controller
             'depart_province_id' => $request->departure_id,
             'des_province_id' => $request->destination_id,
             'quantity'  => $request->quantity,
-            'depart_date' => $request->depart_date
+            'depart_date' => $request->depart_date,
+            'brand_id' => $request->brand_id
         ];
         $routes = $this->routeRepository->findTrips($data);
 
@@ -133,7 +135,7 @@ class BookingController extends Controller
             $ticket = $this->ticketRepository->createTicket($ticketData);
             $trip->available_seats = $trip->available_seats - $ticketData['quantity'];
             $trip->seat_map = json_encode($seatMap);
-            $trip->save();
+            // $trip->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -212,8 +214,16 @@ class BookingController extends Controller
 
         $ticket = $this->ticketRepository->findByCode($code) ?? null;
 
+        $checkCanCancel = false;
+        if ($ticket) {
+            $runDate = $ticket->tripDepartDate->depart_date;
+            $timeTripRun = strtotime($runDate . " " . $ticket->trip_info['depart_time']);
+            $checkCanCancel = $timeTripRun > time();
+        }
+
         return view('web.tracking.index', [
-            'ticket' => $ticket
+            'ticket' => $ticket,
+            'checkCanCancel' => $checkCanCancel
         ]);
     }
 

@@ -18,7 +18,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<table class="table table-bordered">
+						<table class="table table-bordered" id="datatable">
 							<thead>
 								<tr>
 									<th class="text-center">STT</th>
@@ -42,9 +42,9 @@
 									<td class="text-center">
 										<a href="{{route('admin.trip.update', ['trip' => $trip->id])}}" class="btn btn-warning" title="Cập nhật"><i class="fas fa-pencil-alt"></i></a>
 										@if ($trip->getOriginal('is_active'))
-										<a href="{{route('admin.trip.inactive', ['trip' => $trip->id])}}" class="btn btn-dark" title="Ngưng kích hoạt"><i class="fas fa-ban"></i></a>
+										<a href="{{route('admin.trip.inactive', ['trip' => $trip->id])}}" class="btn btn-dark btn-deactivate" data-page="trip" title="Ngưng kích hoạt"><i class="fas fa-ban"></i></a>
 										@else
-										<a href="{{route('admin.trip.active', ['trip' => $trip->id])}}" class="btn btn-success" title="Kích hoạt"><i class="fas fa-recycle"></i></a>
+										<a href="{{route('admin.trip.active', ['trip' => $trip->id])}}" class="btn btn-success btn-active" data-page="trip" title="Kích hoạt"><i class="fas fa-recycle"></i></a>
 										@endif
 										<a href="{{route('admin.trip.destroy', ['trip' => $trip->id])}}" class="btn btn-danger btn-delete" data-page="trip" title="Xóa"><i class="fa fa-trash"></i></a>
 									</td>

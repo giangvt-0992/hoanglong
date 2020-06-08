@@ -2,20 +2,36 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\Repositories\TicketRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
+    protected $ticketRepository;
+
+    public function __construct(TicketRepository $ticketRepository) {
+        $this->ticketRepository = $ticketRepository;
+    }
+
     public function index()
     {
-        // $admin = getAuthAdmin();
-        //     $brand = $admin->brand;
-        //     $notifications = $brand->unreadNotifications()->where('data->type', 'ticket')->get();
-        //     echo('<pre>');
-        //     print_r($notifications);
-        //     echo('<pre>');
-        //     exit();
-        return view('admin.home.index');
+        $admin = getAuthAdmin();
+        
+        if ($admin->hasAccess(config('permission.view_ticket.slug'))) {
+            $todayTicket = [];
+            $monthTicket = [];
+        } else {
+            $today = date('Y-m-d');
+            $todayTicket = $this->ticketRepository->getTicketByDate($today);
+    
+            $month = date('m');
+            $monthTicket = $this->ticketRepository->getTicketByMonth($month);
+        }
+
+        return view('admin.home.index', [
+            'todayTicket' => $todayTicket,
+            'monthTicket' => $monthTicket,
+        ]);
     }
 }

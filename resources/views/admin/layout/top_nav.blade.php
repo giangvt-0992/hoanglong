@@ -21,7 +21,7 @@
                 <li role="presentation" class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                         <i class="far fa-bell"></i>
-                        <span class="badge bg-green">{{count($notifications->where('read_at', ''))}}</span>
+                        <span class="badge bg-green" id="countUnreadMessage">{{count($notifications->where('read_at', ''))}}</span>
                     </a>
                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                         <div style="max-height: 250px; overflow-y: scroll;" id="notiWrapper">

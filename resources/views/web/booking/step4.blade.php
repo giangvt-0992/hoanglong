@@ -89,6 +89,14 @@
                 </tr>
                 <tr>
                     <td>
+                        {{ __('Seat booked') }}
+                    </td>
+                    <td>
+                        <span class="bold">{{$ticketData['selectedSeats']}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         {{ __('Ticket price') }} VND
                     </td>
                     <td>

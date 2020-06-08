@@ -55,6 +55,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <div class="searchTour">
+                                <select name="brand_id" class="select2bootstrap" id="brand">
+                                    <option value="">{{__('Brand')}}</option>
+                                    @foreach($brands as $brand)
+                                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 row">
                         <div class="col-sm-12 col-xs-12">
