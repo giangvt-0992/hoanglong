@@ -316,6 +316,8 @@ $(".btnConfirmTicket").click(function () {
                 formData: form.serialize(),
             },
             success: function (data) {
+                console.log(data);
+                
                 if (data.status === "success") {
                     $("#step4render").append(data.data.view);
                     $('#pageLoading').removeClass('show');
@@ -367,6 +369,7 @@ function getPickupPlaces (tripId) {
                         $("#pickupPlaceHd").val(location.id);
                         $("#pickupPlaceNameHd").val(location.name);
                         $("#pickupTimeHd").val(time);
+                        $("#pickupPlaceUrlHd").val(location.map_url);
                     } else {
                         option = `<option value="${location.id}" data-map-url="${location.map_url}" data-time=${time}>${time} - ${location.name}</option>`;
                     }
@@ -388,6 +391,7 @@ $("#slPickupPlace").change(function () {
     $("#pickupPlaceHd").val($(this).val());
     $("#pickupPlaceNameHd").val($("#slPickupPlace option:selected").attr('data-name'));
     $("#pickupTimeHd").val($("#slPickupPlace option:selected").attr('data-time'));
+    $("#pickupPlaceUrlHd").val(mapUrl);
 })
 
 $('.book-seat').click(function () {
@@ -438,3 +442,11 @@ const getSeatMap = (tddId) => {
         }
     })
 }
+
+// $("#btnSearchShift1").click(function (e) {
+//     e.preventDefault();
+
+//     if (!$("#select2-departure-container").val()) {
+//         Alert.Warning('')
+//     }
+// })

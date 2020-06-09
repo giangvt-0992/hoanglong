@@ -129,7 +129,7 @@
 		<div class="row top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 				<div class="tile-stats">
-					<a href="{{route('admin.ticket.search', ['from_date' => date('Y-m-d'), 'to_date' => date('Y-m-d')])}}">
+					<a href="{{route('admin.ticket.search', ['from_date' => date('Y-m-d'), 'to_date' => date('Y-m-d'), 'status' => 'booked'])}}">
 					<div class="icon"><i class="fas fa-ticket-alt"></i></div>
 					<div class="count">{{count($todayTicket)}}</div>
 					<h3>Vé xe</h3>
@@ -137,32 +137,32 @@
 				</a>
 				</div>
 			</div>
-			{{-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 				<div class="tile-stats">
 					<div class="icon"><i class="fas fa-coins"></i></div>
 					<div class="count">{{number_format($todayTicket->sum('total'))}}</div>
 					<h3>Doanh thu</h3>
 					<p>Doanh thu theo ngày.</p>
 				</div>
-			</div> --}}
-			{{-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			</div>
+			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				<a href="{{route('admin.ticket.search', ['from_date' => date('Y-m-01'), 'to_date' => date('Y-m-t'), 'status' => 'booked'])}}">
 				<div class="tile-stats">
 					<div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
 					<div class="count">{{count($monthTicket)}}</div>
 					<h3>Vé xe</h3>
 					<p>Số lượng vé đặt trong tháng.</p>
 				</div>
+			</a>
 			</div>
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-				<a href="{{route('admin.ticket.search', ['from_date' => date('Y-m-01'), 'to_date' => date('Y-m-t')])}}">
 				<div class="tile-stats">
 					<div class="icon"><i class="fas fa-coins"></i></div>
 					<div class="count">{{number_format($monthTicket->sum('total'))}}</div>
 					<h3>Doanh thu</h3>
 					<p>Doanh thu theo tháng.</p>
 				</div>
-			</a>
-			</div> --}}
+			</div>
 		</div>
 	</div>
 </div>

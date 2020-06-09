@@ -24,7 +24,11 @@ class CancelTripService
         'trip:id,name',
         'tickets' => function($q) {
           $q->select(['id', 'trip_depart_date_id', 'passenger_info->email as email', 'code', 'passenger_info->locale as locale']);
-          $q->where('status', '!=', TicketStatus::getValue('Cancel'));
+          $q->whereNotIn('status', [
+            TicketStatus::getValue('Cancel'),
+            TicketStatus::getValue('NotRefundYet'),
+            TicketStatus::getValue('Refund'),
+          ]);
           return $q;
         }
         ])->get();
@@ -51,7 +55,12 @@ class CancelTripService
     
     public static function rollbackTicket($listTripDepartDateId)
     {
-      return Ticket::whereIn('trip_depart_date_id', $listTripDepartDateId)->update(['status' => TicketStatus::getValue('Cancel')]);
+      
+      Ticket::whereIn('trip_depart_date_id', $listTripDepartDateId)
+      ->whereIn('status', [TicketStatus::getValue('Paid'), TicketStatus::getValue('Unpaid')])
+      ->update(['status' => DB::raw("IF(status = 'unpaid', 'cancel', 'not refund yet')")]);
+      // ->update(['status' => DB::raw("IF(status = 'unpaid', 'cancel', IF(status = 'paid', 'not refund yet', status))")]);
+      
     }
     
     public static function rollbackTripDepartDateData($listTripDepartDateId)

@@ -68,6 +68,7 @@
                     </div>
                     <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 row">
                         <div class="col-sm-12 col-xs-12">
+                            <input type="hidden" id="hdculture" value="{{app()->getLocale()}}">
                             <input type="submit" class="btn btn-block buttonCustomPrimary btnSearchShift" value="{{__('Search route')}}" data-blank="1"/>
                         </div>
                     </div>

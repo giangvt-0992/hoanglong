@@ -221,7 +221,7 @@ lightHeader
                 </tr>
               </tbody>
             </table>
-            @if ($ticket->getOriginal('status') == 'unpaid' && $checkCanCancel)
+            @if (($ticket->getOriginal('status') == 'unpaid' || $ticket->getOriginal('status') == 'paid') && $checkCanCancel)
             <div class="row" id="divCancelBooking">
               <div class="col-md-offset-2 col-md-4 col-sm-12">
                 <button class="btn buttonCustomPrimary" id="btnCancelTicket" data-href="{{route('send-cancel-ticket-mail', ['locale' => app()->getLocale()])}}" data-locale="{{app()->getLocale()}}">{{__('Cancel booking')}}</button>
@@ -229,11 +229,12 @@ lightHeader
             </div>
             <div class="row" style="display:none;" id="divCodeInput">
                 <div class="col-md-offset-2 col-md-4 form-group">
+                  <span><i>{{__('Check your email to get verification code')}}</i></span>
                   <input type="text" class="form-control" autocomplete="off" placeholder="" id="cancelCode" name="cancelCode" required="required" style="margin-bottom: 10px;">
                   <p id="msgStatusCode" style="color: #ee4735 !important" data-locale="{{app()->getLocale()}}">{{__('Your code will expire in :seconds second', ['seconds' => 90])}}</p>
                   <button class="btn buttonCustomPrimary" id="submit" data-href="{{route('cancel-ticket', ['locale' => app()->getLocale()])}}">{{__('Submit')}}</button>
                   <button class="btn buttonCustomPrimary" id="resend" style="display: none;">{{__('Resend')}}</button>
-                  <button class="btn " style="background-color: #21A1DB!important; color: white; padding: 0 16px; line-height: 45px;" id="cancel">Cancel</button>
+                  <button class="btn " style="background-color: #21A1DB!important; color: white; padding: 0 16px; line-height: 45px;" id="cancel">{{__('Cancel')}}</button>
                 </div>
             </div>
             @endif
@@ -257,38 +258,53 @@ lightHeader
 <script>
   let locale = 'vi';
   let cancelTicketCode = '';
-  $('#btnCancelTicket').click(function () {
+  $('#btnCancelTicket').click(async function () {
     $("#pageLoading").show();
     const url = $(this).attr('data-href');
     const ticketCode = $("#ticketCode").text();
     locale = $(this).attr('data-locale');
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    await swal({
+      title: "Warning",
+      text: "Bạn có chắc chắn muốn hủy vé này không",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#ee4735',
+      confirmButtonText: 'Xác nhận!',
+    },
+    function(isConfirm){
+      if (isConfirm){
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        $.ajax({
+          type: 'POST',
+          url: url,
+          data: {ticketCode},
+          success(response) {
+            
+            if (response.status == 200) {
+              cancelTicketCode = response.data.cancelTicketCode;
+              console.log(cancelTicketCode);
+              setTimeout(() => {
+                $("#pageLoading").hide();
+                $("#divCodeInput").slideDown();
+                $("#divCancelBooking").slideUp();
+                countDown(90);
+              }, 1000);  
+              
+            }
+          },
+          error(err) {
+            console.log(err);
+          }
+        });
+      } else {
+        $("#pageLoading").hide();
       }
     });
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: {ticketCode},
-      success(response) {
-        
-        if (response.status == 200) {
-          cancelTicketCode = response.data.cancelTicketCode;
-          console.log(cancelTicketCode);
-          setTimeout(() => {
-            $("#pageLoading").hide();
-            $("#divCodeInput").slideDown();
-            $("#divCancelBooking").slideUp();
-            countDown(90);
-          }, 1000);  
-          
-        }
-      },
-      error(err) {
-        console.log(err);
-      }
-    })
+    
   });
 
   $("#cancel").click(function () {
@@ -373,6 +389,8 @@ lightHeader
               window.location.reload();
             }
           });
+        } else {
+          Alert.Error(response.message);
         }
       },
       error(err) {

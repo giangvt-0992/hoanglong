@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquents;
 
 use App\Contracts\Repositories\TicketRepository;
+use App\Enums\TicketStatus;
 use App\Models\Route;
 use App\Models\Ticket;
 use App\Models\TripDepartDate;
@@ -112,11 +113,17 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
             $listTripId = [$data['trip_id']];
         }
 
-        if (isset($data['status'])) {
-            $where[] = ['status', $data['status']];
+        // if (isset($data['status'])) {
+        //     $where[] = ['status', $data['status']];
+        // }
+
+        if (isset($data['code'])) {
+            $where[] = ['code', $data['code']];
         }
 
-        $tickets = $this->model->whereHas('tripDepartDate', function ($q) use ($listTripId) {
+        $tickets = $this->model
+        // ->with('tripDepartDate:id,depart_date')
+        ->whereHas('tripDepartDate', function ($q) use ($listTripId) {
             if (count($listTripId)) {
                 $q->whereIn('trip_id', $listTripId);
             }
@@ -125,7 +132,11 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
         ->where(function ($q) use ($data) {
             isset($data['from_date']) && $q->whereDate('created_at', '>=', $data['from_date']);
             isset($data['to_date']) && $q->whereDate('created_at', '<=', $data['to_date']);
+            if (isset($data['status'])) {
+                $data['status'] == TicketStatus::getValue('Booked') ? $q->whereIn('status', [TicketStatus::getValue('Unpaid'), TicketStatus::getValue('Paid')]) : $q->where('status', $data['status']);
+            }
         })
+        ->with('tripDepartDate:id,depart_date')
         ->get();
         return $tickets;
     }
@@ -158,11 +169,11 @@ class EloquentTicketRepository extends EloquentBaseRepository implements TicketR
 
     public function getTicketByDate($date)
     {
-        return $this->model->whereDate('created_at', $date)->brand()->isNotCancel()->get();
+        return $this->model->whereDate('created_at', $date)->brand()->isBooked()->get();
     }
 
     public function getTicketByMonth($month)
     {
-        return $this->model->whereMonth('created_at', $month)->brand()->isNotCancel()->get();
+        return $this->model->whereMonth('created_at', $month)->brand()->isBooked()->get();
     }
 }

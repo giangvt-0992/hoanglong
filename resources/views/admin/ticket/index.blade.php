@@ -13,6 +13,9 @@
 			<form action="{{route('admin.ticket.search')}}" method="GET" id="frmSearchTicket">
 				<div class="col-md-12" style="margin-bottom: 10px;">
 					<div class="col-md-4 col-xs-12">
+						<input type="text" class="form-control" placeholder="Mã vé" name="code" value="{{request('code')}}">
+					</div>
+					<div class="col-md-4 col-xs-12">
 						<select class="form-control" name="route_id" id="searchRouteId">
 							<option value="" selected>Tuyến xe</option>
 							@foreach($routes as $route)
@@ -32,6 +35,8 @@
 							@endif
 						</select>
 					</div>
+				</div>
+				<div class="col-md-12">
 					<div class="col-md-4 col-xs-12">
 						@php $ticketStatus = request('status') ?? -1;@endphp
 						<select class="form-control" name="status" id="">
@@ -41,9 +46,7 @@
 							@endforeach
 						</select>
 					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="col-md-offset-2 col-md-4  col-xs-12">
+					<div class="col-md-4  col-xs-12">
 						@php 
 						$fromDate = request('from_date');
 						@endphp
@@ -90,6 +93,7 @@
 									<th class="text-center">Số lượng</th>
 									<th class="text-center">Tuyến</th>
 									<th class="text-center">Thời gian</th>
+									<th class="text-center">Ngày đi</th>
 									<th class="text-center">Trạng thái</th>
 									{{-- <th class="text-center">Slug</th> --}}
 									<th class="text-center">Hành động</th>
@@ -99,17 +103,18 @@
 								@foreach ($tickets as $ticket)
 								<tr>
 									<td class="text-center">{{$loop->iteration}}</td>
-									<td class="text-center"><a href="{{route('admin.ticket.show', ['code' => $ticket->code])}}">{{$ticket->code}}</a></td>
+									<td class="text-center">{{$ticket->code}}</td>
 									<td class="text-center">{{$ticket->passenger_info['name']}}</td>
 									<td class="text-center">{{$ticket->passenger_info['phone']}}</td>
 									<td class="text-center">{{$ticket->quantity}}</td>
 									<td class="text-center">{{$ticket->trip_info['route_name']}}</td>
 									<td class="text-center">{{date('H:i', strtotime($ticket->trip_info['depart_time'])) . ' - ' . date('H:i', strtotime($ticket->trip_info['des_time']))}}</td>
+									<td class="text-center">{{date('d-m-Y', strtotime($ticket->tripDepartDate->depart_date))}}</td>
 									<td class="text-center {{$ticket->getStatusColor()}}">{{$ticket->status}}</td>
 									{{-- <td class="text-center">{{$ticket->slug}}</td> --}}
 									<td class="text-center">
-										{{-- <a href="{{route('admin.ticket.edit', ['ticket' => $ticket->id])}}" class="btn btn-warning" title="Cập nhật"><i class="fas fa-pencil-alt"></i></a>
-										<a href="{{route('admin.ticket.destroy', ['ticket' => $ticket->id])}}" class="btn btn-danger btn-delete" data-page="ticket" title="Xóa"><i class="fa fa-trash"></i></a></td> --}}
+										<a href="{{route('admin.ticket.show', ['code' => $ticket->code])}}" class="btn btn-warning" title="Cập nhật"><i class="fas fa-eye"></i></a>
+										{{-- <a href="{{route('admin.ticket.destroy', ['ticket' => $ticket->id])}}" class="btn btn-danger btn-delete" data-page="ticket" title="Xóa"><i class="fa fa-trash"></i></a></td> --}}
 								</tr>
 								@endforeach
 							</tbody>

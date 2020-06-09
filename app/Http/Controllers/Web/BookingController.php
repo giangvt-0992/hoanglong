@@ -135,7 +135,7 @@ class BookingController extends Controller
             $ticket = $this->ticketRepository->createTicket($ticketData);
             $trip->available_seats = $trip->available_seats - $ticketData['quantity'];
             $trip->seat_map = json_encode($seatMap);
-            // $trip->save();
+            $trip->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -214,12 +214,7 @@ class BookingController extends Controller
 
         $ticket = $this->ticketRepository->findByCode($code) ?? null;
 
-        $checkCanCancel = false;
-        if ($ticket) {
-            $runDate = $ticket->tripDepartDate->depart_date;
-            $timeTripRun = strtotime($runDate . " " . $ticket->trip_info['depart_time']);
-            $checkCanCancel = $timeTripRun > time();
-        }
+        $checkCanCancel = $ticket ? !$ticket->isExpiredInHours(Ticket::$defaultExpiredHours) : false;
 
         return view('web.tracking.index', [
             'ticket' => $ticket,
@@ -268,10 +263,15 @@ class BookingController extends Controller
 
         try {
             $ticket = $this->ticketRepository->findByCode($ticketCode);
+
+            if ($ticket->isExpiredInHours(Ticket::$defaultExpiredHours)) {
+                return response()->json(createResponse(400, [], __('Ticket cancellation period has expired')));
+            }
+
             if ($ticket->code != TicketStatus::getValue('Cancel')) {
-                DB::transaction(function () use ($ticketCode) {
-                    $this->ticketRepository->changeStatus($ticketCode, TicketStatus::getValue('Cancel'));
-                    $this->ticketRepository->rollback($ticketCode);
+                DB::transaction(function () use ($ticket){
+                    $this->ticketRepository->changeStatus($ticket->code, $ticket->getNextStatus());
+                    $this->ticketRepository->rollback($ticket->code);
                 });
             }
         } catch (\Throwable $th) {
