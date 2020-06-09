@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class Ticket extends Model
 {
+    public static $defaultExpiredHours = 6;
+
     protected $table = "tickets";
 
     protected $fillable = [
@@ -23,6 +25,14 @@ class Ticket extends Model
         'code',
         'trip_info',
         'status',
+    ];
+
+    protected $colorList = [
+        TicketStatus::Unpaid => 'info',
+        TicketStatus::Paid => 'success',
+        TicketStatus::Cancel => 'dark',
+        TicketStatus::Refund => 'warning',
+        TicketStatus::NotRefundYet => 'danger',
     ];
 
     public function tripDepartDate()
@@ -57,15 +67,14 @@ class Ticket extends Model
         return __($value);
     }
 
+    public function getColor($status)
+    {
+        return $this->colorList[$status];
+    }
+
     public function getStatusColor()
     {
-        $colorList = [
-            TicketStatus::Unpaid => 'warning',
-            TicketStatus::Paid => 'success',
-            TicketStatus::Cancel => 'danger',
-        ];
-        $color = $colorList[$this->getOriginal('status')];
-        return $color;
+        return $this->getColor($this->getOriginal('status'));
     }
 
     public function scopeBrand(Builder $builder) {
@@ -74,14 +83,50 @@ class Ticket extends Model
         $builder->where('brand_id', '=', $brandId);
     }
 
-    public function scopeIsNotCancel(Builder $builder)
+    public function scopeIsBooked(Builder $builder)
     {
-        $builder->where('status', '!=', TicketStatus::getValue('Cancel'));
+        $builder->where('status', '=', TicketStatus::getValue('Paid'))->orWhere('status', '=', TicketStatus::getValue('Unpaid'));
     }
 
     public function getListSeatString()
     {
         $list = json_decode($this->list_seat, true);
         return join(", ", $list);
+    }
+
+    public function getNextStatus()
+    {
+        switch ($this->getOriginal('status')) {
+            case TicketStatus::Unpaid:
+                return TicketStatus::Paid;
+            case TicketStatus::Paid:
+                return TicketStatus::NotRefundYet;
+            case TicketStatus::NotRefundYet:
+                return TicketStatus::Refund;
+            default:
+                return null;
+        }
+    }
+
+    public function getNextStatusColor()
+    {
+        $nextStatus = $this->getNextStatus();
+        return $nextStatus ? $this->getColor($nextStatus) : null;
+    }
+
+    public function getNextStatusAttribute()
+    {
+        $nextStatus = $this->getNextStatus();
+        return __($nextStatus);
+    }
+
+    public function isExpiredInHours($hours)
+    {
+        // $hours = isset($hours) ? $hours : $this->hoursExpired;
+        $runDate = $this->tripDepartDate->depart_date;
+        $runTime = $this->tri_info['depart_time'];
+        $runTimestamp = $runDate . " " . $runTime;
+
+        return strtotime($runTimestamp) < (time() + $hours * 3600);
     }
 }

@@ -118,6 +118,7 @@ Route::group([
             Route::post('/{ticket_code}/edit', 'TicketController@update');
             Route::get('/{ticket_code}/destroy', 'TicketController@destroy')->name('destroy');
             Route::get('/search', 'TicketController@search')->name('search');
+            Route::post('/{ticket_code}/update-status', 'TicketController@updateStatus')->name('update_status');
         });
 
         Route::group([

@@ -97,18 +97,18 @@
                 </tr>
                 <tr>
                     <td>
-                        {{ __('Ticket price') }} VND
+                        {{ __('Ticket price') }}
                     </td>
                     <td>
-                        <span class="bold">{{number_format($ticketData['price'])}}</span>
+                        <span class="bold">{{number_format($ticketData['price'])}} VND</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        {{ __('Total price') }} VND
+                        {{ __('Total price') }}
                     </td>
                     <td>
-                        <span class="bold">{{number_format($ticketData['quantity']*$ticketData['price'])}}</span>
+                        <span class="bold">{{number_format($ticketData['quantity']*$ticketData['price'])}} VND</span>
                     </td>
                 </tr>
                 <tr>

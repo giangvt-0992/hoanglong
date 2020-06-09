@@ -15,6 +15,7 @@
 					<div class="x_title">
 						<h2><i class="fa fa-bars"></i> Chi tiết vé xe</h2>
 						<div class="clearfix"></div>
+						{{-- <a href="{{route('admin.route.create')}}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Thêm tuyến đường</a> --}}
 					</div>
 					<div class="x_content">
 						<table class="table table-bordered" id="">
@@ -70,6 +71,10 @@
                   <td class="">{{date('H:i', strtotime($ticket->trip_info['depart_time'])) . ' - ' . date('H:i', strtotime($ticket->trip_info['des_time']))}}</td>
                 </tr>
 								<tr>
+                  <td class="">Ngày đi</td>
+                  <td class="">{{date('d-m-Y', strtotime($ticket->tripDepartDate->depart_date))}}</td>
+                </tr>
+								<tr>
                   <td class="text-bold"><b>Điểm lên xe - thời gian lên</b></td>
                   <td class="text-bold"><b>{{$ticket->trip_info['pickup_place'] . ' - ' . date('H:i', strtotime($ticket->trip_info['pickup_time']))}}</b></td>
                 </tr>
@@ -79,6 +84,15 @@
                 </tr>
 							</tbody>
 						</table>
+						@if ($ticket->nextStatus && !$isExpired)
+						<form action="{{route('admin.ticket.update_status', ['ticket_code' => $ticket->code])}}" method="POST" id="frmUpdateStatus">
+							{{ csrf_field() }}
+							<input type="hidden" name="status" value="{{$ticket->getNextStatus()}}">
+							<button class="btn btn-{{$ticket->getNextStatusColor()}} float-right" id="btnChangeStatus">{{$ticket->nextStatus}}</button>
+						</form>
+						@else
+						<p>Lưu ý: chỉ có thể đổi trạng thái vé trước 6 tiếng trước khi xe chạy</p>
+						@endif
 					</div>
 				</div>
 			</div>
@@ -87,5 +101,25 @@
 </div>
 @endsection
 @section('after-scripts')
+<script>
 
+	$("#btnChangeStatus").click(function (e) {
+		e.preventDefault();
+		Swal.fire({
+			title: 'Xác nhận đổi trạng thái?',
+			text: "Bạn có muốn đổi trạng thái vé này không!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Xác nhận!',
+			cancelButtonText: 'Hủy!'
+		}).then((result) => {
+			if (result.value) {
+				$("#frmUpdateStatus").submit();
+			}
+		});
+	});
+	
+</script>
 @endsection

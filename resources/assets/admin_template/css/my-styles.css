@@ -59,9 +59,18 @@ ul.to_do li {
   min-height: 34px!important;
   height: 34px;
 }
+.text-bold {
+  font-weight: bold;
+}
+
+.as-read {
+  background: none!important;
+  border: 1px solid whitesmoke;
+}
 
 .truncate {
-  width: 250px;
+  width: 500px;
+  max-width: 500px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

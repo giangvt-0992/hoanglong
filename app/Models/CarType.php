@@ -18,4 +18,9 @@ class CarType extends Model
     {
         return $this->hasMany(Trip::class);
     }
+
+    public function getTotalSeatsAttribute($value)
+    {
+        return $value - 1;
+    }
 }
